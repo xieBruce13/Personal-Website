@@ -5,7 +5,7 @@ Help Bruce Xie secure AI product manager roles by showing product judgment, desi
 
 ## Current decisions
 - English and Chinese, with persistent equivalent project routes.
-- Dark, minimal landing page with restrained typography and an original interactive particle form.
+- Dark landing page with a small-text, three-column composition and an evenly distributed, interactive particle background.
 - Business and Experimental project groups, plus About and contact.
 - Six project overview pages. Full case studies are a later stage.
 - Editable copy centralized in `src/content.json`.
@@ -19,7 +19,14 @@ Help Bruce Xie secure AI product manager roles by showing product judgment, desi
 - Future public launch requires checking the content and choosing public hosting/access.
 
 ## Next
-1. Refine landing-page wording and particle art after Bruce reviews it.
+1. Review the revised landing-page composition, particle density, and color cycle with Bruce.
 2. Add approved project screenshots, videos, and individual contribution details.
 3. Complete the three business case studies.
 4. Add a résumé download and finalize public deployment/domain.
+
+## Revision 2
+- Removed the oversized hero heading and framed particle shape.
+- Added evenly spaced jittered particles over a continuous viewport background.
+- Preserved cursor repulsion and spring-back parameters.
+- Added a 72-second hue cycle, 160px drawing overscan, and a soft viewport edge fade.
+- Source/build/link checks passed. Browser visual QA was blocked by an automatic approval review usage limit; this revision needs visual review.
