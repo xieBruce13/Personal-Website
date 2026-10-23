@@ -14,7 +14,7 @@
 .home-page .header sup{font-size:9px;margin-left:5px}
 .home-page .language{justify-self:end;padding:5px 12px;font-size:11px;line-height:1.5;background:rgba(13,14,12,.8)}
 .home-page .hero{margin:0;min-height:660px;min-height:max(660px,76svh);padding:25px var(--side) 110px;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;position:relative}
-.home-page .intro{grid-column:3;max-width:440px;padding:0;align-self:start;font-size:18px;line-height:1.35;letter-spacing:-.25px;text-shadow:0 1px 8px #0d0e0c,0 0 4px #0d0e0c}
+.home-page .intro{grid-column:3;justify-self:end;width:100%;max-width:440px;padding:0;align-self:start;font-size:18px;line-height:1.35;letter-spacing:-.25px;text-shadow:0 1px 8px #0d0e0c,0 0 4px #0d0e0c}
 .home-page .intro h1{font:inherit;font-weight:400;letter-spacing:inherit;line-height:inherit;margin:0 0 22px}
 .home-page .intro p{font:inherit;font-weight:400;letter-spacing:inherit;line-height:inherit;margin:0 0 22px;color:var(--text)}
 .home-page .intro p:last-child{margin-bottom:0}
@@ -46,7 +46,7 @@
  .home-page .identity{font-size:16px}
  .home-page .header nav{grid-column:2;grid-row:1;gap:4px;font-size:16px;padding:0;align-self:start}
  .home-page .hero{display:block;padding-top:145px;padding-bottom:120px;min-height:690px}
- .home-page .intro{max-width:330px;font-size:18px;margin-left:0}
+ .home-page .intro{max-width:330px;font-size:18px;margin-left:auto}
  .home-page .intro h1{font-size:18px;line-height:1.4;letter-spacing:-.25px}
  .home-page .intro p{font-size:18px;line-height:1.4;letter-spacing:-.25px;margin-bottom:24px}
  .home-page .particle-controls{bottom:36px}

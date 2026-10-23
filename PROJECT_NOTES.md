@@ -44,3 +44,7 @@ Help Bruce Xie secure AI product manager roles by showing product judgment, desi
 - Removed the particle pause/play button at Bruce’s request. The language switch remains.
 - Preserved automatic reduced-motion handling and offscreen/tab-hidden animation suspension.
 - Bruce considers the landing-page direction settled after this small cleanup.
+
+## Revision 5
+- Anchored the introduction block to the right page margin, including when the desktop grid column is wider than its 440px reading width.
+- Kept the text itself left-aligned; the mobile block also follows the right page margin.
