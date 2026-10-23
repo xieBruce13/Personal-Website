@@ -5,7 +5,7 @@ Help Bruce Xie secure AI product manager roles by showing product judgment, desi
 
 ## Current decisions
 - English and Chinese, with persistent equivalent project routes.
-- Dark landing page with a small-text, three-column composition and an evenly distributed, interactive particle background.
+- Dark landing page with a small-text, three-column composition and a loosely clustered, interactive particle hero above a solid black project index.
 - Business and Experimental project groups, plus About and contact.
 - Six project overview pages. Full case studies are a later stage.
 - Editable copy centralized in `src/content.json`.
@@ -30,3 +30,12 @@ Help Bruce Xie secure AI product manager roles by showing product judgment, desi
 - Preserved cursor repulsion and spring-back parameters.
 - Added a 72-second hue cycle, 160px drawing overscan, and a soft viewport edge fade.
 - Source/build/link checks passed. Browser visual QA was blocked by an automatic approval review usage limit; this revision needs visual review.
+
+## Revision 3
+- Aligned the introduction, identity, and Work navigation at the top on desktop; kept a readable stacked mobile layout.
+- Localized the displayed name: Bruce Xie in English, 谢凌翔 in Chinese.
+- Replaced the cursor hint with the language switch at the lower right of the hero; retained pause/play.
+- Confined particles to the hero with a soft bottom fade. All lower content uses solid black.
+- Mixed broad drifting clusters with a sparse field; preserved cursor repulsion and hue cycling.
+- Paused animation when the hero is offscreen. Language switching remains available if Canvas is unsupported.
+- Browser visual QA remains blocked by the automatic approval review usage limit; verify the composition on desktop and mobile when browser access returns.
