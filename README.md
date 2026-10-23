@@ -63,7 +63,6 @@ The language control sits at the lower right of the homepage hero and in the hea
 
 - Semantic headings, tables, links, and navigation.
 - Visible keyboard focus and a skip link.
-- A pause/play control; reduced-motion preferences default to a still image.
 - Animation stops when the hero is offscreen or the tab is hidden; reduced-motion defaults to a still frame.
 - Mobile has fewer particles; pixel density is capped.
 - No external fonts, trackers, or animation libraries.

@@ -26,10 +26,6 @@ function home(l) {
         </div>
         <div class="particle-controls">
           ${languageSwitch(l)}
-          <button id="motion-toggle" type="button" aria-label="${c.motion}"
-            data-pause="${c.motion}" data-play="${c.resumeMotion}" aria-pressed="false">
-            <span aria-hidden="true">Ⅱ</span>
-          </button>
         </div>
       </section>
       <section id="work" class="work">

@@ -39,3 +39,8 @@ Help Bruce Xie secure AI product manager roles by showing product judgment, desi
 - Mixed broad drifting clusters with a sparse field; preserved cursor repulsion and hue cycling.
 - Paused animation when the hero is offscreen. Language switching remains available if Canvas is unsupported.
 - Browser visual QA remains blocked by the automatic approval review usage limit; verify the composition on desktop and mobile when browser access returns.
+
+## Revision 4
+- Removed the particle pause/play button at Bruce’s request. The language switch remains.
+- Preserved automatic reduced-motion handling and offscreen/tab-hidden animation suspension.
+- Bruce considers the landing-page direction settled after this small cleanup.
