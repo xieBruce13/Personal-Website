@@ -1,0 +1,14 @@
+{
+  "name": "bruce-xie-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node --check src/particles.js && node --check src/site.js && node --check build.mjs",
+    "dev": "node build.mjs && node scripts/serve.mjs",
+    "test": "node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

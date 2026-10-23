@@ -1,0 +1,285 @@
+{
+  "site": {
+    "name": "Bruce Xie",
+    "chineseName": "谢凌翔",
+    "email": "bruce_xie@gsd.harvard.edu",
+    "copyrightYear": 2026,
+    "experience": [
+      {
+        "name": "Qwen",
+        "period": "2026",
+        "role": {
+          "en": "AI Product Manager Intern",
+          "zh": "AI 产品经理实习生"
+        }
+      },
+      {
+        "name": "TikTok",
+        "period": "2025",
+        "role": {
+          "en": "AI Product Manager Intern",
+          "zh": "AI 产品经理实习生"
+        }
+      },
+      {
+        "name": "Co-Hive",
+        "period": "2023–24",
+        "role": {
+          "en": "Founder & Product Lead",
+          "zh": "创始人兼产品负责人"
+        }
+      }
+    ],
+    "education": [
+      {
+        "name": "Harvard GSD",
+        "period": "2025–27",
+        "program": {
+          "en": "MDes · Ecologies",
+          "zh": "MDes · Ecologies"
+        }
+      },
+      {
+        "name": "Rhode Island School of Design",
+        "period": "2021–25",
+        "program": {
+          "en": "Industrial Design",
+          "zh": "工业设计"
+        }
+      }
+    ]
+  },
+  "copy": {
+    "en": {
+      "title": "Bruce Xie — AI Product Manager & Builder",
+      "name": "Bruce Xie",
+      "other": "谢凌翔",
+      "index": "Index",
+      "about": "About",
+      "contact": "Contact",
+      "role": "AI Product Manager<br>& Builder.",
+      "intro": "I turn emerging AI capabilities into thoughtful, usable products.",
+      "bio": "Product experience at Qwen and TikTok.<br>Harvard GSD, with roots in industrial design at RISD.",
+      "tag": "PRODUCT STRATEGY · DESIGN · HUMAN–AI INTERACTION",
+      "art": "A field of possibilities.",
+      "hint": "Move your cursor through the particles",
+      "work": "Selected work",
+      "workSub": "Products, questions, and things in the making.",
+      "business": "Business",
+      "experimental": "Experimental",
+      "project": "Project",
+      "focus": "Focus",
+      "explore": "Explore",
+      "view": "View project",
+      "inProgress": "In progress",
+      "footer": "Good products start with a conversation.",
+      "sayHello": "Say hello",
+      "location": "Cambridge, MA",
+      "top": "Back to top",
+      "home": "Back to index",
+      "details": "Project overview",
+      "coming": "Full case study in preparation.",
+      "comingBody": "This is a first look. The decisions, process, and supporting materials will follow.",
+      "contribution": "My contribution",
+      "visit": "Visit Qwen Create",
+      "next": "Next project",
+      "aboutTitle": "A product mind.<br>A designer’s eye.",
+      "aboutIntro": "I’m Bruce, an AI product manager and builder interested in how people work with intelligent systems.",
+      "aboutBio": "I study in Harvard GSD’s MDes Ecologies program and have a background in Industrial Design from RISD. My work brings together product strategy, interaction design, and hands-on AI building.",
+      "experience": "Experience",
+      "education": "Education",
+      "resume": "Experience & education",
+      "email": "Email",
+      "motion": "Pause animation",
+      "resumeMotion": "Play animation",
+      "aboutFooter": "Let’s make something useful.",
+      "meta": "AI product work, design, and experiments by Bruce Xie. Harvard GSD, RISD, Qwen, and TikTok.",
+      "interactionStudy": "INTERACTION STUDY",
+      "skip": "Skip to content",
+      "navigation": "Main navigation",
+      "homeLabel": "Home",
+      "switchLanguage": "切换为中文",
+      "notFound": "Page not found.",
+      "returnHome": "Return to the index ↗"
+    },
+    "zh": {
+      "title": "谢凌翔 Bruce Xie — AI 产品经理与创造者",
+      "name": "Bruce Xie",
+      "other": "谢凌翔",
+      "index": "项目",
+      "about": "关于",
+      "contact": "联系",
+      "role": "AI 产品经理<br>与创造者。",
+      "intro": "将新兴 AI 能力，转化为自然、实用的产品体验。",
+      "bio": "曾在千问与 TikTok 从事产品工作。<br>就读哈佛 GSD，拥有 RISD 工业设计背景。",
+      "tag": "产品策略 · 交互设计 · 人机交互",
+      "art": "探索，始于好奇。",
+      "hint": "移动光标，与粒子互动",
+      "work": "精选项目",
+      "workSub": "产品、问题，以及正在发生的探索。",
+      "business": "商业项目",
+      "experimental": "实验项目",
+      "project": "项目",
+      "focus": "方向",
+      "explore": "查看",
+      "view": "查看项目",
+      "inProgress": "进行中",
+      "footer": "好的产品，始于一次交流。",
+      "sayHello": "聊一聊",
+      "location": "剑桥，马萨诸塞州",
+      "top": "返回顶部",
+      "home": "返回项目目录",
+      "details": "项目概览",
+      "coming": "完整案例整理中。",
+      "comingBody": "这里先呈现项目概览。产品决策、开发过程与相关材料将陆续补充。",
+      "contribution": "我的贡献",
+      "visit": "体验 Qwen Create",
+      "next": "下一个项目",
+      "aboutTitle": "产品的思考。<br>设计的视角。",
+      "aboutIntro": "我是谢凌翔 Bruce，一名关注人与智能系统如何协作的 AI 产品经理与创造者。",
+      "aboutBio": "我在哈佛 GSD 就读 MDes Ecologies 项目，拥有 RISD 工业设计背景。我的工作结合产品策略、交互设计与动手构建 AI 产品。",
+      "experience": "工作经历",
+      "education": "教育背景",
+      "resume": "经历与教育",
+      "email": "邮箱",
+      "motion": "暂停动画",
+      "resumeMotion": "播放动画",
+      "aboutFooter": "一起，做有用的产品。",
+      "meta": "谢凌翔 Bruce Xie 的 AI 产品、设计与实验项目。哈佛 GSD、RISD、千问与 TikTok。",
+      "interactionStudy": "交互实验",
+      "skip": "跳转到内容",
+      "navigation": "主导航",
+      "homeLabel": "首页",
+      "switchLanguage": "Switch to English",
+      "notFound": "页面未找到。",
+      "returnHome": "返回项目目录 ↗"
+    }
+  },
+  "projects": [
+    {
+      "slug": "qwen-create",
+      "name": "Qwen Create",
+      "group": "business",
+      "type": {
+        "en": "Professional · AI agents",
+        "zh": "专业项目 · AI Agent"
+      },
+      "summary": {
+        "en": "Turning creator needs into AI-powered marketing workflows.",
+        "zh": "将创作者需求转化为 AI 营销工作流。"
+      },
+      "role": {
+        "en": "AI Product Manager Intern",
+        "zh": "AI 产品经理实习生"
+      },
+      "period": "2026",
+      "body": {
+        "en": "At Qwen, I worked on the development and international launch of Qwen Create, an AI-agent product for end-to-end marketing workflows.",
+        "zh": "在千问，我参与 Qwen Create 从开发到海外上线的过程，将创作者需求转化为端到端的 AI 营销工作流。"
+      },
+      "contribution": {
+        "en": "My work included defining a multi-agent product architecture and evaluation across model quality, planning, execution, and end-to-end task success.",
+        "zh": "我的工作包括定义多 Agent 产品架构，以及围绕模型质量、规划、执行和端到端任务完成度建立评测。"
+      },
+      "url": "https://create.qwen.com/r/ai-studio-pc-global/main/agent-team/welcome"
+    },
+    {
+      "slug": "pison",
+      "name": "Pison",
+      "group": "business",
+      "type": {
+        "en": "Business project",
+        "zh": "商业项目"
+      },
+      "summary": {
+        "en": "Product and business exploration.",
+        "zh": "产品与商业探索。"
+      },
+      "period": "",
+      "body": {
+        "en": "A business project. The full project story will be added here.",
+        "zh": "商业项目。完整项目内容将在此更新。"
+      }
+    },
+    {
+      "slug": "co-hive",
+      "name": "Co-Hive",
+      "group": "business",
+      "type": {
+        "en": "Independent · Product & service",
+        "zh": "独立项目 · 产品与服务"
+      },
+      "summary": {
+        "en": "Making campus equipment easier to share.",
+        "zh": "让校园设备共享更便捷。"
+      },
+      "role": {
+        "en": "Founder & Product Lead",
+        "zh": "创始人兼产品负责人"
+      },
+      "period": "2023–24",
+      "body": {
+        "en": "Co-Hive is a hardware-software campus sharing platform developed with Brown University and RISD. It connects smart lockers, real-time device synchronization, and a consumer borrowing experience.",
+        "zh": "Co-Hive 是与布朗大学和 RISD 合作开发的校园共享平台，将智能储物柜、实时设备同步与用户借还体验连接起来。"
+      },
+      "contribution": {
+        "en": "I led product development from user research to launch, using usability testing and behavioral data to improve the scan, borrow, return, and rewards journey.",
+        "zh": "我负责从用户研究到上线的产品开发，通过可用性测试与行为数据改进扫码、借用、归还和奖励流程。"
+      }
+    },
+    {
+      "slug": "ai-for-business",
+      "name": "AI for Business",
+      "group": "business",
+      "type": {
+        "en": "In progress",
+        "zh": "进行中"
+      },
+      "summary": {
+        "en": "An ongoing business exploration.",
+        "zh": "进行中的商业探索。"
+      },
+      "wip": true,
+      "body": {
+        "en": "An ongoing project exploring AI for business. More to come as the work develops.",
+        "zh": "一个围绕 AI 与商业展开的项目。更多内容将随项目进展更新。"
+      }
+    },
+    {
+      "slug": "eye-tracking-thingz",
+      "name": "Eye Tracking Thingz",
+      "group": "experimental",
+      "type": {
+        "en": "In progress",
+        "zh": "进行中"
+      },
+      "summary": {
+        "en": "An eye-tracking experiment in development.",
+        "zh": "开发中的眼动追踪实验。"
+      },
+      "wip": true,
+      "body": {
+        "en": "An experimental project in development. This page will grow with the work.",
+        "zh": "开发中的实验项目。此页面将随项目逐步完善。"
+      }
+    },
+    {
+      "slug": "astra",
+      "name": "Astra",
+      "group": "experimental",
+      "type": {
+        "en": "In progress",
+        "zh": "进行中"
+      },
+      "summary": {
+        "en": "Architecture intervention.",
+        "zh": "建筑干预。"
+      },
+      "wip": true,
+      "body": {
+        "en": "Astra Architecture Intervention is an experimental project in development.",
+        "zh": "Astra Architecture Intervention 是一个进行中的建筑干预实验项目。"
+      }
+    }
+  ]
+}
