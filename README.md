@@ -2,7 +2,7 @@
 
 A bilingual portfolio for Bruce Xie — AI Product Manager & Builder.
 
-The first version includes an English/Chinese landing page, an evenly distributed, color-shifting particle background, a project index, an About page, and honest project-overview pages ready for further case-study development.
+The first version includes an English/Chinese landing page, a loosely clustered, color-shifting particle hero, a project index, an About page, and honest project-overview pages ready for further case-study development.
 
 ## Start here: edit the text
 
@@ -57,14 +57,14 @@ The checks validate source syntax, bilingual content completeness, internal link
 - `/en/work/{slug}/` and `/zh/work/{slug}/`: project overview
 - `/`: English landing page
 
-The language control links to the corresponding page. Navigation and text work without JavaScript. JavaScript enhances the particle field and the clickable area of table rows.
+The language control sits at the lower right of the homepage hero and in the header on other pages. It links to the corresponding page. Only the name for the active language is displayed. Navigation and text work without JavaScript. JavaScript enhances the particle field and the clickable area of table rows.
 
 ## Accessibility and performance
 
 - Semantic headings, tables, links, and navigation.
 - Visible keyboard focus and a skip link.
 - A pause/play control; reduced-motion preferences default to a still image.
-- Animation stops when the tab is hidden; reduced-motion defaults to a still frame.
+- Animation stops when the hero is offscreen or the tab is hidden; reduced-motion defaults to a still frame.
 - Mobile has fewer particles; pixel density is capped.
 - No external fonts, trackers, or animation libraries.
 - The canvas is decorative and never blocks access to project links.
@@ -81,6 +81,6 @@ For subsequent changes: create a focused feature branch, edit source, run checks
 
 ## Design and content provenance
 
-The visual direction closely follows Jason Yuan’s restrained three-column layout: identity on the left, vertical navigation in the center, and a compact introduction on the right. The particle field spans the viewport, with 160px of drawing overscan and a soft 22px outer edge fade to avoid clipping during hover. Colors cycle gradually over 72 seconds. The requested Harvard Innovation Labs particle reference could not render in the review browser because WebGL was unavailable; this implementation is an original Canvas 2D interaction, not a copy of its code or assets.
+The visual direction closely follows Jason Yuan’s restrained three-column layout: identity on the left, vertical navigation in the center, and a compact introduction on the right. The introduction aligns with the identity and navigation on desktop; mobile stacks it below the header. Particles occupy only the hero, with 160px drawing overscan and a soft 100px bottom fade into the solid black project index. A sparse field and broad, slowly drifting clusters give the distribution variation. Tune `CLUSTER_SHARE`, `clusters`, `SPACING`, and `HUE_SPEED` in `src/particles.js`. Colors cycle gradually over 72 seconds. The requested Harvard Innovation Labs particle reference could not render in the review browser because WebGL was unavailable; this implementation is an original Canvas 2D interaction, not a copy of its code or assets.
 
 Bio, Qwen, TikTok, and Co-Hive overview facts are grounded in the supplied portfolio brief and résumé. Pison and experimental project pages remain explicitly preliminary where source materials have not been reviewed. No project metrics or individual contributions have been invented.
