@@ -54,12 +54,12 @@
       "title": "Bruce Xie — AI Product Manager & Builder",
       "name": "Bruce Xie",
       "other": "谢凌翔",
-      "index": "Index",
+      "index": "Work",
       "about": "About",
       "contact": "Contact",
-      "role": "AI Product Manager<br>& Builder.",
+      "role": "I’m Bruce, an AI product manager & builder.",
       "intro": "I turn emerging AI capabilities into thoughtful, usable products.",
-      "bio": "Product experience at Qwen and TikTok.<br>Harvard GSD, with roots in industrial design at RISD.",
+      "bio": "I’ve worked on AI products at Qwen and TikTok.",
       "tag": "PRODUCT STRATEGY · DESIGN · HUMAN–AI INTERACTION",
       "art": "A field of possibilities.",
       "hint": "Move your cursor through the particles",
@@ -100,7 +100,8 @@
       "homeLabel": "Home",
       "switchLanguage": "切换为中文",
       "notFound": "Page not found.",
-      "returnHome": "Return to the index ↗"
+      "returnHome": "Return to the index ↗",
+      "homeEducation": "I study in Harvard GSD’s MDes Ecologies program, with a background in Industrial Design from RISD."
     },
     "zh": {
       "title": "谢凌翔 Bruce Xie — AI 产品经理与创造者",
@@ -109,9 +110,9 @@
       "index": "项目",
       "about": "关于",
       "contact": "联系",
-      "role": "AI 产品经理<br>与创造者。",
+      "role": "我是谢凌翔 Bruce，一名 AI 产品经理与创造者。",
       "intro": "将新兴 AI 能力，转化为自然、实用的产品体验。",
-      "bio": "曾在千问与 TikTok 从事产品工作。<br>就读哈佛 GSD，拥有 RISD 工业设计背景。",
+      "bio": "我曾在千问与 TikTok 从事 AI 产品工作。",
       "tag": "产品策略 · 交互设计 · 人机交互",
       "art": "探索，始于好奇。",
       "hint": "移动光标，与粒子互动",
@@ -152,7 +153,8 @@
       "homeLabel": "首页",
       "switchLanguage": "Switch to English",
       "notFound": "页面未找到。",
-      "returnHome": "返回项目目录 ↗"
+      "returnHome": "返回项目目录 ↗",
+      "homeEducation": "我就读于哈佛 GSD 的 MDes Ecologies 项目，拥有 RISD 工业设计背景。"
     }
   },
   "projects": [
