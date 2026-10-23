@@ -17,7 +17,6 @@ if (canvas) {
     const HUE_SPEED = 5; // Degrees per second; one gentle cycle every 72 seconds.
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const fine = matchMedia('(pointer: fine)');
-    const toggle = document.getElementById('motion-toggle');
     const pointer = { x: -9999, y: -9999 };
     let width = 0, height = 0, points = [];
     let paused = reduce.matches, visible = true, time = 0, last = 0, raf = 0;
@@ -109,9 +108,6 @@ if (canvas) {
     }
     function stop() { cancelAnimationFrame(raf); raf = 0; }
     function sync() {
-      toggle.setAttribute('aria-pressed', String(paused));
-      toggle.setAttribute('aria-label', paused ? toggle.dataset.play : toggle.dataset.pause);
-      toggle.firstElementChild.textContent = paused ? '▷' : 'Ⅱ';
       if (paused) stop(); else start();
     }
     function leave() { pointer.x = pointer.y = -9999; }
@@ -130,13 +126,11 @@ if (canvas) {
       visible = entry.isIntersecting;
       if (visible) start(); else { stop(); leave(); }
     }).observe(hero);
-    toggle.addEventListener('click', () => { paused = !paused; sync(); });
     reduce.addEventListener('change', () => { paused = reduce.matches; sync(); });
     document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
     resize();
     sync();
   } else {
     canvas.hidden = true;
-    document.getElementById('motion-toggle').hidden = true;
   }
 }
