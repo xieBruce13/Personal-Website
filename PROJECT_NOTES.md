@@ -48,3 +48,62 @@ Help Bruce Xie secure AI product manager roles by showing product judgment, desi
 ## Revision 5
 - Anchored the introduction block to the right page margin, including when the desktop grid column is wider than its 440px reading width.
 - Kept the text itself left-aligned; the mobile block also follows the right page margin.
+
+## Pending review — Selected Work cards
+- Not committed, pushed, or deployed. Existing site and GitHub version remain unchanged.
+- Six full-width cards with numbered left rails, descriptions, focus labels, and explicit visual placeholders.
+- Project text and images blur together near the viewport edges and sharpen in the reading area; keyboard focus and reduced motion show clear content.
+- The hero particles gather into the active project number, then morph between 01–06 on scroll.
+- Reference observed in browser: Jason Yuan’s opening screen shows a blurred lower project grid; scrolling resolves the grid. Our row layout and particle numbering are original adaptations.
+- Next: Bruce reviews the preview; only after approval integrate and commit to GitHub.
+
+Validation: static build and all 18 generated routes passed; desktop and 390px mobile views inspected in the browser, blur/clear states and particle numerals 01, 02, 06 observed, and English/Chinese project navigation verified. Browser logs contained extension metadata errors only, with no observed application error.
+
+## Pending review — smoother single-number transitions
+- Replaced irregular particle sampling with a shared regular dot grid for cleaner numerals.
+- Hid all static numeral rails when canvas is active, including 01 in the opening blurred preview.
+- One canvas draws only the active numeral; adjacent project numbers stay hidden.
+- Added a 0.95-second eased transition between masks and smoothed the initial particle gathering.
+- Applied identical blur/opacity/translation to each card’s copy and visual, including outgoing cards.
+- Validation: syntax, build, and route/content checks passed. Browser confirmed opening preview copy/image blur with no numeral, a clean 01 after formation, and active 03 with hidden 02/04 and matching copy/image blur. Desktop/mobile behavior reviewed.
+- Still uncommitted, unpushed, and undeployed. Await Bruce’s review before GitHub integration.
+
+## Pending review — title-anchored numerals
+- Formed particle numerals now align with their own project heading and scroll with the card.
+- Removed the fixed viewport position and sticky number rail on desktop and mobile.
+- Preserved initial gathering, single active numeral, and whole-card blur. No commit or deployment.
+
+## Pending review — direct number switch
+- Removed the visible Business and Experimental dividers from Selected Work while retaining accessible grouping and categories on project pages.
+- Kept the hero-to-01 gathering, but subsequent active numerals switch immediately with no morph or dissolve.
+- Numbers remain beside their own titles and scroll with the cards. Not committed or published.
+
+## Pending review — compact particle formation
+- Replaced the direct switch for 02–06 with a 480ms local particle gather around the incoming glyph.
+- The outgoing number disappears immediately; the successor resolves in place beside its heading without a cross-number morph.
+- The initial hero-to-01 gather remains. Reduced motion shows the settled glyph immediately.
+
+## Pending review — five-project sequence and closing field
+- Reordered selected work to Pison, Qwen Create, Eye Tracking Thingz, Generative Ground, and Co-Hive. AI for Business is not in the current five-card review.
+- Renamed Astra's displayed title to Generative Ground in both languages while preserving the existing `/work/astra/` URL.
+- Added a closing scroll area where 05 disperses back into a full-viewport particle field. Increased clustered particle share and tightened the cluster spread in both hero and closing field.
+- Build and bilingual route checks passed; browser verified card order, 05 counter, and closing field. This remains an uncommitted, unpublished preview.
+
+## Pending review — pinned reading interval
+- Added native proximity scroll alignment and a bounded sticky interval per project. Oversized cards and reduced-motion layouts retain normal flow.
+- Initial numeral gathering now completes after its entry threshold, even when scrolling stops. Local number formation remains timed.
+- No GitHub commit or publication.
+
+## Pending review — compact project cards
+- Desktop media placeholders now cap at 520px wide (640px on very wide screens), roughly 60% of the former image area. Card padding and pinned dwell spacing are shorter.
+- Mobile media sits beneath the text column at 250px in a 390px viewport. Build and bilingual checks passed; desktop and mobile dimensions verified in the browser.
+- Review-only; no GitHub commit or deployment.
+
+## Pending review — consistent card sizes and spacing
+- Shared measured card height across all five projects; mobile image rows use the same copy-row height.
+- Pin top is now 32px; dwell gap reduced from 24svh to 32–60px.
+- Exit blur uses outgoing card position rather than height, so smaller pinned cards stay sharp.
+- Browser confirmed all five desktop cards at 399px and mobile cards at 473px, with zero blur on the active pinned card. Source/build checks passed. No commit or publication.
+
+## Approved GitHub update
+Bruce authorized upload and commit of this five-project review with active-only blur. Adjacent cards retain 14px blur, including with reduced motion; keyboard-focused links remain readable.

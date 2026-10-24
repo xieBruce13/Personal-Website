@@ -62,3 +62,93 @@
  .home-page .footer{padding-top:30px}
  .home-page .footer-bottom{display:flex;font-size:10px;justify-content:space-between}
 }
+
+/* Review draft: full-width project cards and scroll-driven focus. */
+.home-page .particle-background{position:fixed;z-index:1;inset:0;overflow:hidden}
+.home-page .particle-background canvas{width:100%;height:100%;left:0;top:0}
+.home-page .header,.home-page .intro,.home-page .particle-controls{z-index:3}
+.home-page .hero{isolation:auto;min-height:max(540px,64svh)}
+.home-page .intro{position:relative}
+.home-page .work{padding-top:20px;padding-bottom:0}
+.home-page .section-heading{margin-bottom:28px}
+.work-group-heading{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #30322d;padding:0 0 16px;color:#9b9e94;font-size:12px}
+.work-group-heading h3{font:inherit;margin:0}
+.work-group-heading>span{font:11px monospace}
+.work-group+.work-group{margin-top:0}
+.project-card{display:grid;grid-template-columns:minmax(100px,.45fr) minmax(240px,.95fr) minmax(0,1.9fr);gap:36px;min-height:510px;padding:42px 0 85px;border-bottom:1px solid #282a25;position:relative;scroll-margin-top:35px}
+.number-rail{position:relative;align-self:start;width:100%;height:110px}
+.project-number{display:block;font:600 100px/1 Arial,Helvetica,sans-serif;letter-spacing:-5px;color:#cbd5c2;opacity:.8}
+.particles-ready .project-number{visibility:hidden;opacity:0}
+
+.card-copy{position:relative;z-index:2;max-width:355px;align-self:start;padding-top:5px}
+.card-kind{font-size:11px;line-height:1.5;color:#a1a49b;margin:0 0 22px}
+.card-copy h3{font-size:clamp(28px,2.7vw,42px);font-weight:400;line-height:1.1;letter-spacing:-1.1px;margin:0 0 24px}
+.card-copy h3 a:hover{color:var(--accent)}
+.card-description{font-size:17px;line-height:1.5;margin:0;max-width:330px;color:#d0d2c9}
+.card-focus{margin:38px 0 34px;font-size:13px;line-height:1.6}
+.card-focus dt{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#858a7e;margin-bottom:9px}
+.card-focus dd{margin:0;color:#b6baae}
+.card-link{font-size:12px;display:inline-flex;gap:28px;padding:10px 0;border-bottom:1px solid #555a4d;min-height:44px;align-items:center}
+.card-link:hover{color:var(--accent);border-color:var(--accent)}
+.card-visual{margin:0;min-width:0;position:relative;z-index:2}
+.media-link{display:block;border-radius:3px}
+.card-copy,.card-visual{filter:blur(var(--reveal-blur,0px));opacity:var(--reveal-opacity,1);transform:translateY(var(--reveal-shift,0px));transition:filter 220ms ease-out,opacity 220ms ease-out,transform 220ms ease-out;will-change:filter,transform}
+.media-placeholder{aspect-ratio:16/10;background:var(--media-tone,#292d27);position:relative;overflow:hidden;border:1px solid #ffffff0c;color:#c9cec2}
+.media-placeholder::before{content:'';position:absolute;inset:22px;border:1px solid #ffffff0e}
+.media-placeholder::after{content:'';position:absolute;left:22px;right:22px;top:50%;height:1px;background:#ffffff08}
+.media-marker{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:40px/1 monospace;color:#ffffff35}
+.media-name{position:absolute;left:36px;top:34px;font-size:clamp(18px,2.5vw,35px);letter-spacing:-.7px;color:#d2d5cd}
+.media-format{position:absolute;bottom:32px;left:36px;color:#a2aa9d;font:11px/1.5 monospace;text-transform:uppercase;letter-spacing:1.2px}
+.media-corner{position:absolute;bottom:30px;right:35px;font-size:22px;color:#c7ccbf}
+.card-visual figcaption{display:flex;justify-content:space-between;gap:20px;color:#777d70;font:10px/1.5 monospace;margin-top:14px}
+.project-card:focus-within .card-copy,.project-card:focus-within .card-visual{filter:none!important;opacity:1!important;transform:none!important}
+@media(min-width:1700px){.project-card{grid-template-columns:minmax(160px,.45fr) minmax(320px,.95fr) minmax(0,1.9fr);gap:50px;min-height:620px}.card-description{font-size:19px}.card-focus{font-size:14px}.project-number{font-size:132px;letter-spacing:-11px}.number-rail{height:145px}}
+@media(max-width:1000px){.project-card{grid-template-columns:80px minmax(190px,.95fr) minmax(0,1.4fr);gap:24px;min-height:440px}.project-number{font-size:70px;letter-spacing:-6px}.number-rail{height:80px}.card-description{font-size:15px}.card-copy h3{font-size:29px}.media-placeholder{aspect-ratio:4/5}.media-name{font-size:22px;left:24px}.media-format{left:24px;font-size:10px}}
+@media(max-width:680px){
+ .home-page .hero{min-height:max(590px,73svh);padding-bottom:100px}
+ .home-page .work{padding-top:12px}
+ .project-card{grid-template-columns:64px minmax(0,1fr);gap:20px;min-height:0;padding:30px 0 55px}
+ .number-rail{height:64px}.project-number{font-size:56px;letter-spacing:-5px}
+ .card-copy{max-width:none;padding-top:0}.card-copy h3{font-size:29px;margin-bottom:18px}.card-kind{margin-bottom:14px;font-size:10px}
+ .card-description{font-size:16px;max-width:none}.card-focus{margin:25px 0 14px;font-size:12px}
+ .card-visual{grid-column:1/-1;margin-top:14px}.media-placeholder{aspect-ratio:16/11}.media-name{font-size:27px}
+ .work-group+.work-group{margin-top:0}.card-visual figcaption{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.card-copy,.card-visual{transform:none!important;will-change:auto}}
+
+
+/* Breathing room for the final numeral to disperse into the field. */
+.particle-outro{height:100svh;min-height:520px;pointer-events:none}
+.home-page .work{position:relative}
+
+/* Native proximity snap and a bounded sticky reading interval. */
+html.portfolio-scroll{scroll-snap-type:y proximity;scroll-padding-top:72px}
+.project-stage{scroll-snap-align:start;scroll-snap-stop:normal}
+.project-stage.can-pin{padding-bottom:38svh}
+.project-stage.can-pin .project-card{position:sticky;top:72px}
+.particle-outro{scroll-snap-align:end}
+@media(prefers-reduced-motion:reduce){html.portfolio-scroll{scroll-snap-type:none}.project-stage.can-pin{padding-bottom:0}.project-stage.can-pin .project-card{position:relative;top:auto}}
+
+/* Compact portfolio cards: image area ~60% of the earlier desktop placeholder. */
+.project-card{grid-template-columns:minmax(100px,.45fr) minmax(230px,1fr) minmax(0,1.55fr);gap:28px;min-height:390px;padding:28px 0 38px}
+.card-copy{max-width:340px}
+.card-kind{margin-bottom:14px}
+.card-copy h3{margin-bottom:17px}
+.card-focus{margin:22px 0 15px}
+.media-placeholder{aspect-ratio:16/10}
+.project-stage.can-pin{padding-bottom:24svh}
+@media(min-width:1700px){.project-card{grid-template-columns:minmax(150px,.45fr) minmax(300px,1fr) minmax(0,1.55fr);gap:38px;min-height:440px}}
+@media(max-width:1000px){.project-card{grid-template-columns:75px minmax(170px,1fr) minmax(0,1.35fr);gap:20px;min-height:350px}.media-placeholder{aspect-ratio:16/11}}
+@media(max-width:680px){.project-card{grid-template-columns:64px minmax(0,1fr);gap:15px;min-height:0;padding:25px 0 34px}.card-copy h3{margin-bottom:13px}.card-focus{margin:18px 0 8px}.card-visual{grid-column:2;max-width:100%;margin-top:6px}.media-placeholder{aspect-ratio:16/10}.media-name{font-size:21px;left:20px;top:20px}.media-format{bottom:18px;left:20px}.media-corner{bottom:18px;right:20px}.project-stage.can-pin{padding-bottom:15svh}}
+.card-visual{width:min(100%,520px);justify-self:end}
+@media(min-width:1700px){.card-visual{width:min(100%,640px)}}
+@media(max-width:680px){.card-visual{width:100%;justify-self:stretch}}
+
+/* One consistent card rhythm, with only a short pin interval between rows. */
+html.portfolio-scroll{scroll-padding-top:32px}
+.project-card{align-content:start;padding-top:20px;padding-bottom:24px;scroll-margin-top:0}
+.project-stage.can-pin{padding-bottom:clamp(32px,6svh,60px)}
+.project-stage.can-pin .project-card{top:32px}
+.home-page .section-heading{margin-bottom:12px}
+@media(max-width:680px){.project-card{grid-template-rows:var(--copy-height,auto) auto;row-gap:12px;padding-top:18px;padding-bottom:22px}.card-visual{margin-top:0}}
+@media(prefers-reduced-motion:reduce){.project-stage.can-pin{padding-bottom:0}.project-stage.can-pin .project-card{position:relative;top:auto}}

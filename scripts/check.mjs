@@ -17,4 +17,4 @@ for(const file of files){
  }
  if(file.includes('/work/')){const other=file.includes('/en/')?'/zh/':'/en/';const slug=file.split('/')[3];assert(html.includes(`href="${other}work/${slug}/"`),'Language toggle must preserve project')}
 }
-console.log(`Passed: bilingual copy, six project records, ${files.length} generated pages, internal assets/links, and language-pair navigation.`);
+console.log(`Passed: bilingual copy, ${projects.length} project records, ${files.length} generated pages, internal assets/links, and language-pair navigation.`);

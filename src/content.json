@@ -97,7 +97,9 @@
       "switchLanguage": "切换为中文",
       "notFound": "Page not found.",
       "returnHome": "Return to the index ↗",
-      "homeEducation": "I study in Harvard GSD’s MDes Ecologies program, with a background in Industrial Design from RISD."
+      "homeEducation": "I study in Harvard GSD’s MDes Ecologies program, with a background in Industrial Design from RISD.",
+      "mediaPlaceholder": "Image / video",
+      "visualPlaceholder": "Visual placeholder"
     },
     "zh": {
       "title": "谢凌翔 — AI 产品经理与创造者",
@@ -146,10 +148,35 @@
       "switchLanguage": "Switch to English",
       "notFound": "页面未找到。",
       "returnHome": "返回项目目录 ↗",
-      "homeEducation": "我就读于哈佛 GSD 的 MDes Ecologies 项目，拥有 RISD 工业设计背景。"
+      "homeEducation": "我就读于哈佛 GSD 的 MDes Ecologies 项目，拥有 RISD 工业设计背景。",
+      "mediaPlaceholder": "图片 / 视频",
+      "visualPlaceholder": "视觉素材占位"
     }
   },
   "projects": [
+    {
+      "slug": "pison",
+      "name": "Pison",
+      "group": "business",
+      "type": {
+        "en": "Business project",
+        "zh": "商业项目"
+      },
+      "summary": {
+        "en": "Product and business exploration.",
+        "zh": "产品与商业探索。"
+      },
+      "period": "",
+      "body": {
+        "en": "A business project. The full project story will be added here.",
+        "zh": "商业项目。完整项目内容将在此更新。"
+      },
+      "focus": {
+        "en": "Product · Business exploration",
+        "zh": "产品 · 商业探索"
+      },
+      "visualTone": "#292d32"
+    },
     {
       "slug": "qwen-create",
       "name": "Qwen Create",
@@ -175,25 +202,58 @@
         "en": "My work included defining a multi-agent product architecture and evaluation across model quality, planning, execution, and end-to-end task success.",
         "zh": "我的工作包括定义多 Agent 产品架构，以及围绕模型质量、规划、执行和端到端任务完成度建立评测。"
       },
-      "url": "https://create.qwen.com/r/ai-studio-pc-global/main/agent-team/welcome"
+      "url": "https://create.qwen.com/r/ai-studio-pc-global/main/agent-team/welcome",
+      "focus": {
+        "en": "Multi-agent workflows · Evaluation",
+        "zh": "多 Agent 工作流 · 评测"
+      },
+      "visualTone": "#2a302b"
     },
     {
-      "slug": "pison",
-      "name": "Pison",
-      "group": "business",
+      "slug": "eye-tracking-thingz",
+      "name": "Eye Tracking Thingz",
+      "group": "experimental",
       "type": {
-        "en": "Business project",
-        "zh": "商业项目"
+        "en": "In progress",
+        "zh": "进行中"
       },
       "summary": {
-        "en": "Product and business exploration.",
-        "zh": "产品与商业探索。"
+        "en": "An eye-tracking experiment in development.",
+        "zh": "开发中的眼动追踪实验。"
       },
-      "period": "",
+      "wip": true,
       "body": {
-        "en": "A business project. The full project story will be added here.",
-        "zh": "商业项目。完整项目内容将在此更新。"
-      }
+        "en": "An experimental project in development. This page will grow with the work.",
+        "zh": "开发中的实验项目。此页面将随项目逐步完善。"
+      },
+      "focus": {
+        "en": "Eye tracking · Interaction experiments",
+        "zh": "眼动追踪 · 交互实验"
+      },
+      "visualTone": "#263136"
+    },
+    {
+      "slug": "astra",
+      "name": "Generative Ground",
+      "group": "experimental",
+      "type": {
+        "en": "In progress",
+        "zh": "进行中"
+      },
+      "summary": {
+        "en": "Architecture intervention.",
+        "zh": "建筑干预。"
+      },
+      "wip": true,
+      "body": {
+        "en": "An experimental architecture intervention in development.",
+        "zh": "一个正在进行中的建筑干预实验项目。"
+      },
+      "focus": {
+        "en": "Architecture · Design intervention",
+        "zh": "建筑 · 设计干预"
+      },
+      "visualTone": "#302c28"
     },
     {
       "slug": "co-hive",
@@ -219,61 +279,12 @@
       "contribution": {
         "en": "I led product development from user research to launch, using usability testing and behavioral data to improve the scan, borrow, return, and rewards journey.",
         "zh": "我负责从用户研究到上线的产品开发，通过可用性测试与行为数据改进扫码、借用、归还和奖励流程。"
-      }
-    },
-    {
-      "slug": "ai-for-business",
-      "name": "AI for Business",
-      "group": "business",
-      "type": {
-        "en": "In progress",
-        "zh": "进行中"
       },
-      "summary": {
-        "en": "An ongoing business exploration.",
-        "zh": "进行中的商业探索。"
+      "focus": {
+        "en": "User research · Product & service design",
+        "zh": "用户研究 · 产品与服务设计"
       },
-      "wip": true,
-      "body": {
-        "en": "An ongoing project exploring AI for business. More to come as the work develops.",
-        "zh": "一个围绕 AI 与商业展开的项目。更多内容将随项目进展更新。"
-      }
-    },
-    {
-      "slug": "eye-tracking-thingz",
-      "name": "Eye Tracking Thingz",
-      "group": "experimental",
-      "type": {
-        "en": "In progress",
-        "zh": "进行中"
-      },
-      "summary": {
-        "en": "An eye-tracking experiment in development.",
-        "zh": "开发中的眼动追踪实验。"
-      },
-      "wip": true,
-      "body": {
-        "en": "An experimental project in development. This page will grow with the work.",
-        "zh": "开发中的实验项目。此页面将随项目逐步完善。"
-      }
-    },
-    {
-      "slug": "astra",
-      "name": "Astra",
-      "group": "experimental",
-      "type": {
-        "en": "In progress",
-        "zh": "进行中"
-      },
-      "summary": {
-        "en": "Architecture intervention.",
-        "zh": "建筑干预。"
-      },
-      "wip": true,
-      "body": {
-        "en": "Astra Architecture Intervention is an experimental project in development.",
-        "zh": "Astra Architecture Intervention 是一个进行中的建筑干预实验项目。"
-      }
+      "visualTone": "#343027"
     }
   ]
 }

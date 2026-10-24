@@ -44,7 +44,7 @@ The checks validate source syntax, bilingual content completeness, internal link
 | `build.mjs` | Shared page templates and static page generation |
 | `src/styles.css` | Colors, typography, layout, mobile rules |
 | `src/particles.js` | Original canvas particle artwork and pointer interaction |
-| `src/site.js` | Clickable project rows |
+| `src/site.js` | Scroll-based text and image reveal |
 | `scripts/serve.mjs` | Dependency-free local preview server |
 | `scripts/check.mjs` | Content and generated-page checks |
 | `.github/workflows/check.yml` | Automatic build and checks on commits / pull requests |
@@ -83,3 +83,20 @@ For subsequent changes: create a focused feature branch, edit source, run checks
 The visual direction closely follows Jason Yuan’s restrained three-column layout: identity on the left, vertical navigation in the center, and a compact introduction on the right. The introduction aligns with the identity and navigation on desktop; mobile stacks it below the header. Particles occupy only the hero, with 160px drawing overscan and a soft 100px bottom fade into the solid black project index. A sparse field and broad, slowly drifting clusters give the distribution variation. Tune `CLUSTER_SHARE`, `clusters`, `SPACING`, and `HUE_SPEED` in `src/particles.js`. Colors cycle gradually over 72 seconds. The requested Harvard Innovation Labs particle reference could not render in the review browser because WebGL was unavailable; this implementation is an original Canvas 2D interaction, not a copy of its code or assets.
 
 Bio, Qwen, TikTok, and Co-Hive overview facts are grounded in the supplied portfolio brief and résumé. Pison and experimental project pages remain explicitly preliminary where source materials have not been reviewed. No project metrics or individual contributions have been invented.
+
+## Uncommitted Selected Work review
+
+This draft replaces the table with full-width project cards. Each project’s `focus` and `visualTone` are editable in `src/content.json`; media is explicitly a placeholder. The blur reveal is configured in `src/site.js` and particle gathering in `src/particles.js`. The live site and GitHub remain unchanged pending Bruce’s approval.
+
+Run `npm run build`, then `node scripts/preview.mjs` to generate `dist/review.html`, a standalone review with desktop/mobile controls and working bilingual routes. Open that file directly in a browser, or visit `/review.html` on the local server.
+
+### Refined scroll behavior
+
+- Text and visuals share the same blur envelope; keyboard focus and reduced motion keep content clear.
+- The opening preview has no number. Scrolling gathers the hero field into one clean dot-grid numeral.
+- Only the current numeral is drawn. Changes between numbers use a short local particle gather on a shared grid.
+- Tune `MAX_BLUR` and the viewport entry/exit ranges in `src/site.js`; tune `MORPH_SECONDS` in `src/particles.js`.
+
+### Current review order
+
+Pison → Qwen Create → Eye Tracking Thingz → Generative Ground → Co-Hive. AI for Business is retained in planning notes, but is absent from the five-project review. The final numeral disperses into a clustered field in the closing scroll area.
