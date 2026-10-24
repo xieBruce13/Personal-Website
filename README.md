@@ -1,102 +1,61 @@
 # Bruce Xie · Personal Website
 
-A bilingual portfolio for Bruce Xie — AI Product Manager & Builder.
+Bilingual portfolio for Bruce Xie / 谢凌翔. Dependency-free static generation; Node.js 22+.
 
-The first version includes an English/Chinese landing page, a loosely clustered, color-shifting particle hero, a project index, an About page, and honest project-overview pages ready for further case-study development.
+## Edit content
 
-## Start here: edit the text
+All English and Chinese copy is in `src/content.json`. The `projects` array controls card order and numbering:
 
-**All editable portfolio copy lives in [`src/content.json`](src/content.json).**
+1. Pison
+2. Qwen Create
+3. Eye Tracking Thingz
+4. Generative Ground (existing `/work/astra/` URL retained)
+5. Co-Hive
 
-- `site`: name, contact email, experience, and education.
-- `copy.en` / `copy.zh`: navigation, homepage, labels, footer, and interface text.
-- `projects`: names, category, summaries, roles, project links, and overview copy.
-- Every translated project field has explicit `en` and `zh` keys.
-- Keep a project's `slug` unchanged after sharing its URL. It controls both language routes.
-- `wip: true` marks the project itself as in progress. An unfinished case study does **not** mean the underlying project is unfinished.
-- The `aboutTitle` interface field intentionally contains `<br>` for line breaks. Other fields should be plain text. Content is trusted author-edited source, not user-submitted input.
+Keep slugs stable when changing names. Visuals are explicit placeholders; full case studies and real assets are still to be added. No metrics or research should be added without supporting materials.
 
-After editing, run `npm run build`. Never edit `dist/` by hand; it is generated.
+## Run and review
 
-## Local development
-
-Use Node.js 22 or later. There are no runtime or build dependencies to install.
-
-```bash
-npm run build
+```sh
 npm run dev
 ```
 
-Then open `http://localhost:4173`. After editing the source, rebuild and refresh the browser. `npm run dev` builds once at startup.
+Open `http://localhost:4173/review.html` for the desktop/mobile review, or `/en/` and `/zh/` for the actual pages. After source edits, run `npm run preview` and refresh.
 
-```bash
+```sh
 npm run check
+npm run preview
 npm test
 ```
 
-The checks validate source syntax, bilingual content completeness, internal links, language-pair routes, project slugs, and page structure. Browser QA still matters for layout and interaction.
+`dist/review.html` is a standalone offline file with embedded styles, scripts, and bilingual pages. Download and open it directly in a browser. `dist/` is generated and ignored by Git; do not edit it manually. Running the build replaces generated output.
 
-## Structure
+## Source map
 
 | File | Purpose |
 | --- | --- |
-| `src/content.json` | Editable English and Chinese text, projects, contact details |
-| `build.mjs` | Shared page templates and static page generation |
-| `src/styles.css` | Colors, typography, layout, mobile rules |
-| `src/particles.js` | Original canvas particle artwork and pointer interaction |
-| `src/site.js` | Scroll-based text and image reveal |
-| `scripts/serve.mjs` | Dependency-free local preview server |
-| `scripts/check.mjs` | Content and generated-page checks |
-| `.github/workflows/check.yml` | Automatic build and checks on commits / pull requests |
-| `PROJECT_NOTES.md` | Decisions, known limitations, next tasks |
+| `src/content.json` | Editable copy, project order, links and placeholder colors |
+| `build.mjs` | Static page templates and bilingual routes |
+| `src/styles.css` | Responsive layout, equal cards, sticky reading positions |
+| `src/site.js` | Card sizing and active-only blur |
+| `src/particles.js` | Hero clusters, numeral formation, closing transition |
+| `scripts/preview.mjs` | Standalone offline preview generator |
+| `scripts/serve.mjs` | Local-only development server by default |
+| `scripts/check.mjs` | Content, routes, assets and link checks |
+| `PROJECT_NOTES.md` | Decisions, validation and next tasks |
 
-## URLs
+## Interaction behavior
 
-- `/en/` and `/zh/`: landing page
-- `/en/about/` and `/zh/about/`: background and contact
-- `/en/work/{slug}/` and `/zh/work/{slug}/`: project overview
-- `/`: English landing page
+Only the active card is sharp. Its number forms beside the title; inactive card text and imagery remain blurred. Keyboard focus reveals content so links remain readable. Cards have equal measured heights at each viewport size. Cards too tall to fit the viewport use normal scrolling.
 
-The language control sits at the lower right of the homepage hero and in the header on other pages. It links to the corresponding page. Only the name for the active language is displayed. Navigation and text work without JavaScript. JavaScript enhances the particle field and the clickable area of table rows.
+The hero gathers into 01 after a threshold, then finishes without further scroll input. Later numbers gather locally in 480ms. Leaving the last card triggers a 700ms spread and scroll to the footer. Upward wheel/key input or touch cancels this automatic travel. Reduced motion displays settled particles without continuous animation and disables pinning/snap. Hidden tabs suspend animation.
 
-## Accessibility and performance
+## GitHub and hosting
 
-- Semantic headings, tables, links, and navigation.
-- Visible keyboard focus and a skip link.
-- Animation stops when the hero is offscreen or the tab is hidden; reduced-motion defaults to a still frame.
-- Mobile has fewer particles; pixel density is capped.
-- No external fonts, trackers, or animation libraries.
-- The canvas is decorative and never blocks access to project links.
+GitHub: https://github.com/xieBruce13/Personal-Website
 
-## Deployment
+GitHub pushes run build checks. They do not automatically redeploy the separately hosted Site. Deploy `dist/` only when publication is authorized; the offline preview does not publish anything.
 
-`npm run build` produces a static site in `dist/`. Deploy that directory to a static host that supports directory `index.html` routes. No API keys, backend, database, or account system are required.
+## Next session
 
-The current review deployment is managed separately through ChatGPT Sites. GitHub pushes run checks; they **do not automatically redeploy** that review site. Hosting integration can be added later.
-
-## Version-control practice
-
-For subsequent changes: create a focused feature branch, edit source, run checks, review both languages in a browser, and open a pull request. Keep commits small and describe the visitor-facing behavior. Do not commit credentials, dependencies, generated output, or private project materials.
-
-## Design and content provenance
-
-The visual direction closely follows Jason Yuan’s restrained three-column layout: identity on the left, vertical navigation in the center, and a compact introduction on the right. The introduction aligns with the identity and navigation on desktop; mobile stacks it below the header. Particles occupy only the hero, with 160px drawing overscan and a soft 100px bottom fade into the solid black project index. A sparse field and broad, slowly drifting clusters give the distribution variation. Tune `CLUSTER_SHARE`, `clusters`, `SPACING`, and `HUE_SPEED` in `src/particles.js`. Colors cycle gradually over 72 seconds. The requested Harvard Innovation Labs particle reference could not render in the review browser because WebGL was unavailable; this implementation is an original Canvas 2D interaction, not a copy of its code or assets.
-
-Bio, Qwen, TikTok, and Co-Hive overview facts are grounded in the supplied portfolio brief and résumé. Pison and experimental project pages remain explicitly preliminary where source materials have not been reviewed. No project metrics or individual contributions have been invented.
-
-## Uncommitted Selected Work review
-
-This draft replaces the table with full-width project cards. Each project’s `focus` and `visualTone` are editable in `src/content.json`; media is explicitly a placeholder. The blur reveal is configured in `src/site.js` and particle gathering in `src/particles.js`. The live site and GitHub remain unchanged pending Bruce’s approval.
-
-Run `npm run build`, then `node scripts/preview.mjs` to generate `dist/review.html`, a standalone review with desktop/mobile controls and working bilingual routes. Open that file directly in a browser, or visit `/review.html` on the local server.
-
-### Refined scroll behavior
-
-- Text and visuals share the same blur envelope; keyboard focus and reduced motion keep content clear.
-- The opening preview has no number. Scrolling gathers the hero field into one clean dot-grid numeral.
-- Only the current numeral is drawn. Changes between numbers use a short local particle gather on a shared grid.
-- Tune `MAX_BLUR` and the viewport entry/exit ranges in `src/site.js`; tune `MORPH_SECONDS` in `src/particles.js`.
-
-### Current review order
-
-Pison → Qwen Create → Eye Tracking Thingz → Generative Ground → Co-Hive. AI for Business is retained in planning notes, but is absent from the five-project review. The final numeral disperses into a clustered field in the closing scroll area.
+Start with `PROJECT_NOTES.md`. Prioritize real project images/demos and factual case-study content. Validate changes in both languages and at desktop/mobile widths before committing.

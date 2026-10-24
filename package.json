@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node --check src/particles.js && node --check src/site.js && node --check build.mjs",
-    "dev": "node build.mjs && node scripts/serve.mjs",
-    "test": "node scripts/check.mjs"
+    "check": "node --check src/particles.js && node --check src/site.js && node --check build.mjs && node --check scripts/preview.mjs && node --check scripts/serve.mjs && node --check scripts/check.mjs",
+    "dev": "node build.mjs && node scripts/preview.mjs && node scripts/serve.mjs",
+    "test": "node scripts/check.mjs",
+    "preview": "node build.mjs && node scripts/preview.mjs"
   },
   "engines": {
     "node": ">=22"

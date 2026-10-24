@@ -18,7 +18,6 @@ function revealProjects() {
     card.style.setProperty('--reveal-blur', `${((1-focus)*MAX_BLUR).toFixed(2)}px`);
     card.style.setProperty('--reveal-opacity', (0.4+focus*0.6).toFixed(3));
     card.style.setProperty('--reveal-shift', `${((1-focus)*14).toFixed(2)}px`);
-    card.style.setProperty('--reveal-scale', (0.985+focus*0.015).toFixed(4));
   }
 }
 function scheduleReveal() { if (!revealFrame) revealFrame=requestAnimationFrame(revealProjects); }

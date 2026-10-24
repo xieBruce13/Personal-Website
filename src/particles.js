@@ -14,6 +14,7 @@ if(canvas){
  let width=0,height=0,heroHeight=0,points=[],glyphs=[],active=0;
  let shape=[],formationTime=LOCAL_FORM_SECONDS;
  let targetGather=0,gather=0,time=0,last=0,raf=0,dirty=true,scroll=0,anchorX=0,anchorY=0,outro=0;
+ let ending=false,ended=false,endArmed=true,endTime=0,endStart=0,endX=0,endY=0;
  let seed=3491;
  const pointer={x:-9999,y:-9999};
  const random=()=>{seed=seed*16807%2147483647;return(seed-1)/2147483646;};
@@ -52,7 +53,9 @@ if(canvas){
   // Separate enter/leave thresholds prevent flicker at the boundary.
   if(scroll<40||rects[0].top>height*.78)targetGather=0;
   else if(rects[0].top<height*.62)targetGather=1;
-  outro=smooth((height*.75-rects[rects.length-1].bottom)/(height*.6));
+  const finalRect=rects[rects.length-1];
+  if(finalRect.top>=32&&!ending){endArmed=true;ended=false;outro=0;}
+  if(ended&&finalRect.bottom>0&&!ending){outro=0;ended=false;}
   if(next!==active){active=next;shape=glyphs[next];formationTime=reduced.matches?LOCAL_FORM_SECONDS:0;}
   const card=cards[active];
   const title=card.querySelector('.card-copy h3').getBoundingClientRect();
@@ -61,6 +64,11 @@ if(canvas){
   // Follow the title's document position exactly: no sticky viewport anchor
   // and no easing of scroll displacement after the numeral has formed.
   anchorY=title.top+title.height/2-size*.44;
+  // Start only after the final card leaves its pinned reading position.
+  if(endArmed&&!ending&&!ended&&finalRect.top < -24){
+   ending=true;endArmed=false;endTime=0;endStart=scroll;endX=anchorX;endY=anchorY;
+   document.documentElement.classList.add('ending-scroll');
+  }
  }
  function resize(){
   width=innerWidth;height=innerHeight;heroHeight=hero.clientHeight;
@@ -69,6 +77,7 @@ if(canvas){
   canvas.style.width=`${width}px`;canvas.style.height=`${height}px`;
   ctx.setTransform(dpr,0,0,dpr,0,0);
   seed=3491;points=[];glyphs=makeGlyphs();
+  if(!glyphs.length){canvas.hidden=true;document.body.classList.remove('particles-ready');return;}
   const count=Math.max(glyphs[0].length,Math.min(4200,Math.ceil(width*heroHeight/(width<=680?310:230))));
   for(let i=0;i<count;i++){
    const c=random()<.68?clusters[Math.floor(random()*clusters.length)]:null;
@@ -79,6 +88,14 @@ if(canvas){
  }
  function draw(dt){
   if(dirty)measure();
+  if(ending){
+   endTime+=dt;
+   outro=reduced.matches?1:smooth(endTime/.7);
+   const bottom=document.documentElement.scrollHeight-height;
+   window.scrollTo({top:endStart+(bottom-endStart)*outro,behavior:'instant'});
+   anchorX=endX;anchorY=endY;
+   if(outro===1){ending=false;ended=true;document.documentElement.classList.remove('ending-scroll');}
+  }
   const move=reduced.matches?1:1-Math.exp(-dt/.2);
   gather+=(targetGather-gather)*move;
   if(Math.abs(gather-targetGather)<.0005)gather=targetGather;
@@ -131,7 +148,11 @@ if(canvas){
   window.addEventListener('pointermove',e=>{if(fine.matches&&!reduced.matches&&e.pointerType!=='touch'){pointer.x=e.clientX;pointer.y=e.clientY;}},{passive:true});
   document.documentElement.addEventListener('pointerleave',leave);window.addEventListener('blur',leave);
   window.addEventListener('scroll',()=>{dirty=true;leave();if(reduced.matches)draw(0);},{passive:true});
-  window.addEventListener('resize',resize,{passive:true});
+  const cancelEnding=()=>{if(ending){ending=false;ended=true;outro=1;document.documentElement.classList.remove('ending-scroll');}};
+  window.addEventListener('touchstart',cancelEnding,{passive:true});
+  window.addEventListener('wheel',e=>{if(e.deltaY<0)cancelEnding();},{passive:true});
+  window.addEventListener('keydown',e=>{if(['ArrowUp','PageUp','Home','Escape'].includes(e.key))cancelEnding();});
+  window.addEventListener('resize',()=>{cancelEnding();resize();},{passive:true});
   new ResizeObserver(()=>{dirty=true;}).observe(document.querySelector('main'));
   reduced.addEventListener('change',()=>{cancelAnimationFrame(raf);raf=0;dirty=true;draw(0);start();});
   document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0;}else start();});

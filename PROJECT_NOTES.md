@@ -107,3 +107,14 @@ Validation: static build and all 18 generated routes passed; desktop and 390px m
 
 ## Approved GitHub update
 Bruce authorized upload and commit of this five-project review with active-only blur. Adjacent cards retain 14px blur, including with reduced motion; keyboard-focused links remain readable.
+
+## Ending transition refinement
+05 now stays formed while Co-Hive is pinned. Passing the final card starts a 700ms spread and automatic travel to the footer. Upward scrolling can cancel the transition. This follow-up is pending review.
+
+## End-of-day checkpoint — 2026-10-24
+- Latest approved state: five compact, equal-height cards; active-only blur; particle numbers attached to headings; final timed transition to the footer.
+- Fixed local-server startup regenerating the offline preview, stale transition anchor on fast scroll, and touch cancellation of automatic ending travel. Added graceful mask-canvas fallback and expanded syntax checks.
+- Validation: source syntax, static build, all 16 generated pages, internal assets/links, bilingual copy and language-pair routes. Browser checked Chinese home, project navigation and equivalent English project page. Previous browser checks verified desktop/mobile equal sizing, active blur, and ending at exact page bottom.
+- GitHub upload authorized. Hosting is separate and has not been redeployed.
+- Tomorrow: replace placeholders with approved images/demo videos; fill Pison and other case studies from source materials; review keyboard/reduced-motion behavior on the user's own browser before public launch.
+- No claim of exhaustive bug-free coverage: Safari/iOS and real project media have not been tested in this environment.

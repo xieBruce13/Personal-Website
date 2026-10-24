@@ -152,3 +152,7 @@ html.portfolio-scroll{scroll-padding-top:32px}
 .home-page .section-heading{margin-bottom:12px}
 @media(max-width:680px){.project-card{grid-template-rows:var(--copy-height,auto) auto;row-gap:12px;padding-top:18px;padding-bottom:22px}.card-visual{margin-top:0}}
 @media(prefers-reduced-motion:reduce){.project-stage.can-pin{padding-bottom:0}.project-stage.can-pin .project-card{position:relative;top:auto}}
+
+html.ending-scroll{scroll-snap-type:none!important;scroll-behavior:auto!important}
+.particle-outro{scroll-snap-align:none}
+.home-page .footer{scroll-snap-align:end}
