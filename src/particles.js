@@ -14,7 +14,7 @@ if(canvas){
  let width=0,height=0,heroHeight=0,points=[],glyphs=[],active=0;
  let shape=[],formationTime=LOCAL_FORM_SECONDS;
  let targetGather=0,gather=0,time=0,last=0,raf=0,dirty=true,scroll=0,anchorX=0,anchorY=0,outro=0;
- let ending=false,ended=false,endArmed=true,endTime=0,endStart=0,endX=0,endY=0;
+ let ending=false,ended=false,endArmed=true,endTime=0,endX=0,endY=0;
  let seed=3491;
  const pointer={x:-9999,y:-9999};
  const random=()=>{seed=seed*16807%2147483647;return(seed-1)/2147483646;};
@@ -65,8 +65,8 @@ if(canvas){
   // and no easing of scroll displacement after the numeral has formed.
   anchorY=title.top+title.height/2-size*.44;
   // Start only after the final card leaves its pinned reading position.
-  if(endArmed&&!ending&&!ended&&finalRect.top < -24){
-   ending=true;endArmed=false;endTime=0;endStart=scroll;endX=anchorX;endY=anchorY;
+  if(endArmed&&!ending&&!ended&&finalRect.bottom <= 0){
+   ending=true;endArmed=false;endTime=0;endX=anchorX;endY=anchorY;
    document.documentElement.classList.add('ending-scroll');
   }
  }
@@ -91,8 +91,6 @@ if(canvas){
   if(ending){
    endTime+=dt;
    outro=reduced.matches?1:smooth(endTime/.7);
-   const bottom=document.documentElement.scrollHeight-height;
-   window.scrollTo({top:endStart+(bottom-endStart)*outro,behavior:'instant'});
    anchorX=endX;anchorY=endY;
    if(outro===1){ending=false;ended=true;document.documentElement.classList.remove('ending-scroll');}
   }
@@ -138,7 +136,7 @@ if(canvas){
  }
  function tick(now){
   raf=0;if(document.hidden)return;
-  if(now-last>=16){const dt=Math.max(0,(now-last)/1000);last=now;if(!reduced.matches)time+=Math.min(dt,.1);draw(dt);}
+  if(now-last>=16){const dt=Math.min(.05,Math.max(0,(now-last)/1000));last=now;if(!reduced.matches)time+=Math.min(dt,.1);draw(dt);}
   if(!reduced.matches)raf=requestAnimationFrame(tick);
  }
  function start(){if(!raf&&!document.hidden&&!reduced.matches){last=performance.now();raf=requestAnimationFrame(tick);}}

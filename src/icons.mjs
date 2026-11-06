@@ -1,0 +1,28 @@
+// One outline family across navigation, product storytelling and system diagrams.
+const paths = {
+ arrow:'<path d="M7 17 17 7M7 7h10v10"/>',
+ left:'<path d="m14 6-6 6 6 6M8 12h12"/>',
+ down:'<path d="M12 4v16m-6-6 6 6 6-6"/>',
+ up:'<path d="M12 20V4m-6 6 6-6 6 6"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ close:'<path d="m6 6 12 12M6 18 18 6"/>',
+ pulse:'<path d="M2 12h5l3-8 4 16 3-8h5"/>',
+ moon:'<path d="M20 14a8 8 0 0 1-10-10A8 8 0 1 0 20 14Z"/><path d="M18 3v4m-2-2h4"/>',
+ trend:'<path d="M4 5v15h16M7 15l4-4 4 2 5-7M16 6h4v4"/>',
+ sliders:'<path d="M4 7h7m4 0h5M4 17h3m4 0h9M11 4v6M7 14v6"/>',
+ route:'<circle cx="5" cy="18" r="2"/><path d="M7 18h8a4 4 0 0 0 0-8H9a3 3 0 0 1 0-6h9m-3-3 3 3-3 3"/>',
+ calendar:'<rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 10h16M8 14h2m4 0h2m-8 3h2"/>',
+ mail:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>',
+ watch:'<rect x="6" y="6" width="12" height="12" rx="3"/><path d="m9 2-1 4m7-4 1 4M8 18l1 4m7-4-1 4m3-12h2M9 12h2l1-3 2 6 1-3"/>',
+ chat:'<path d="M7 19 3 22V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3Z"/><path d="M7 8h10M7 12h7"/>',
+ layers:'<path d="m3 8 9-5 9 5-9 5-9-5Zm0 5 9 5 9-5M3 18l9 5 9-5"/>',
+ spark:'<path d="m12 3 2.8 6.2L21 12l-6.2 2.8L12 21l-2.8-6.2L3 12l6.2-2.8L12 3Z"/>',
+ database:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>',
+ check:'<path d="m5 12 4 4L19 6"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>',
+ shield:'<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/>',
+ play:'<path d="m9 5 11 7-11 7V5Z"/>',
+ sound:'<path d="m11 4-6 5H2v6h3l6 5V4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
+ expand:'<path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/>'
+};
+export const icon = (name, cls='') => `<svg class="ui-icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths[name]||paths.spark}</svg>`;

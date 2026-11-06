@@ -1,0 +1,538 @@
+{
+  "en": {
+    "headline": "A little context.<br>A better next move.",
+    "summary": "A prototype turning Pison Watch data into timely advice, through iMessage.",
+    "companyLink": "About Pison ↗",
+    "techTitle": "From signal<br>to response.",
+    "chapters": [
+      [
+        "00:00",
+        "Before the game",
+        0
+      ],
+      [
+        "00:20",
+        "Ask a follow-up",
+        20
+      ],
+      [
+        "00:50",
+        "Keep the conversation going",
+        50
+      ]
+    ],
+    "teamLabel": "The team",
+    "team": [
+      [
+        "Bruce",
+        "Product & agent design"
+      ],
+      [
+        "Daniel Tecum-Pauc",
+        "Development & implementation"
+      ],
+      [
+        "Jerry Chen",
+        "Neuroscience research"
+      ]
+    ],
+    "deck": "Project deck",
+    "repo": "GitHub",
+    "playError": "Use the video’s play control to start playback.",
+    "nav": [
+      "Overview",
+      "The opportunity",
+      "Product decisions",
+      "The system",
+      "In use"
+    ],
+    "videoLabel": "Pison Ultimate Agent — conversation demo",
+    "contextLabel": "The opportunity",
+    "contextTitle": "From signals<br>to decisions.",
+    "company": "Pison measures neural and physiological signals. I explored the next step: helping people act on them.",
+    "watchAlt": "Pison Watch, shown with the Pison app",
+    "capabilities": [
+      [
+        "Neural signals",
+        "Wrist-based ENG."
+      ],
+      [
+        "Sleep & recovery",
+        "Sleep, heart rate and HRV."
+      ],
+      [
+        "Personal patterns",
+        "Readiness against your baseline."
+      ]
+    ],
+    "companySource": "The science ↗",
+    "solutionLabel": "My product decisions",
+    "solutionTitle": "Design for the next move.",
+    "decisions": [
+      {
+        "shift": "Action over dashboards",
+        "title": "A clear<br>next step.",
+        "body": "I chose one useful recommendation over another dashboard.",
+        "tradeoff": "Keep the evidence available through follow-up questions."
+      },
+      {
+        "shift": "Messages over app checking",
+        "title": "The right<br>moment.",
+        "body": "I brought guidance into iMessage, where people already reply.",
+        "tradeoff": "Each proactive message must earn the interruption."
+      },
+      {
+        "shift": "Context over a single score",
+        "title": "The whole<br>day.",
+        "body": "I combined baselines, calendar, goals and history to make advice relevant.",
+        "tradeoff": "Qualify advice when context is incomplete or stale."
+      }
+    ],
+    "visualOne": [
+      "HRV",
+      "Sleep",
+      "Strain",
+      "Interpret together",
+      "A useful next step"
+    ],
+    "visualTwo": [
+      "08:00",
+      "Signals sync",
+      "08:05",
+      "A timely message",
+      "The user can simply reply."
+    ],
+    "contextTags": [
+      "Personal baseline",
+      "Calendar",
+      "Goals",
+      "History"
+    ],
+    "moreTitle": "See it in use.",
+    "hockeyLabel": "Pison Ultimate Agent — real-life hockey demo",
+    "demoPoints": [
+      [
+        "Before the game",
+        ""
+      ],
+      [
+        "Question the advice",
+        ""
+      ],
+      [
+        "Follow through",
+        ""
+      ]
+    ],
+    "extraTitle": "A day with Pison.",
+    "close": "Close",
+    "explore": "Explore decision",
+    "scrollHint": "Scroll to follow the conversation",
+    "systemHint": "Scroll through the system",
+    "conversationTitle": "Context first.<br>Conversation follows.",
+    "conversationLabel": "The experience",
+    "sources": [
+      [
+        "Pison Watch",
+        "Sleep · recovery"
+      ],
+      [
+        "Calendar",
+        "Game tomorrow"
+      ],
+      [
+        "Email",
+        "Proposed"
+      ]
+    ],
+    "chatSteps": [
+      "Connect",
+      "Anticipate",
+      "Listen",
+      "Explain",
+      "Follow through"
+    ],
+    "chatMessages": [
+      [
+        "agent",
+        "Game tomorrow at 7. Let’s plan for it."
+      ],
+      [
+        "user",
+        "But I feel sharper after a 4 pm coffee."
+      ],
+      [
+        "agent",
+        "In your history, late coffee lines up with later sleep. With tomorrow’s game, try it earlier."
+      ],
+      [
+        "user",
+        "Let’s move it earlier."
+      ],
+      [
+        "agent",
+        "We’ll check how you feel tomorrow."
+      ]
+    ],
+    "chatTyping": "Putting your day together",
+    "agentCaption": "Pison Ultimate Agent",
+    "systemSteps": [
+      [
+        "Sense",
+        "Establish a baseline.",
+        "Calculate personal patterns before asking AI to interpret them."
+      ],
+      [
+        "Understand",
+        "Analyze once. Reuse.",
+        "Store a compact briefing for faster, more economical replies."
+      ],
+      [
+        "Respond",
+        "Answer in context.",
+        "Combine the briefing, calendar and history at message time."
+      ],
+      [
+        "Remember",
+        "Know when to wait.",
+        "Keep memory, check freshness, and limit repeated nudges."
+      ]
+    ],
+    "systemNodes": [
+      [
+        "watch",
+        "Pison Watch",
+        "BigQuery / CSV"
+      ],
+      [
+        "sliders",
+        "Analysis",
+        "Baselines & patterns"
+      ],
+      [
+        "spark",
+        "Haiku",
+        "Structured briefing"
+      ],
+      [
+        "database",
+        "PostgreSQL",
+        "Briefing & memory"
+      ],
+      [
+        "chat",
+        "Incoming message",
+        "FastAPI webhook"
+      ],
+      [
+        "layers",
+        "Context assembly",
+        "Briefing · calendar · profile"
+      ],
+      [
+        "spark",
+        "Sonnet",
+        "Contextual response"
+      ],
+      [
+        "chat",
+        "Linq → iMessage",
+        "Delivery & conversation"
+      ]
+    ],
+    "systemVisualLabels": {
+      "signal": "Wearable records",
+      "analysis": "Deterministic analysis",
+      "baseline": "Personal baseline",
+      "metrics": [
+        "Sleep",
+        "HRV",
+        "Cognition"
+      ],
+      "raw": "Analysis output",
+      "brief": "Structured briefing",
+      "store": "Saved in PostgreSQL",
+      "context": [
+        "Briefing",
+        "Calendar",
+        "Profile",
+        "History"
+      ],
+      "reply": "Contextual reply",
+      "memory": "Conversation memory",
+      "fresh": "Is the data current?",
+      "cooldown": "Is another message useful?",
+      "send": "Respond when relevant",
+      "wait": "Otherwise, wait"
+    },
+    "decisionTradeoff": "The tradeoff"
+  },
+  "zh": {
+    "headline": "多一点上下文。<br>更合适的下一步。",
+    "summary": "将 Pison Watch 数据转化为及时建议的 iMessage 原型。",
+    "companyLink": "了解 Pison ↗",
+    "techTitle": "从信号，<br>到回应。",
+    "chapters": [
+      [
+        "00:00",
+        "比赛开始前",
+        0
+      ],
+      [
+        "00:20",
+        "提出追问",
+        20
+      ],
+      [
+        "00:50",
+        "继续交流",
+        50
+      ]
+    ],
+    "teamLabel": "团队分工",
+    "team": [
+      [
+        "Bruce",
+        "产品与 Agent 设计"
+      ],
+      [
+        "Daniel Tecum-Pauc",
+        "开发与实现"
+      ],
+      [
+        "Jerry Chen",
+        "神经科学研究"
+      ]
+    ],
+    "deck": "项目演示",
+    "repo": "GitHub",
+    "playError": "请使用视频自带的播放按钮开始播放。",
+    "nav": [
+      "概览",
+      "产品机会",
+      "产品决策",
+      "技术架构",
+      "实际体验"
+    ],
+    "videoLabel": "Pison Ultimate Agent — conversation demo",
+    "contextLabel": "产品机会",
+    "contextTitle": "从信号，<br>到决定。",
+    "company": "Pison 采集神经与生理信号。我探索下一步：帮助人们据此行动。",
+    "watchAlt": "Pison Watch 与 Pison App",
+    "capabilities": [
+      [
+        "神经信号",
+        "腕部 ENG 感知。"
+      ],
+      [
+        "睡眠与恢复",
+        "睡眠、心率与 HRV。"
+      ],
+      [
+        "个人模式",
+        "对照个人基线理解状态。"
+      ]
+    ],
+    "companySource": "传感技术 ↗",
+    "solutionLabel": "我的产品决策",
+    "solutionTitle": "围绕下一步行动设计。",
+    "decisions": [
+      {
+        "shift": "从看数据到做决定",
+        "title": "清晰的<br>下一步。",
+        "body": "我选择给出一个有用的建议，而不是再做一个仪表盘。",
+        "tradeoff": "用户可以通过追问了解依据。"
+      },
+      {
+        "shift": "从打开应用到收到消息",
+        "title": "合适的<br>时机。",
+        "body": "将建议带入用户熟悉的 iMessage 对话。",
+        "tradeoff": "每次主动提醒都要值得打扰。"
+      },
+      {
+        "shift": "从单个分数到完整情境",
+        "title": "理解<br>一整天。",
+        "body": "结合个人基线、日历、目标与历史，让建议与当下相关。",
+        "tradeoff": "上下文缺失或过时，就明确说明。"
+      }
+    ],
+    "visualOne": [
+      "HRV",
+      "睡眠",
+      "活动负荷",
+      "综合理解",
+      "有用的下一步"
+    ],
+    "visualTwo": [
+      "08:00",
+      "同步信号",
+      "08:05",
+      "及时的一条消息",
+      "用户可以直接回复。"
+    ],
+    "contextTags": [
+      "个人基线",
+      "日历",
+      "目标",
+      "历史"
+    ],
+    "moreTitle": "看看实际体验。",
+    "hockeyLabel": "Pison Ultimate Agent — real-life hockey demo",
+    "demoPoints": [
+      [
+        "比赛之前",
+        ""
+      ],
+      [
+        "质疑建议",
+        ""
+      ],
+      [
+        "继续跟进",
+        ""
+      ]
+    ],
+    "extraTitle": "与 Pison 的一天。",
+    "close": "关闭",
+    "explore": "展开产品决策",
+    "scrollHint": "滚动，跟随这段对话",
+    "systemHint": "滚动，了解系统运行",
+    "conversationTitle": "先理解上下文，<br>再开始对话。",
+    "conversationLabel": "交互体验",
+    "sources": [
+      [
+        "Pison Watch",
+        "睡眠 · 恢复"
+      ],
+      [
+        "日历",
+        "明天比赛"
+      ],
+      [
+        "邮件",
+        "拟议接入"
+      ]
+    ],
+    "chatSteps": [
+      "连接",
+      "预判",
+      "倾听",
+      "解释",
+      "跟进"
+    ],
+    "chatMessages": [
+      [
+        "agent",
+        "明晚 7 点比赛，一起做点准备？"
+      ],
+      [
+        "user",
+        "但下午 4 点喝咖啡，我感觉更清醒。"
+      ],
+      [
+        "agent",
+        "你的历史里，晚喝咖啡常伴随更晚入睡。明天有比赛，不如提前一点。"
+      ],
+      [
+        "user",
+        "那就提前一点。"
+      ],
+      [
+        "agent",
+        "明天再看看你的状态。"
+      ]
+    ],
+    "chatTyping": "正在整理你的一天",
+    "agentCaption": "Pison Ultimate Agent",
+    "systemSteps": [
+      [
+        "感知",
+        "建立个人基线。",
+        "先计算个人模式，再让 AI 解读。"
+      ],
+      [
+        "理解",
+        "分析一次，持续复用。",
+        "保存精简简报，减少回复延迟与成本。"
+      ],
+      [
+        "回应",
+        "结合情境回答。",
+        "在收到消息时，整合简报、日历与历史。"
+      ],
+      [
+        "记忆",
+        "知道何时等待。",
+        "保留记忆、检查时效，限制重复提醒。"
+      ]
+    ],
+    "systemNodes": [
+      [
+        "watch",
+        "Pison Watch",
+        "BigQuery / CSV"
+      ],
+      [
+        "sliders",
+        "分析流水线",
+        "基线与规律"
+      ],
+      [
+        "spark",
+        "Haiku",
+        "结构化简报"
+      ],
+      [
+        "database",
+        "PostgreSQL",
+        "简报与记忆"
+      ],
+      [
+        "chat",
+        "用户消息",
+        "FastAPI webhook"
+      ],
+      [
+        "layers",
+        "上下文整合",
+        "简报 · 日历 · 档案"
+      ],
+      [
+        "spark",
+        "Sonnet",
+        "情境化回应"
+      ],
+      [
+        "chat",
+        "Linq → iMessage",
+        "消息交付与交流"
+      ]
+    ],
+    "systemVisualLabels": {
+      "signal": "可穿戴数据",
+      "analysis": "确定性分析",
+      "baseline": "个人基线",
+      "metrics": [
+        "睡眠",
+        "HRV",
+        "认知"
+      ],
+      "raw": "分析结果",
+      "brief": "结构化简报",
+      "store": "保存至 PostgreSQL",
+      "context": [
+        "简报",
+        "日历",
+        "档案",
+        "历史"
+      ],
+      "reply": "情境化回应",
+      "memory": "对话记忆",
+      "fresh": "数据是否足够新？",
+      "cooldown": "再次打扰是否有用？",
+      "send": "在合适时回应",
+      "wait": "否则，等待"
+    },
+    "decisionTradeoff": "取舍"
+  }
+}

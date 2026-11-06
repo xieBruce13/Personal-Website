@@ -1,7 +1,7 @@
 {
   "site": {
-    "name": "Bruce Xie",
-    "chineseName": "谢凌翔",
+    "name": "Bruce",
+    "chineseName": "Bruce",
     "email": "bruce_xie@gsd.harvard.edu",
     "copyrightYear": 2026,
     "experience": [
@@ -47,12 +47,18 @@
           "zh": "工业设计"
         }
       }
+    ],
+    "featuredProjects": [
+      "pison",
+      "qwen-create",
+      "co-hive",
+      "eye-tracking-thingz"
     ]
   },
   "copy": {
     "en": {
-      "title": "Bruce Xie — AI Product Manager & Builder",
-      "name": "Bruce Xie",
+      "title": "Bruce — AI Product Manager & Builder",
+      "name": "Bruce",
       "index": "Work",
       "about": "About",
       "contact": "Contact",
@@ -89,7 +95,7 @@
       "resume": "Experience & education",
       "email": "Email",
       "aboutFooter": "Let’s make something useful.",
-      "meta": "AI product work, design, and experiments by Bruce Xie. Harvard GSD, RISD, Qwen, and TikTok.",
+      "meta": "AI product work, design, and experiments by Bruce. Harvard GSD, RISD, Qwen, and TikTok.",
       "interactionStudy": "INTERACTION STUDY",
       "skip": "Skip to content",
       "navigation": "Main navigation",
@@ -99,15 +105,30 @@
       "returnHome": "Return to the index ↗",
       "homeEducation": "I study in Harvard GSD’s MDes Ecologies program, with a background in Industrial Design from RISD.",
       "mediaPlaceholder": "Image / video",
-      "visualPlaceholder": "Visual placeholder"
+      "visualPlaceholder": "Visual placeholder",
+      "heroLineOne": "AI products.",
+      "heroLineTwo": "Built with intent.",
+      "headerRole": "AI Product Manager & Builder",
+      "scrollPrompt": "Scroll down",
+      "focusLabels": "Product strategy|Interaction design|AI building",
+      "period": "Year",
+      "contactTitle": "Let’s make something useful.",
+      "menu": "Menu",
+      "placeholderVisual": "Next up",
+      "placeholderLabel": "Project placeholder",
+      "placeholderTitle": "Next project",
+      "placeholderBody": "A space for the next project. Details to come.",
+      "focusStrategy": "Identifying worthwhile problems, making product choices, and defining how to evaluate the result.",
+      "focusInteraction": "Designing how people understand and work with AI through clear, usable interactions.",
+      "focusBuilding": "Turning ideas into working prototypes, testing what works, and iterating."
     },
     "zh": {
-      "title": "谢凌翔 — AI 产品经理与创造者",
-      "name": "谢凌翔",
+      "title": "Bruce — AI 产品经理与创造者",
+      "name": "Bruce",
       "index": "项目",
       "about": "关于",
       "contact": "联系",
-      "role": "我是谢凌翔，一名 AI 产品经理与创造者。",
+      "role": "我是 Bruce，一名 AI 产品经理与创造者。",
       "intro": "将新兴 AI 能力，转化为自然、实用的产品体验。",
       "bio": "我曾在千问与 TikTok 从事 AI 产品工作。",
       "tag": "产品策略 · 交互设计 · 人机交互",
@@ -133,14 +154,14 @@
       "visit": "体验 Qwen Create",
       "next": "下一个项目",
       "aboutTitle": "产品的思考。<br>设计的视角。",
-      "aboutIntro": "我是谢凌翔，一名关注人与智能系统如何协作的 AI 产品经理与创造者。",
+      "aboutIntro": "我是 Bruce，一名关注人与智能系统如何协作的 AI 产品经理与创造者。",
       "aboutBio": "我在哈佛 GSD 就读 MDes Ecologies 项目，拥有 RISD 工业设计背景。我的工作结合产品策略、交互设计与动手构建 AI 产品。",
       "experience": "工作经历",
       "education": "教育背景",
       "resume": "经历与教育",
       "email": "邮箱",
       "aboutFooter": "一起，做有用的产品。",
-      "meta": "谢凌翔 的 AI 产品、设计与实验项目。哈佛 GSD、RISD、千问与 TikTok。",
+      "meta": "Bruce 的 AI 产品、设计与实验项目。哈佛 GSD、RISD、千问与 TikTok。",
       "interactionStudy": "交互实验",
       "skip": "跳转到内容",
       "navigation": "主导航",
@@ -150,30 +171,45 @@
       "returnHome": "返回项目目录 ↗",
       "homeEducation": "我就读于哈佛 GSD 的 MDes Ecologies 项目，拥有 RISD 工业设计背景。",
       "mediaPlaceholder": "图片 / 视频",
-      "visualPlaceholder": "视觉素材占位"
+      "visualPlaceholder": "视觉素材占位",
+      "heroLineOne": "让 AI 产品，",
+      "heroLineTwo": "更有用。",
+      "headerRole": "AI 产品经理与创造者",
+      "scrollPrompt": "向下浏览",
+      "focusLabels": "产品策略|交互设计|AI 构建",
+      "period": "时间",
+      "contactTitle": "一起，做有用的产品。",
+      "menu": "菜单",
+      "placeholderVisual": "Next up",
+      "placeholderLabel": "项目占位",
+      "placeholderTitle": "下一个项目",
+      "placeholderBody": "为下一个项目预留的位置，内容待补充。",
+      "focusStrategy": "发现值得解决的问题，做出产品决策，并明确如何评估结果。",
+      "focusInteraction": "通过清晰、自然的交互，让人们更好地理解和使用 AI。",
+      "focusBuilding": "将想法做成可运行的原型，通过测试持续迭代。"
     }
   },
   "projects": [
     {
       "slug": "pison",
-      "name": "Pison",
+      "name": "Pison Health Agent",
       "group": "business",
       "type": {
-        "en": "Business project",
-        "zh": "商业项目"
+        "en": "Team project · AI agent prototype",
+        "zh": "团队项目 · AI Agent 原型"
       },
       "summary": {
-        "en": "Product and business exploration.",
-        "zh": "产品与商业探索。"
+        "en": "Turning wearable signals and calendar context into timely, conversational guidance.",
+        "zh": "将可穿戴信号与日程结合，通过对话提供及时的建议。"
       },
       "period": "",
       "body": {
-        "en": "A business project. The full project story will be added here.",
-        "zh": "商业项目。完整项目内容将在此更新。"
+        "en": "Pison Ultimate Agent turns Pison Watch data into contextual conversations. My role covered product and agent design.",
+        "zh": "Pison Ultimate Agent 将 Pison Watch 数据转化为有上下文的对话。我负责产品与 Agent 设计。"
       },
       "focus": {
-        "en": "Product · Business exploration",
-        "zh": "产品 · 商业探索"
+        "en": "Agent behavior · Contextual guidance",
+        "zh": "Agent 行为 · 情境化建议"
       },
       "visualTone": "#292d32"
     },

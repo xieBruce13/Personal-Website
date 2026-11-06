@@ -1,0 +1,20 @@
+/* Canonical portfolio tokens. See docs/DESIGN_SYSTEM.md before adding UI. */
+:root {
+  --canvas: #fff;
+  --surface: #f7f7f7;
+  --text-primary: #171717;
+  --text-secondary: #666;
+  --edge: #e8e8e8;
+  --gallery-radius: 18px;
+  --gallery-aspect: 1.9;
+  --gallery-gap: 18px;
+  --gallery-title: clamp(20px, 1.6vw, 26px);
+  --gallery-inset: 26px;
+  --hero-glyph-scale: .44;
+  --motion-ease: cubic-bezier(.2,.7,.2,1);
+  --motion-feedback: 220ms;
+  --motion-object: 550ms;
+}
+@media(max-width:1000px){:root{--gallery-gap:18px;--gallery-inset:22px}}
+@media(max-width:809px){:root{--gallery-gap:16px;--gallery-inset:22px;--gallery-title:22px}}
+@media(max-width:520px){:root{--gallery-inset:24px;--gallery-title:22px}}
