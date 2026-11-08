@@ -1,0 +1,61 @@
+{
+  "url": "https://create.qwen.com/r/ai-studio-pc-global/main/agent-team/",
+  "en": {
+    "headline": "An agent team for marketing creation.",
+    "intro": "Built for frequent creators with limited production expertise, Qwen Create turns a campaign brief into strategy, copy, images, and video.",
+    "role": "AI Product Manager Intern · Qwen · 2026",
+    "access": "Region-limited access. A U.S., Mexico, Brazil, Philippines, or Indonesia IP address is required to open the product.",
+    "open": "Open Qwen Create",
+    "imageAlt": "English Qwen Create Ad video creator workspace, with the Experts menu and Growth expert project in the sidebar",
+    "targetLabel": "Target users",
+    "targetTitle": "Create often. Across every format.",
+    "targetBody": "For marketing creators who publish frequently, work across social platforms, and need professional-looking assets without specialist production skills.",
+    "targetPoints": ["Frequent content creation", "Limited specialist expertise", "Text, image and video formats"],
+    "overviewLabel": "Overview",
+    "overviewTitle": "One brief. A coordinated agent team.",
+    "overviewBody": "One lead agent identifies intent, plans the work, and delegates tasks to five specialists using reusable Skills and tools.",
+    "leadAgent": "Lead agent",
+    "leadAgentNote": "Intent, planning and delegation",
+    "specialistCount": "Five specialist agents",
+    "specialistNote": "Specialized work + reusable Skills",
+    "featuresLabel": "Agent Team capabilities",
+    "features": [
+      {"title": "Intent & routing", "body": "Understand creator requests and invoke the appropriate agents, tools and Skills."},
+      {"title": "Platform-ready content", "body": "Connect marketing strategy with copy, imagery and video for TikTok, Instagram and YouTube."},
+      {"title": "Evaluation loop", "body": "Review model quality, planning, execution and end-to-end task success to refine workflows."}
+    ],
+    "workflowLabel": "Illustrative workflow",
+    "workflowTitle": "From campaign brief to usable assets.",
+    "steps": ["Brief", "Plan", "Delegate", "Create", "Refine"],
+    "flowNote": "A simplified view of the multi-agent process."
+  },
+  "zh": {
+    "headline": "一支面向营销创作的 Agent 团队。",
+    "intro": "面向高频创作、专业制作能力有限的创作者，Qwen Create 将营销需求转化为策略、文案、图像与视频。",
+    "role": "AI 产品经理实习生 · 千问 · 2026",
+    "access": "产品目前有地区限制，需要使用美国、墨西哥、巴西、菲律宾或印度尼西亚的 IP 地址访问。",
+    "open": "体验 Qwen Create",
+    "imageAlt": "Qwen Create 英文 Ad video creator 工作台，左侧展示 Experts 菜单和 Growth expert 项目",
+    "targetLabel": "目标用户",
+    "targetTitle": "高频创作，跨越多种内容形式。",
+    "targetBody": "服务于需要持续产出营销内容、适配不同社交平台，又缺少专业制作技能的创作者。",
+    "targetPoints": ["高频内容生产", "专业制作能力有限", "文案、图像与视频多形态"],
+    "overviewLabel": "概览",
+    "overviewTitle": "一个需求，一支协作的 Agent 团队。",
+    "overviewBody": "由主 Agent 识别意图、制定计划，并调用五个专业 Agent 及可复用 Skills、工具来执行任务。",
+    "leadAgent": "主 Agent",
+    "leadAgentNote": "意图识别、规划与任务分配",
+    "specialistCount": "五个专业 Agent",
+    "specialistNote": "专业分工与可复用 Skills",
+    "featuresLabel": "Agent Team 核心能力",
+    "features": [
+      {"title": "意图识别与调用", "body": "理解创作者需求，决定调用哪些 Agent、工具和 Skills。"},
+      {"title": "适配社交平台", "body": "打通营销策略、文案、图像与视频，适配 TikTok、Instagram 和 YouTube。"},
+      {"title": "评测与迭代", "body": "从模型质量、规划、执行、端到端成功率四个维度评估工作流。"}
+    ],
+    "workflowLabel": "示意流程",
+    "workflowTitle": "从营销需求到可用素材。",
+    "steps": ["提出需求", "制定计划", "分配任务", "生成内容", "复盘优化"],
+    "flowNote": "多 Agent 创作流程的简化示意。"
+  }
+}

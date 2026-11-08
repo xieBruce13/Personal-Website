@@ -1,8 +1,8 @@
 # Bruce — Portfolio design system
 
-Version 1.3 · 6 November 2026 · Governs all new and modified portfolio UI.
+Version 1.15 · 7 November 2026 · Governs all new and modified portfolio UI.
 
-This document is the visual source of truth. Read it before adding a page, section, component, animation, or project. Current user instructions override this document. Existing legacy CSS is not a precedent for new exceptions. Shared values live in `src/design-tokens.css`; gallery rules live in `src/project-gallery.css`.
+This document is the visual source of truth. Read it before adding a page, section, component, animation, or project. Current user instructions override this document. Existing legacy CSS is not a precedent for new exceptions. Shared values live in `src/design-tokens.css`; gallery rules live in `src/project-gallery.css`; cross-page editorial typography is enforced last by `src/typography.css`.
 
 ## 1. Direction
 
@@ -12,8 +12,8 @@ The site should communicate a product manager who can make clear choices and bui
 
 ### Reference hierarchy
 
-1. **Studio Maria — primary visual reference.** Its home and Work page were visually reviewed. Adapt the continuous white canvas, economical navigation, disciplined sans-serif type, generous breathing room, and image-first project presentation. Keep our own branding, six-tile structure, and restrained rounded corners. Do not copy reference assets or reproduce its layout wholesale.
-2. **Harbor Bai — gallery proportion and editorial economy.** Use wide landscape studies, substantial visual evidence, and brief copy between media. Synapse, Dive-in LLM and O2 were reviewed from introduction to conclusion. Their compact premise, role information, process imagery and short explanations establish the content model. Preserve Bruce’s explicit preference for no caption rows underneath covers; do not import the serif introduction or long uppercase captions.
+1. **Studio Maria — primary visual reference.** Its home and Work page were visually reviewed. Adapt the continuous white canvas, economical navigation, disciplined sans-serif type, generous breathing room, and image-first project presentation. Keep our own branding, editorial project grid, and restrained rounded corners. Do not copy reference assets or reproduce its layout wholesale.
+2. **Harbor Bai — typography, neutrals and editorial economy.** The live homepage and Living Surface case study were remeasured on 7 November: about 20 px navigation, 33 px homepage introduction, 23 px card captions, 81 px case-study title, 34 px subtitle, 38 px section heading, 23 px narrative copy, and 13/22 px metadata label/value pairs. Adapt this hierarchy to Inter, with charcoal #252525, quiet gray captions and a white canvas. Use substantial visual evidence and brief copy between media. Bruce’s project names remain inside the covers, with gray category captions directly below the squares. Do not import the serif introduction, source images or unrelated text.
 3. **Apple — product presentation, not the portfolio identity.** Use clear hierarchy, readable device demonstrations, controlled cropping, and visible product behavior within case studies. Do not introduce blue surfaces, excessive glass, or giant type merely to signal Apple influence.
 4. **DMCG / Archiv — restrained physicality.** Give actual product objects presence; let fine details carry character. Depth belongs to the depicted object, not to floating page containers.
 5. **Qantas / Adham Dannaway and Artem / Sanjay — evidence and narrative.** Explain the problem, choices, working experience, and implementation. Avoid copying their denser prose or unrelated visual branding. Ricardo Garcia’s PMF page remains an earlier reference; it could not be retrieved in this review and is not the basis for a new rule.
@@ -28,11 +28,13 @@ These are ranked influences, not separate themes to alternate between sections.
 | --- | --- | --- |
 | `--canvas` | `#FFFFFF` | Page, header, gallery and white-to-white transitions |
 | `--surface` | `#F7F7F7` | A necessary inset surface; never every section |
-| `--text-primary` | `#171717` | Titles, meaningful labels, primary controls |
-| `--text-secondary` | `#666666` | Supporting copy and pending labels |
-| `--edge` | `#E8E8E8` | Decorative card edges and separators |
+| `--text-primary` | `#252525` | Reference-inspired charcoal for titles, body statements and primary controls |
+| `--text-secondary` | `#737373` | Readable gray for small supporting text and metadata |
+| `--text-muted` | `#999999` | Larger soft-gray display phrasing, not essential 14 px body text |
+| `--text-faint` | `#BFBFBF` | Nonessential subdued decoration only |
+| `--edge` | `#E6E6E6` | Decorative card edges and separators |
 
-Use #F3F3F3 on Pison, Co-Hive and the first pending tile; other covers stay white. No beige wash, blue tint or colored gallery text. Product photography and the existing glass hero can retain authentic color. No red contact band or dark footer. Navigation remains About, Contact and language switching. The homepage gallery is the only project index; legacy Work URLs display the homepage. Essential controls need a visible outline or icon; pale decorative edges alone must not carry their meaning.
+Use #F3F3F3 on selected gallery covers for rhythm; other covers stay white. No beige wash, blue tint or colored gallery text. Product photography and the existing glass hero can retain authentic color. No red contact band or dark footer. Navigation remains About, Contact and language switching. The homepage gallery is the only project index; legacy Work URLs display the homepage. Essential controls need a visible outline or icon; pale decorative edges alone must not carry their meaning.
 
 ### Typography
 
@@ -40,42 +42,45 @@ Keep the bundled Inter variable font. Use the existing Chinese system fallbacks.
 
 | Role | Desktop | Narrow screen | Leading / tracking |
 | --- | --- | --- | --- |
-| Home headline | 44–60 px | 38–52 px; 40 px at ≤620 | 1.08 / −0.06em |
-| Home introduction | 21–26 px | 20–21 px | 1.3 / −0.035em |
-| Gallery project title | 20–26 px | 22 px | 1.1 / −0.045em |
-| Body copy for new sections | 16–18 px | 16 px | 1.45–1.6 / near neutral |
-| Navigation / compact labels | 14–15 px | 14–15 px where space allows | 1.4–1.6 |
-| Small metadata | 12–13 px | 12–13 px | 1.4 minimum |
+| Home statement | **34 px** | **31 px** | 1.24 / −0.045em |
+| Home introduction | **23 px** | **20 px** | 1.4 / −0.018em |
+| Case-study title | **62–82 px** | **50–68 px** | 1.06 / −0.055em |
+| Case-study subtitle | **30–35 px** | **29 px** | 1.2 / −0.035em |
+| Section headline | **34–42 px** | **34 px** | 1.15 / −0.043em |
+| Gallery project title inside image | **18–25 px** | **22 px** | 1.1 / −0.035em |
+| Navigation and gallery categories | **20 px** | Gallery category 20 px; overlay menu is intentionally larger | 1.25 / −0.015em |
+| Lead / narrative statements | **23 px** | **19 px** | 1.4 / −0.02em |
+| Detailed explanatory copy | **16 px** | **16 px** | 1.45–1.6 / near neutral |
+| Metadata label, annotation, footnote and compact UI | **14 px** | **14 px** | 1.4–1.6 / neutral |
+| Metadata value | **20 px** | **18 px** | 1.3 / neutral |
 
-12 px is reserved for nonessential metadata, never core explanatory copy. Miniature phone-screen text is decorative cover art; essential meaning must exist in the accessible link name and the full case study. Do not shrink text to fit an overloaded layout. Cut copy or reflow first. Chinese text should use looser tracking and natural wrapping.
+Use `--type-small: 14px` for **compact editorial annotation**, including Pison/Qwen labels, both research studies' evidence captions, numbered notes and overlines. The visibly larger reference-style header and homepage categories share `--type-navigation: 20px`, while gallery project names are about 23 px. Do not add one-off 10–13 px type to editorial UI, including mobile. Explanatory body copy retains the shared 16 px base, with 23 px reserved for high-level prose; titles and section statements use the scale above. The “Bruce” masthead and menu-open links are intentional controls with their own scale. Text inside miniature phone screens, system-node diagrams and screenshot browser chrome depicts artifacts and is not part of the editorial scale. Essential meaning in those visuals must remain in accessible text outside them. Do not shrink text to fit overloaded layouts; cut copy or reflow first. Chinese text should use natural wrapping.
 
 ### Layout and shape
 
 - White must be exactly the same white across adjoining sections. No seam caused by a shadow, gradient, or mismatched off-white wrapper.
 - Use a 4 px spacing basis: 8, 12, 16, 24, 32, 40, 64, 96. Gallery inset 26 px and an 18 px inter-column gap are optical exceptions.
 - Page edges: existing 40 px navigation gutter. Gallery gutters are 24 px desktop, 20 px at ≤1000 px and 16 px at ≤620 px; there is no maximum width.
-- Gallery: three equal columns above 809 px, two from 621–809 px, one at ≤620 px. Column gaps 18 px desktop and 16 px narrow; row gaps 36–42 px desktop, 24 px tablet, 22 px phone.
-- Cover aspect ratio **1.9:1**. Corner radius **18 px**. One 1 px neutral edge. No floating frame shadow, full-card tilt, or glossy panel treatment.
+- Gallery: four equal columns in one desktop row above 809 px, two from 621–809 px, one at ≤620 px. Column gaps 16 px; no second desktop row. Gray category captions sit below the covers. Align each caption to the left edge of its white project title at every viewport width, including the 1 px cover border in the caption inset.
+- Cover aspect ratio **1:1** (square). Corner radius **18 px**. One 1 px neutral edge. No floating frame shadow, full-card tilt, or glossy panel treatment.
 - Spacing between major sections: normally 64–100 px. Within a section, establish one primary alignment and keep headings, media and controls on it.
 
 ## 3. Component contracts
 
 ### Hero B·XYZ
 
-Keep the existing glass artwork, separate glyph positions, centered dot, rotation rates, pointer repulsion, reduced-motion support, and offscreen pausing. The canonical glyph scale is **0.44**, 12% smaller than the previous 0.50. Keep the loose staggered arrangement, with B and Z in the middle band, X above, Y below, and the dot beside B, matching the supplied formation. Scale the inner glyph wrapper, not the stage. Do not enlarge the letters at wide breakpoints. Preserve empty space around them and keep them clear of navigation and the headline.
+Keep the existing glass artwork, separate glyph positions, centered dot, rotation rates, pointer repulsion, reduced-motion support, and offscreen pausing. The canonical glyph scale is **0.405**, modestly smaller than the prior 0.44. Letter silhouettes have slightly thinner strokes and the layered glass depth is 4.25 px per slice, creating a lighter sculptural presence. Keep the loose staggered arrangement, with B and Z in the middle band, X above, Y below, and the dot beside B, matching the supplied formation. Scale the inner glyph wrapper, not the stage. Do not enlarge the letters at wide breakpoints. Preserve empty space around them and keep them clear of navigation and the headline.
 
 The homepage moves directly from hero to project cards and ends there. Keep biography and focus details on the dedicated About page; do not restore the removed homepage About block.
 
-### Six-tile project gallery
+### Project gallery
 
-- Exactly four real projects, in order: Pison Health Agent, Qwen Create, Co-Hive, Eye Tracking Thingz. Qwen is restored by the current user instruction.
-- Two further tiles are honestly labeled **Coming soon**. No invented project names, fake links, or hover effects suggesting that these tiles open.
-- All real titles share the same size, weight, top inset, and left inset. Pison is not a larger typographic logo in this grid.
-- Keep project names inside the cover. No duplicate title, description, role, date, or caption row underneath.
-- Use actual Pison Watch art without changing its hardware or branding. The decorative phone is an illustrative native UI composition, not a claimed screenshot.
-- Qwen uses a neutral creative-canvas study. Eye Tracking uses a monochrome optical study. Co-Hive uses a neutral locker study. These are thematic illustrations, not fabricated product evidence. Replace them with supplied project media when available.
+- Exactly four featured projects, in order: Pison Health Agent, Qwen, Eye Tracking, Defying Freud (the Lucian Freud LoRA study). Co-Hive and the old Coming soon tiles are not shown or linked from the homepage gallery.
+- Place **Pison Agent**, **Qwen Create**, **Eye Tracking**, and **Defying Freud** inside their respective lower-left cover corners in white, over the uniform **85% #181818 shade**. Put their categories **Personal Agent**, **Agent Team**, **Research Tool**, and **Model Training** on a separate, left-aligned line directly beneath each cube in #777 gray. The whole image tile links to the case study, with visible keyboard focus.
+- Pison's homepage cover draws only from the **13.00–30.00-second span of the original 35.6-second concept film**, cropped to 600×600 without top or bottom bands. The current **9.75-second loop** contains exactly three shots: the **first phone-holding shot** (start), the **watch-hand opening/closing** (middle), and **Marcus smiling and departing** (end). The second locker-room phone-holding shot and all partially cut-off “heading to game” / “Good luck Marcus” message overlays are removed. The cut removes frames 164–236 from the previous 12.79-second no-bubbles loop, retaining 234 frames at 24 fps. Keep the complete concept film on its detail page and retain the established first-phone-shot poster.
+- Qwen's homepage cover shows the shampoo product changing through visual styles and ends **while the product is on the moon, after the light sweep, before the pullback/billboard reveal**. The current **5.54-second loop** retains the balanced 7 November timing (0.21-second opening hold and first 2.5 seconds slowed an additional 20%) and applies four-frame dissolves at eight style-change cuts. These transitions soften visual jumps without altering the duration or the moon ending; do not append the zoom-out. Both Pison and Qwen cover loops run at normal browser playback rate because their final timing is baked into the files, silently only while visible, with the same **85% #181818 overlay** as the other two. Keep the full originals in the existing project media. Eye Tracking uses an eight-second animated heatmap of Bruce's supplied interior reference image; the traveling color patches are an **illustrative attention visualization, not measured participant gaze**. Defying Freud uses the subtle 16-second blink-loop animation of Bruce's supplied portrait reference with the original artwork as its poster; it is **animated reference artwork, not a claimed trained model output**. All motion pauses offscreen and obeys reduced-motion preferences.
 - Put arrow feedback in the top-right. Reveal it on hover/focus and keep it visible on touch layouts. The complete real card is a normal link with an accessible project name.
-- Keep a card’s container and title still. Optional inner artwork movement is capped at 4 px per axis; a small object gesture may clarify the theme. Do not move surrounding content.
+- Keep a card’s container and title still. All four cover artworks share a very slight hover/focus magnification and bounded pointer-driven movement (at most 2 px per axis); the card itself never tilts or shifts. Disable this effect for reduced motion. Do not move surrounding content.
 
 ### Case studies and demos
 
@@ -87,7 +92,15 @@ Each section should answer one reader question. Pair a product decision with a u
 
 Videos should autoplay muted only when in view, with native playback controls. Respect reduced motion and explicit user pauses. Show real-life footage uncropped with `object-fit:contain`. Crop decorative device framing deliberately; never hide the part needed to understand a demo. Use a sensible display size for low-resolution footage rather than claiming that upscaling creates detail.
 
-Pison naming: **Pison Health Agent** for the portfolio cover; **Pison Ultimate Agent** for the agent; **Pison Watch** for the wearable. Preserve team attribution and factual source links.
+Pison naming: **Pison Health Agent** for the portfolio cover; **Pison Ultimate Agent** for the agent; **Pison Watch** for the wearable. Per the 6 November review, do not show the former ending block with team credits, the project deck, GitHub, or the next-project teaser. Keep factual sources in the relevant product sections.
+
+Qwen uses the same opening title, headline and body hierarchy as Pison. The user-supplied English Ad video creator workspace screenshot sits in a centered, 1280 px maximum-width landscape frame, matching the scale of Harbor Bai's Dive-in LLM presentation. The screenshot is the one external link to Qwen Create; the access-region note is quiet text below. Do not add a second external CTA or next-project teaser.
+
+Eye Tracking and Defying Freud use a **shared experimental case-study system** (`src/case-studies/experiments.mjs`, `src/research-cases.css`): same large Inter title, concise subheadline, three-column factual metadata strip, maximum 1280 px width, white canvas, visual-first project evidence, 01–04 numbered sections, and no generic next-project footer. Borrow Harbor Bai's media-first pacing and compact metadata without importing its serif font. Each visual claim identifies its evidence type once. Eye Tracking shows the actual live prototype screenshot and a separate illustrative heatmap film, then documented implementation choices (17 targets, five held-out checks, local processing, page-specific heatmaps) and future validation honestly. Its live link currently requires owner access. Defying Freud pairs the supplied reference and animated film, then examines surface/expression/material; a clearly labeled model-evidence gap remains until Bruce supplies the newest Freud-trained model's real generations/config/checkpoint from his laptop. Never present the animated painting as a LoRA inference or substitute the earlier model. Both pages have complete EN/中文 copy; their films follow the existing offscreen pause and reduced-motion policy.
+
+The About page uses `src/case-studies/about.json` and `src/about-page.css` for a **résumé-grounded, bilingual editorial timeline**. Lead with Bruce's Harvard GSD Human–AI Interaction and RISD Industrial Design background, then his specific contributions at Qwen Create, TikTok and Co-Hive, then education and practical capabilities. Use the résumé's precise technical approach, measured results and business responsibilities, keeping content concise and legible on mobile. The English and Chinese résumés conflict on Qwen's seed-user and satisfaction figures; do not publish either figure without confirmation. Avoid substituting a generic personal brand statement for the actual work.
+
+After the Qwen screenshot, identify the target users documented in Bruce's résumé: frequent marketing creators with limited specialist production expertise, working across text/image/video and social formats. Then show a restrained Overview with one lead agent coordinating five specialists and reusable Skills/tools, plus a three-point capabilities strip for intent/routing, platform-ready assets, and evaluation across model quality, planning, execution, and end-to-end success. Below it, retain the five-part editorial process strip: Brief, Plan, Delegate, Create, Refine (localized in Chinese). Explicitly call this an illustrated or simplified process, not a verified fixed five-step sequence shipped in the interface. Do not invent individual agent names or unverified impact metrics. The English and Chinese résumés disagree on seed-user and satisfaction figures; omit those metrics until Bruce confirms one set. Keep the Qwen sections under the same 1280 px alignment as the media.
 
 ## 4. Editorial economy — a requirement, not a preference
 
@@ -103,7 +116,7 @@ Pison naming: **Pison Health Agent** for the portfolio cover; **Pison Ultimate A
 
 | Element | Default limit | Purpose |
 | --- | --- | --- |
-| Gallery cover | Project name only | Recognize the work |
+| Gallery cover | Project name only; category beneath | Recognize the work |
 | Section headline | 3–8 words | State one point |
 | Project premise | 15–30 words | Product + audience or value |
 | Main section body | One sentence; usually 12–30 words, maximum 35 | Add information absent from the visual |
@@ -148,7 +161,7 @@ A feature is ready only when:
 3. Desktop, 390 px mobile, Chinese, keyboard navigation and reduced-motion behavior have been reviewed. No clipping or horizontal page overflow.
 4. Links, disclosure controls, media and route-preserving language switching work.
 5. `npm run check`, `npm run preview`, and `npm test` pass. Browser limitations are recorded honestly rather than represented as a pass.
-6. The preview and source archive are updated together. New recurring values belong in `src/design-tokens.css`; obsolete component rules are replaced rather than stacked indefinitely.
+6. For local-only iterations, keep a self-contained, downloadable focused preview current with the source; do not publish or prepare a deployment archive until Bruce explicitly asks. For deployments, update the preview and source archive together. New recurring values belong in `src/design-tokens.css`; obsolete component rules are replaced rather than stacked indefinitely.
 
 Change this document when a deliberate system decision changes. Do not let a one-off feature silently redefine the site. Current older case-study CSS may contain legacy values; migrate those during relevant edits rather than treating them as new standards.
 

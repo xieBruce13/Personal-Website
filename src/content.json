@@ -51,8 +51,8 @@
     "featuredProjects": [
       "pison",
       "qwen-create",
-      "co-hive",
-      "eye-tracking-thingz"
+      "eye-tracking-thingz",
+      "lucian-freud-lora"
     ]
   },
   "copy": {
@@ -194,6 +194,8 @@
       "slug": "pison",
       "name": "Pison Health Agent",
       "group": "business",
+      "galleryTitle": {"en":"Pison Health Agent","zh":"Pison Health Agent"},
+      "galleryCategory": {"en":"Personal Agent","zh":"个人 Agent"},
       "type": {
         "en": "Team project · AI agent prototype",
         "zh": "团队项目 · AI Agent 原型"
@@ -217,6 +219,8 @@
       "slug": "qwen-create",
       "name": "Qwen Create",
       "group": "business",
+      "galleryTitle": {"en":"Qwen","zh":"Qwen"},
+      "galleryCategory": {"en":"Agent Team","zh":"Agent 团队"},
       "type": {
         "en": "Professional · AI agents",
         "zh": "专业项目 · AI Agent"
@@ -238,7 +242,7 @@
         "en": "My work included defining a multi-agent product architecture and evaluation across model quality, planning, execution, and end-to-end task success.",
         "zh": "我的工作包括定义多 Agent 产品架构，以及围绕模型质量、规划、执行和端到端任务完成度建立评测。"
       },
-      "url": "https://create.qwen.com/r/ai-studio-pc-global/main/agent-team/welcome",
+      "url": "https://create.qwen.com/r/ai-studio-pc-global/main/agent-team/",
       "focus": {
         "en": "Multi-agent workflows · Evaluation",
         "zh": "多 Agent 工作流 · 评测"
@@ -247,20 +251,22 @@
     },
     {
       "slug": "eye-tracking-thingz",
-      "name": "Eye Tracking Thingz",
+      "name": "Eye Tracking",
       "group": "experimental",
+      "galleryTitle": {"en":"Eye Tracking","zh":"Eye Tracking"},
+      "galleryCategory": {"en":"Research Tool","zh":"研究工具"},
       "type": {
-        "en": "In progress",
-        "zh": "进行中"
+        "en": "Research prototype",
+        "zh": "研究原型"
       },
       "summary": {
-        "en": "An eye-tracking experiment in development.",
-        "zh": "开发中的眼动追踪实验。"
+        "en": "A browser-local prototype for viewing a design portfolio through estimated gaze and page-level heatmaps.",
+        "zh": "一个利用浏览器本地眼动估计与按页热图观察作品集观看过程的原型。"
       },
       "wip": true,
       "body": {
-        "en": "An experimental project in development. This page will grow with the work.",
-        "zh": "开发中的实验项目。此页面将随项目逐步完善。"
+        "en": "The working prototype loads documents, calibrates camera-based gaze estimation, displays page-specific attention heatmaps and exports data. Tracking accuracy and AI-assisted redesign still require evaluation.",
+        "zh": "当前可运行原型已支持文档加载、摄像头眼动校准、按页注意力热图和数据导出。追踪准确度与 AI 辅助版式重排仍需验证。"
       },
       "focus": {
         "en": "Eye tracking · Interaction experiments",
@@ -290,6 +296,19 @@
         "zh": "建筑 · 设计干预"
       },
       "visualTone": "#302c28"
+    },
+    {
+      "slug": "lucian-freud-lora",
+      "name": "Defying Freud",
+      "group": "experimental",
+      "galleryTitle": {"en":"Defying Freud","zh":"Defying Freud"},
+      "galleryCategory": {"en":"Model Training","zh":"模型训练"},
+      "type": {"en":"Exploratory study · In progress","zh":"探索研究 · 进行中"},
+      "summary": {"en":"A visual study of painterly portraits and LoRA-based style learning, with training evidence under review.","zh":"围绕绘画感肖像与 LoRA 风格学习的视觉研究，训练证据仍待核验。"},
+      "wip": true,
+      "body": {"en":"Planned work includes reference selection, rights review, dataset preparation, fine-tuning, and visual evaluation. Training results will be shown when available.","zh":"计划从参考图像筛选、版权核查与数据集整理开始，进行模型微调和视觉评估。训练结果将在完成后展示。"},
+      "focus": {"en":"LoRA · Model fine-tuning · Image generation","zh":"LoRA · 模型微调 · 图像生成"},
+      "visualTone": "#595751"
     },
     {
       "slug": "co-hive",

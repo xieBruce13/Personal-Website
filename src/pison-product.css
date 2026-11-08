@@ -117,9 +117,6 @@
 .pison-scene-controls button{background:transparent;min-width:32px;min-height:30px;font-size:11px}
 .pison-scene-controls button[aria-current]{background:#fff;box-shadow:0 2px 6px #41414111;color:#656565}
 .pison-system-stage{margin-bottom:18px}
-.pison-resource-links{display:flex;align-items:flex-start;justify-content:flex-end;gap:28px;padding-top:31px}
-.pison-credits .pison-resource-links>a{font-size:16px;margin:0;padding-bottom:6px;border-bottom:1px solid #e0e0e0;white-space:nowrap}
-.pison-resource-links .ui-icon{width:15px;height:15px}
 .pison-model-roadmap{padding-bottom:38px}
 @media(min-width:1800px){
  .pison-conversation-composition{padding:48px 46px 0 66px;grid-template-columns:.85fr 1.3fr;gap:5%}

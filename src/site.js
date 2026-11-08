@@ -139,8 +139,22 @@ galleryTiles.forEach(tile=>{
  document.addEventListener('visibilitychange',()=>{if(document.hidden)reset()});
 });
 
+// Homepage films loop only while visible; posters cover reduced motion.
+const galleryPreviewVideos=[...document.querySelectorAll('.gallery-preview-video')];
+const visibleGalleryPreviewVideos=new WeakSet();
+function syncGalleryPreviewVideos(){galleryPreviewVideos.forEach(v=>{
+ if(visibleGalleryPreviewVideos.has(v)&&!document.hidden&&!reducedMotion.matches)v.play().catch(()=>{});
+ else v.pause();
+})}
+if(galleryPreviewVideos.length){
+ const previewObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.intersectionRatio>=.3)visibleGalleryPreviewVideos.add(e.target);else visibleGalleryPreviewVideos.delete(e.target)});syncGalleryPreviewVideos()},{threshold:[0,.3]});
+ galleryPreviewVideos.forEach(v=>{v.muted=true;v.playbackRate=Number(v.dataset.playbackRate)||1;previewObserver.observe(v)});
+ document.addEventListener('visibilitychange',syncGalleryPreviewVideos);
+ reducedMotion.addEventListener('change',syncGalleryPreviewVideos);
+}
+
 // Autoplay only in view. Respect explicit pauses and reduced-motion preferences.
-const pisonVideos=[...document.querySelectorAll('.pison-case video')];
+const pisonVideos=[...document.querySelectorAll('.pison-case video, .experimental-case video')];
 const videoState=new WeakMap();
 function pauseVideo(v){const s=videoState.get(v);if(!v.paused){s.systemPause=true;v.pause()}}
 function tryVideo(v){const s=videoState.get(v);if(s.visible&&!s.userPaused&&!document.hidden&&!reducedMotion.matches)v.play().catch(()=>{});}

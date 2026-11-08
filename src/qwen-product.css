@@ -1,0 +1,57 @@
+/* Qwen Create uses Pison's editorial type hierarchy and a single live-product link. */
+.qwen-page{padding-bottom:110px}
+.qwen-opening{margin:58px 0 64px;max-width:1100px}
+.qwen-opening h1{font-size:clamp(68px,7.6vw,116px);font-weight:500;line-height:1.06;letter-spacing:-.055em;margin-bottom:30px}
+.qwen-opening h2{font-size:clamp(38px,4vw,62px);font-weight:500;line-height:1.08;letter-spacing:-.052em;text-wrap:balance;max-width:16ch}
+.qwen-intro{font-size:19px;line-height:1.5;letter-spacing:-.025em;max-width:39ch;margin-top:28px;color:var(--text-primary)}
+.qwen-role{font-size:14px;color:var(--text-secondary);margin-top:24px;letter-spacing:0}
+.qwen-preview{width:100%;max-width:1280px;margin:0 auto;scroll-margin-top:100px}
+.qwen-preview-link{position:relative;display:block;overflow:hidden;border-radius:18px;border:1px solid var(--edge);background:#181818}
+.qwen-preview-link:focus-visible{outline:2px solid var(--text-primary);outline-offset:5px}
+.qwen-preview img{display:block;width:100%;height:auto;aspect-ratio:2048/1103;object-fit:contain;background:#181818}
+.qwen-preview-action{position:absolute;right:20px;bottom:20px;display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:24px;background:#fffffff2;color:#171717;font-size:14px;line-height:1.2;transition:background var(--motion-feedback),transform var(--motion-feedback)}
+.qwen-preview-action .ui-icon{width:16px;height:16px}
+.qwen-preview-link:hover .qwen-preview-action{background:#fff;transform:translateY(-3px)}
+.qwen-preview figcaption{font-size:14px;line-height:1.55;letter-spacing:0;color:var(--text-secondary);max-width:63ch;padding:16px 2px 0}
+.qwen-audience{display:grid;grid-template-columns:1fr 2fr;gap:40px;max-width:1280px;margin:92px auto 0;padding-bottom:50px;border-bottom:1px solid var(--edge)}
+.qwen-audience h2{font-size:clamp(35px,3.9vw,54px);font-weight:400;line-height:1.1;letter-spacing:-.05em;max-width:18ch;text-wrap:balance}
+.qwen-audience p{font-size:18px;line-height:1.5;letter-spacing:-.02em;max-width:51ch;color:var(--text-secondary);margin-top:22px}
+.qwen-audience ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:24px 0 0}
+.qwen-audience li{font-size:13px;line-height:1.35;color:#555;border:1px solid #ddd;border-radius:999px;padding:9px 13px}
+.qwen-overview{max-width:1280px;margin:84px auto 0}
+.qwen-overview-intro{display:grid;grid-template-columns:1fr 2fr;gap:40px;padding-bottom:60px}
+.qwen-section-label{font-size:14px;line-height:1.5;color:var(--text-secondary);letter-spacing:0}
+.qwen-overview-intro h2{font-size:clamp(39px,4.6vw,70px);font-weight:400;line-height:1.09;letter-spacing:-.055em;max-width:14ch;text-wrap:balance}
+.qwen-overview-intro p{font-size:18px;line-height:1.5;letter-spacing:-.02em;max-width:46ch;color:var(--text-secondary);margin-top:22px}
+.qwen-agent-map{display:flex;align-items:center;flex-direction:column;justify-content:center;min-height:330px;padding:45px 40px 38px;background:var(--surface);border-radius:var(--gallery-radius)}
+.qwen-lead-agent{display:flex;align-items:center;gap:15px;padding:16px 20px;border:1px solid #e0e0e0;border-radius:12px;background:#fff;min-width:224px}
+.qwen-lead-mark{width:32px;height:32px;border-radius:50%;background:#1d1d1d;display:flex;align-items:center;justify-content:center;gap:3px}
+.qwen-lead-mark span{display:block;width:3px;height:12px;background:#fff;border-radius:4px;transform:rotate(29deg)}
+.qwen-lead-mark span:nth-child(2){height:19px;transform:rotate(-26deg)}
+.qwen-lead-mark span:nth-child(3){height:9px}
+.qwen-lead-agent strong,.qwen-agent-map>p strong{display:block;font-size:16px;font-weight:500;line-height:1.4;letter-spacing:-.02em}
+.qwen-lead-agent div>span,.qwen-agent-map>p>span{display:block;font-size:13px;line-height:1.5;color:var(--text-secondary)}
+.qwen-agent-connector{height:43px;width:1px;background:#c8c8c8}
+.qwen-specialists{display:grid;grid-template-columns:repeat(5,48px);gap:24px;position:relative;justify-content:center}
+.qwen-specialists:before{content:'';position:absolute;left:24px;right:24px;top:-1px;height:1px;background:#c8c8c8}
+.qwen-specialist{display:grid;place-items:center;width:48px;height:48px;background:#fff;border:1px solid #dadada;border-radius:50%;font-size:14px;letter-spacing:-.01em;color:#3b3b3b;position:relative}
+.qwen-specialist:before{content:'';position:absolute;width:1px;height:10px;top:-10px;background:#c8c8c8}
+.qwen-agent-map>p{text-align:center;margin-top:22px}
+.qwen-feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:42px}
+.qwen-feature-grid>div{border-top:1px solid #bdbdbd;padding-top:16px;min-width:0}
+.qwen-feature-grid h3{font-size:17px;line-height:1.4;font-weight:500;letter-spacing:-.025em}
+.qwen-feature-grid p{font-size:15px;line-height:1.55;color:var(--text-secondary);max-width:34ch;margin-top:11px}
+.qwen-workflow{margin-top:104px;border-top:1px solid var(--edge);padding-top:28px}
+.qwen-workflow-heading{display:flex;justify-content:space-between;align-items:baseline;gap:32px}
+.qwen-workflow-heading h3{font-size:clamp(26px,3vw,41px);font-weight:400;line-height:1.14;letter-spacing:-.05em;max-width:20ch}
+.qwen-workflow ol{list-style:none;padding:0;margin:56px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.qwen-workflow li{border-top:1px solid #b8b8b8;padding-top:15px;display:flex;flex-direction:column;gap:35px;min-width:0}
+.qwen-workflow li>span{font-size:13px;line-height:1.5;color:var(--text-secondary)}
+.qwen-workflow li strong{font-size:clamp(19px,2.2vw,29px);font-weight:400;letter-spacing:-.05em;line-height:1.25}
+.qwen-workflow>p{font-size:13px;line-height:1.5;letter-spacing:0;color:var(--text-secondary);margin-top:24px}
+@media(max-width:850px){.qwen-opening{margin-top:46px}.qwen-preview{max-width:100%}}
+@media(max-width:850px){.qwen-overview-intro,.qwen-audience{grid-template-columns:1fr 2fr;gap:24px}.qwen-overview{margin-top:80px}}
+@media(max-width:620px){.qwen-page{padding:112px 16px 78px}.qwen-opening{margin:48px 0 42px}.qwen-opening h1{font-size:68px;margin-bottom:26px}.qwen-opening h2{font-size:37px}.qwen-intro{font-size:18px;line-height:1.5;margin-top:24px}.qwen-role{margin-top:20px;font-size:13px}.qwen-preview-link{border-radius:12px}.qwen-preview-action{right:9px;bottom:9px;padding:8px 10px;font-size:12px;gap:6px}.qwen-preview-action .ui-icon{width:13px;height:13px}.qwen-preview figcaption{font-size:13px;padding-top:12px}}
+@media(max-width:620px){.qwen-overview{margin-top:75px}.qwen-overview-intro{display:block;padding-bottom:40px}.qwen-overview-intro h2{font-size:38px;margin-top:18px}.qwen-overview-intro p{font-size:16px;margin-top:16px}.qwen-agent-map{min-height:270px;padding:38px 14px 32px;border-radius:12px}.qwen-specialists{grid-template-columns:repeat(5,40px);gap:13px}.qwen-specialists:before{left:20px;right:20px}.qwen-specialist{width:40px;height:40px;font-size:12px}.qwen-workflow{margin-top:72px}.qwen-workflow-heading{display:block}.qwen-workflow-heading h3{font-size:29px;margin-top:16px}.qwen-workflow ol{margin-top:36px;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.qwen-workflow li{gap:24px}.qwen-workflow li strong{font-size:24px}.qwen-workflow>p{font-size:13px;margin-top:30px}}
+@media(max-width:620px){.qwen-audience{display:block;margin-top:68px;padding-bottom:36px}.qwen-audience h2{font-size:34px;margin-top:16px}.qwen-audience p{font-size:16px;margin-top:16px}.qwen-audience ul{margin-top:20px}.qwen-audience li{font-size:12px;padding:8px 11px}.qwen-feature-grid{grid-template-columns:1fr;gap:24px;margin-top:34px}.qwen-feature-grid p{max-width:none;margin-top:7px}}
+@media(prefers-reduced-motion:reduce){.qwen-preview-action{transition:none}.qwen-preview-link:hover .qwen-preview-action{transform:none}}

@@ -1,0 +1,90 @@
+{
+  "en": {
+    "eyebrow": "Bruce Xie · Cambridge, MA",
+    "headline": "Ideas into products.<br>Design into decisions.",
+    "intro": "I'm Bruce, an AI product manager and builder who brings together product strategy, interaction design, and hands-on prototyping.",
+    "bio": "I study Human–AI Interaction at Harvard GSD, after training in Industrial Design at RISD. I care about the space between what AI can do and what people actually need—and I enjoy turning that gap into products people can use.",
+    "focus": ["Consumer AI", "Agent workflows", "Human–AI interaction"],
+    "experienceTitle": "Selected experience",
+    "experience": [
+      {
+        "company": "Qwen · Alibaba",
+        "period": "Mar–Aug 2026",
+        "role": "AI Product Manager Intern",
+        "summary": "Helped take Qwen Create from concept to international launch: an agent-powered creative workspace for marketing content.",
+        "details": ["Defined a workflow with one coordinating agent, five specialists, and reusable tools for research, planning, and image, text, and video creation.", "Built evaluation criteria across model quality, planning, execution, and end-to-end task success; worked with engineering, model, design, and go-to-market teams on launch in five markets."]
+      },
+      {
+        "company": "TikTok · ByteDance",
+        "period": "May–Aug 2025",
+        "role": "AI Product Manager Intern",
+        "summary": "Made subjective UGC quality more measurable by introducing human authenticity as an AI evaluation dimension.",
+        "details": ["Developed prompts, test sets, and failure analysis with algorithm teams, improving evaluator precision/recall from 0.77/0.74 to 0.93/0.91.", "Integrated evaluation into production quality and recommendation workflows; related vertical DAU rose 8% and content-quality scores 20%."]
+      },
+      {
+        "company": "Co-Hive",
+        "period": "Dec 2023–Sep 2024",
+        "role": "Founder & Product Lead",
+        "summary": "Founded a campus sharing platform combining smart lockers, real-time device sync, and a borrowing experience for students.",
+        "details": ["Led user research, hardware–software integration, and the scan → borrow → return → rewards experience.", "Launched five stations with 200+ transactions and 78% repeat usage in month one; received $10K from Brown B-Lab and two innovation awards."]
+      }
+    ],
+    "educationTitle": "Education",
+    "education": [
+      {"school": "Harvard University · GSD", "period": "2025–2027", "degree": "Master of Design Studies (MDes)", "focus": "Focus: Human–AI Interaction"},
+      {"school": "Rhode Island School of Design", "period": "2021–2025", "degree": "Bachelor of Industrial Design", "focus": "Industrial and interaction design"}
+    ],
+    "capabilitiesTitle": "What I work with",
+    "capabilities": [
+      {"name": "AI systems", "items": "LLM APIs, agent workflows, tool calling, multi-agent systems, evaluation"},
+      {"name": "Product", "items": "Strategy, user research, experimentation, metrics, market sizing, pricing, go-to-market"},
+      {"name": "Making", "items": "Python, SQL, JavaScript, Figma, Git, Arduino, rapid prototyping"}
+    ],
+    "contactTitle": "Let's make something useful.",
+    "contactLabel": "Get in touch"
+  },
+  "zh": {
+    "eyebrow": "Bruce Xie · 美国剑桥",
+    "headline": "从想法到产品。<br>从设计到决策。",
+    "intro": "我是 Bruce，一名结合产品策略、交互设计与动手开发的 AI 产品经理与创造者。",
+    "bio": "我在哈佛 GSD 攻读设计研究硕士，重点关注 AI 人机交互；本科毕业于 RISD 工业设计专业。我关心的不仅是 AI 能做到什么，更是人们真正需要什么，以及如何把两者连接成好用的产品。",
+    "focus": ["消费级 AI", "Agent 工作流", "人机交互"],
+    "experienceTitle": "工作与创业经历",
+    "experience": [
+      {
+        "company": "阿里巴巴 · 千问",
+        "period": "2026.03–08",
+        "role": "AI 产品经理实习生",
+        "summary": "参与 Qwen Create 从 0 到 1 的产品设计与海外上线，面向营销创作者构建 Agent 驱动的创作工作台。",
+        "details": ["设计由 1 个主 Agent、5 个专业 Agent 和可复用工具组成的工作流，覆盖调研、策划和图文视频创作。", "从模型质量、规划、执行和端到端成功率四个层面建立评测框架，协同研发、模型、设计和市场团队推动产品在五个海外市场上线。"]
+      },
+      {
+        "company": "字节跳动 · TikTok",
+        "period": "2025.05–08",
+        "role": "AI 产品经理实习生",
+        "summary": "将 UGC 内容的“真人感”转化为可以评测、迭代并用于推荐决策的 AI 质量标准。",
+        "details": ["与算法团队设计 Prompt、测试集和失效分析，将评估模型的准确率／召回率从 0.77/0.74 提升至 0.93/0.91。", "推动评估能力进入线上内容质量与推荐流程，相关垂类 DAU 提升 8%，内容质量评分提升 20%。"]
+      },
+      {
+        "company": "Co-Hive 共享社区",
+        "period": "2023.12–2024.09",
+        "role": "创始人兼产品负责人",
+        "summary": "创立结合智能柜、设备状态实时同步和移动端体验的校园共享平台，帮助学生借用低频物品。",
+        "details": ["负责用户研究、软硬件整合，以及“扫码 → 借用 → 归还 → 积分”的完整体验。", "在高校落地 5 个站点，首月交易 200+ 次、复借率 78%；获 Brown B-Lab 1 万美元支持及两项创新奖。"]
+      }
+    ],
+    "educationTitle": "教育背景",
+    "education": [
+      {"school": "哈佛大学 · 设计学院", "period": "2025–2027", "degree": "设计研究硕士（MDes）", "focus": "研究方向：AI 人机交互"},
+      {"school": "罗德岛设计学院 · RISD", "period": "2021–2025", "degree": "工业设计学士", "focus": "工业设计与交互设计"}
+    ],
+    "capabilitiesTitle": "我的工具与方法",
+    "capabilities": [
+      {"name": "AI 系统", "items": "LLM API、Agent 工作流、工具调用、多 Agent 系统、模型与 Agent 评测"},
+      {"name": "产品", "items": "产品策略、用户研究、实验与指标、市场规模、定价、商业化与增长"},
+      {"name": "动手实现", "items": "Python、SQL、JavaScript、Figma、Git、Arduino、快速原型"}
+    ],
+    "contactTitle": "一起做些有用的东西。",
+    "contactLabel": "联系我"
+  }
+}

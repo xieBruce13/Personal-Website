@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bruce — Portfolio preview</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font: 13px Inter, Arial, sans-serif; background: #151515; color: #f3f3f3; }
+    header { height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 18px; border-bottom: 1px solid #323232; }
+    .identity { font-size: 14px; font-weight: 500; white-space: nowrap; }
+    nav { display: flex; align-items: center; gap: 6px; overflow-x: auto; }
+    button { font: inherit; padding: 9px 15px; min-height: 36px; color: #dedede; background: transparent; border: 1px solid #494949; border-radius: 22px; cursor: pointer; white-space: nowrap; }
+    button[aria-pressed="true"] { color: #171717; background: #ebebeb; border-color: #ebebeb; }
+    button:focus-visible { outline: 2px solid #a8c5ff; outline-offset: 3px; }
+    .view { display: flex; justify-content: center; height: calc(100dvh - 56px); overflow: hidden; }
+    iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+    iframe.mobile { width: 390px; max-width: 100%; border-left: 1px solid #494949; border-right: 1px solid #494949; }
+    @media(max-width: 640px) {
+      header { padding: 0 8px; gap: 8px; }
+      .identity { display: none; }
+      nav { width: 100%; justify-content: center; }
+      button { padding-inline: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="identity">Bruce · Portfolio preview</span>
+    <nav aria-label="Preview controls">
+      <button type="button" data-route="home" aria-pressed="true">Home</button>
+      <button type="button" data-route="pison" aria-pressed="false">Pison</button>
+      <button type="button" data-route="qwen" aria-pressed="false">Qwen</button>
+      <button type="button" data-size="desktop" aria-pressed="true">Desktop</button>
+      <button type="button" data-size="mobile" aria-pressed="false">Mobile</button>
+    </nav>
+  </header>
+  <main class="view">
+    <iframe id="site" title="Portfolio preview" src="/en/" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </main>
+  <script>
+    const frame = document.getElementById('site');
+    let route = '/en/';
+    const destination = kind => {
+      const lang = route.startsWith('/zh/') ? 'zh' : 'en';
+      if (kind === 'pison') return `/${lang}/work/pison/`;
+      if (kind === 'qwen') return `/${lang}/work/qwen-create/`;
+      return `/${lang}/`;
+    };
+    function setSelection() {
+      const active = route.includes('/work/pison/') ? 'pison' : route.includes('/work/qwen-create/') ? 'qwen' : 'home';
+      document.querySelectorAll('[data-route]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.route === active)));
+    }
+    document.querySelectorAll('[data-route]').forEach(button => button.addEventListener('click', () => {
+      route = destination(button.dataset.route);
+      frame.src = route;
+      setSelection();
+      history.replaceState(null, '', '#' + route);
+    }));
+    document.querySelectorAll('[data-size]').forEach(button => button.addEventListener('click', () => {
+      const mobile = button.dataset.size === 'mobile';
+      frame.classList.toggle('mobile', mobile);
+      document.querySelectorAll('[data-size]').forEach(choice => choice.setAttribute('aria-pressed', String(choice.dataset.size === button.dataset.size)));
+    }));
+    frame.addEventListener('load', () => {
+      try { route = frame.contentWindow.location.pathname; } catch {}
+      setSelection();
+      history.replaceState(null, '', '#' + route);
+    });
+    if (/^\/(en|zh)\/(?:work\/(?:pison|qwen-create)\/)?$/.test(location.hash.slice(1))) {
+      route = location.hash.slice(1);
+      frame.src = route;
+      setSelection();
+    }
+  </script>
+</body>
+</html>
