@@ -25,7 +25,7 @@ const copy = {
     mapTitle: 'How a heatmap is made',
     mapIntro: 'One image, one caption, and a few simulated gaze samples.',
     stages: [
-      ['Page positions', 'Each dot marks one gaze estimate on the PDF.', 'Seven dots fall on the gray image square and two on the line representing its caption.'],
+      ['Page positions', 'Each dot marks one gaze estimate on the PDF.', 'Seven dots fall on the large rounded image block and two on the dark bars representing its caption.'],
       ['Time per cell', 'The tool adds viewing time to a 60 × 80 grid, skipping gaps over 750 ms.', 'A few grid cells mark the same positions. Darker cells hold more time.'],
       ['Heatmap export', 'Smoothing blends nearby cells. Warmer areas show longer dwell on this page.', 'One warm spot sits on the image and a smaller, cooler spot sits on the caption.']
     ],
@@ -61,7 +61,7 @@ const copy = {
     mapTitle: '一张热图怎样生成',
     mapIntro: '用一张图、一段图注和几个模拟注视点，演示热图的生成过程。',
     stages: [
-      ['页面位置', '每个点代表一次估计的注视位置。', '七个点落在代表图像的灰色方块上，两个点落在代表图注的横线上。'],
+      ['页面位置', '每个点代表一次估计的注视位置。', '七个点落在代表图像的圆角大色块上，两个点落在代表图注的深灰色粗线上。'],
       ['累计停留时间', '工具在 60 × 80 的网格中累加停留时间，跳过超过 750 毫秒的间隔。', '相应位置的网格颜色越深，表示停留时间越长。'],
       ['导出热图', '相邻网格经过平滑处理。颜色越暖，表示在本页该处停留得越久。', '图像上有一处暖色热点，图注上的热点较小，颜色也较冷。']
     ],
@@ -102,10 +102,12 @@ const drawings = [
   targetDots(checks,true) + '<circle class="guide-ring" cx="134.16" cy="80" r="10"/><path class="error-line" d="m137.6 77.6 28-19.6"/><circle cx="169" cy="55.5" r="4.6" class="fit-target"/>'
 ];
 
-// This unframed page sits under each signal layer, keeping every coordinate aligned.
+// Each stage uses the same document underneath its page-relative signal layer.
 const pageArt = `<svg class="eye-page-art" viewBox="0 0 240 136" aria-hidden="true" focusable="false">
-  <rect x="80" y="10" width="80" height="80" fill="#d7d7d7"/>
-  <line x1="81" y1="101" x2="151" y2="101" stroke="#a6a6a6" stroke-width="4" stroke-linecap="round"/>
+  <rect x="20" y="8" width="200" height="120" rx="11" fill="#5e5e5e"/>
+  <rect x="128" y="16" width="78" height="13" rx="6.5" fill="#84d98b"/>
+  <rect x="34" y="36" width="172" height="83" rx="9" fill="#a1a1a1"/>
+  <path d="M48 90h131v12h-50v9H48Z" fill="#606060"/>
 </svg>`;
 
 export function eyeCase(language) {
