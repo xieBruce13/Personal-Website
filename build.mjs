@@ -2,7 +2,8 @@ import {pisonCover, studyCover, placeholderCovers} from './src/project-covers.mj
 import {icon} from './src/icons.mjs';
 import {heroObject} from './src/hero-object.mjs';
 import {pisonCase} from './src/case-studies/pison.mjs';
-import {eyeCase,freudCase} from './src/case-studies/experiments.mjs';
+import {freudCase} from './src/case-studies/freud.mjs';
+import {eyeCase} from './src/case-studies/experiments.mjs';
 import {mkdir,writeFile,copyFile,readFile,rm,cp} from 'node:fs/promises';
 const {projects:allProjects,copy,site}=JSON.parse(await readFile(new URL('./src/content.json',import.meta.url),'utf8'));
 const pison=JSON.parse(await readFile(new URL('./src/case-studies/pison.json',import.meta.url),'utf8'));

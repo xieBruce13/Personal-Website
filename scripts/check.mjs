@@ -94,8 +94,9 @@ for(const l of ['en','zh']){
  const html=await readFile(`dist/${l}/work/lucian-freud-lora/index.html`,'utf8');
  assert(html.includes('Defying Freud'),'New Freud project page title required');
  assert(html.includes('research-freud-hero'),'Freud study must have a substantive media-first presentation');
- assert(html.includes('/media/lora/blink-loop.mp4'),'Freud study must show the supplied animated reference');
- assert(html.includes('/media/lora/reference-portrait.jpg'),'Freud study must show the portrait reference');
+ for(const id of ['173','002','003','004'])assert(html.includes('/media/lora/ref-LF-'+id+'.webp'),'Missing one of the four Freud reference plates');
+ for(const id of ['base','pilot','oil39'])assert(html.includes('/media/lora/portrait-classical-'+id+'.webp'),'Missing matched classical portrait');
+ assert(html.includes('class="folio-flow"') && html.includes('class="folio-branches"'),'Freud study must explain the training and refinement process');
  assert(html.includes('research-material-grid'),'Freud study must examine the visual qualities');
  assert(!html.includes('class="next-project"'),'Freud presentation should end cleanly');
  const eye=await readFile(`dist/${l}/work/eye-tracking-thingz/index.html`,'utf8');

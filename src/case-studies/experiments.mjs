@@ -34,33 +34,6 @@ const copy = {
       built:'Built now',builtList:['Document viewing and camera calibration','Page-specific heatmaps, quality warnings and JSON export','Automated tests for the processing workflow'],
       later:'To validate next',laterList:['Tracking accuracy with real viewing conditions','Liked, confusing and missed areas as separate signals','AI-assisted layout revision and a before/after study'],
       repo:'View project source',repoNote:'Source repository is private; access depends on GitHub permissions.'
-    },
-    freud: {
-      title:'Defying Freud',headline:'Can a painting become a visual system?',
-      intro:'An exploration of portraiture, movement and LoRA-based style learning, inspired by the material quality of Lucian Freud’s paintings.',
-      role:'Independent visual research',format:'Image models · LoRA',stage:'Research draft',
-      original:'Supplied portrait reference',animated:'Animated portrait experiment',
-      film:'The blink is an animated reference study—not a verified output from a trained LoRA.',
-      problemLabel:'01 / The inquiry',problem:'Style is more than the subject of a painting.',
-      problemBody:'I was interested in what makes a portrait feel physically painted: uneven color, vulnerable expression, dense texture and the strange stillness of a face.',
-      studyLabel:'02 / Visual research',study:'Three things worth learning.',
-      qualities:[
-        ['Surface','Layered marks and tonal variation that suggest paint rather than a smooth filter.'],
-        ['Expression','A face that can hold tension without a dramatic pose or theatrical gesture.'],
-        ['Material','Skin, hair and fabric should have different visual behavior.']
-      ],
-      methodLabel:'03 / Model experiment',method:'From references to a testable adapter.',
-      methodBody:'For the newer Freud-image model, the useful comparison is not whether one output resembles one source portrait. It is whether the visual qualities survive changes in prompt, pose and subject.',
-      sequence:[
-        ['Reference set','Document works and image rights.'],
-        ['Dataset','Curate and describe relevant visual traits.'],
-        ['LoRA adapter','Inspect the newest trained checkpoint.'],
-        ['Prompt grid','Compare variation, fidelity and repetition.']
-      ],
-      statusLabel:'04 / Evidence & next edit',status:'What this draft can show honestly.',
-      statusBody:'The supplied painting and blinking film demonstrate the visual direction. I still need the newer model’s actual generations, training configuration and checkpoint evidence before presenting its outcomes or making a claim about style fidelity.',
-      request:'To complete the comparison: latest model output grid, training notes and adapter file from the Fraud folder.',
-      foot:'Only the newer Freud-image model will be shown here; the earlier model is excluded.'
     }
   },
   zh: {
@@ -96,33 +69,6 @@ const copy = {
       built:'已经实现',builtList:['文档阅读、摄像头校准','按页热图、质量提示与 JSON 导出','处理流程的自动化测试'],
       later:'下一步验证',laterList:['真实观看条件下的追踪准确度','分别采集喜欢、困惑与未看到的区域','AI 辅助重排与前后效果对比'],
       repo:'查看项目源码',repoNote:'源码仓库为私有，访问需具备 GitHub 权限。'
-    },
-    freud: {
-      title:'Defying Freud',headline:'一幅画能否变成可学习的视觉系统？',
-      intro:'围绕 Lucian Freud 绘画的物质感，探索肖像、微动作与基于 LoRA 的风格学习。',
-      role:'独立视觉研究',format:'图像模型 · LoRA',stage:'研究草稿',
-      original:'提供的肖像参考图',animated:'肖像动态实验',
-      film:'眨眼影像为参考图的动态实验，尚不能视为训练后 LoRA 的验证输出。',
-      problemLabel:'01 / 探索的问题',problem:'画风不只是画面中的人物。',
-      problemBody:'我想理解肖像为什么会显得真实而有重量：不均匀的色彩、微妙的表情、厚重的质感，以及静止面孔中的张力。',
-      studyLabel:'02 / 视觉研究',study:'值得学习的三个维度。',
-      qualities:[
-        ['表面','叠加的笔触与色调变化，而不只是一层平滑滤镜。'],
-        ['表情','不靠夸张姿势，也能保留面部的微妙张力。'],
-        ['材质','皮肤、头发与织物具有不同的视觉表达。']
-      ],
-      methodLabel:'03 / 模型实验',method:'从参考作品，到可测试的适配器。',
-      methodBody:'对于新一版使用 Freud 作品训练的模型，关键不只是像不像某张原画，而是换了提示词、姿态和人物后，视觉特征是否仍然成立。',
-      sequence:[
-        ['参考作品','记录来源并确认图像使用权。'],
-        ['数据集','筛选图像并描述视觉特征。'],
-        ['LoRA 适配器','核验最新模型的训练权重。'],
-        ['提示词对照','比较变化、风格与重复程度。']
-      ],
-      statusLabel:'04 / 证据与后续',status:'这一版能够如实展示什么。',
-      statusBody:'目前能确认的是参考绘画与眨眼动态实验。我还需要新版模型的实际生成结果、训练配置与权重文件，才能展示结果或评价风格复现程度。',
-      request:'完成对比需要：Fraud 文件夹中新模型的生成图、训练记录与适配器文件。',
-      foot:'本页只会展示使用 Freud 图像的新版模型，不纳入旧模型。'
     }
   }
 };
@@ -140,14 +86,4 @@ export function eyeCase(l){
  <section class="research-section research-flow"><div class="research-section-heading"><span>${c.flowLabel}</span></div><ol class="research-steps">${c.steps.map(([number,name,description])=>`<li><span>${number}</span><strong>${name}</strong><p>${description}</p></li>`).join('')}</ol></section>
  <section class="research-section research-decisions">${sectionHead(c.decisionsLabel,c.decisions,c.decisionsBody)}<div class="research-evidence"><figure><img src="/media/eye-tracking/attention-study.png" width="1154" height="1400" alt="${c.sample}" loading="lazy" decoding="async"><figcaption>${c.sample}</figcaption></figure><div class="research-evidence-notes">${c.notes.map(([title,description],i)=>`<article><span>0${i+1}</span><h3>${title}</h3><p>${description}</p></article>`).join('')}</div></div></section>
  <section class="research-section research-future">${sectionHead(c.nextLabel,c.next,c.nextBody)}<div class="research-status-grid"><div><h3>${c.built}</h3><ul>${c.builtList.map(t=>`<li>${t}</li>`).join('')}</ul></div><div><h3>${c.later}</h3><ul>${c.laterList.map(t=>`<li>${t}</li>`).join('')}</ul></div></div><div class="research-source"><a href="https://github.com/xieBruce13/Eye-Tracking-Canva" target="_blank" rel="noopener noreferrer">${c.repo} ↗</a><span>${c.repoNote}</span></div></section>`;
-}
-
-export function freudCase(l){
- const c=copy[l].freud;
- return `${opening(c,copy[l].labels)}
- <figure class="research-freud-hero" id="project-media"><div class="research-freud-panel"><img src="/media/lora/reference-portrait.jpg" width="1320" height="2000" alt="${c.original}" loading="eager" decoding="async"><span class="research-art-label">01 / ORIGINAL STUDY</span></div><div class="research-freud-panel"><video muted loop playsinline controls preload="metadata" poster="/media/lora/reference-portrait.jpg" aria-label="${c.animated}"><source src="/media/lora/blink-loop.mp4" type="video/mp4"></video><span class="research-art-label">02 / LIVING IMAGE</span></div><figcaption>${c.film}</figcaption></figure>
- <section class="research-section research-question">${sectionHead(c.problemLabel,c.problem,c.problemBody)}</section>
- <section class="research-section research-material">${sectionHead(c.studyLabel,c.study)}<div class="research-material-grid">${c.qualities.map(([title,description],i)=>`<article><div class="research-material-crop research-crop-${i+1}"><img src="/media/lora/reference-portrait.jpg" alt="${title}" loading="lazy" decoding="async"></div><h3><span>0${i+1}</span>${title}</h3><p>${description}</p></article>`).join('')}</div></section>
- <section class="research-section research-method">${sectionHead(c.methodLabel,c.method,c.methodBody)}<ol class="research-method-line">${c.sequence.map(([title,description],i)=>`<li><span>0${i+1}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></section>
- <section class="research-section research-freud-status">${sectionHead(c.statusLabel,c.status,c.statusBody)}<div class="research-open-evidence"><p>${c.request}</p><small>${c.foot}</small></div></section>`;
 }

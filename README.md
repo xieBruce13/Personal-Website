@@ -4,7 +4,7 @@ Bilingual AI product management portfolio. Dependency-free static generation wit
 
 ## Design and content
 
-Read `docs/DESIGN_SYSTEM.md` before changing the UI. The white editorial layout uses a glass B·XYZ hero and a single row of four square project covers: Pison Health Agent (Personal Agent), Qwen (Agent Team), Eye Tracking (Research Tool), and an in-progress Lucian Freud LoRA study (Model Training). Each title and specialty appears below its cover. About and Contact are separate pages.
+Read `docs/DESIGN_SYSTEM.md` before changing the UI. The white editorial layout uses a glass B·XYZ hero and a single row of four square project covers: Pison Health Agent (Personal Agent), Qwen (Agent Team), Eye Tracking (Research Tool), and Defying Freud, a completed private LoRA study (Model Training). Each title and specialty appears below its cover. About and Contact are separate pages.
 
 - `src/content.json`: bilingual portfolio copy and project order.
 - `src/case-studies/pison.json` and `pison.mjs`: bilingual Pison presentation, demonstrations and team credits.
@@ -21,7 +21,7 @@ Preserve factual attribution, prototype status, accessible motion and concise co
 npm run dev
 ```
 
-Open `http://localhost:4173/review.html` for the lightweight hosted desktop/mobile portfolio review, including Home, Pison, and Qwen. `/en/` and `/zh/` are the actual pages. `/pison-review.html` and `/qwen-review.html` redirect to the relevant hosted-review tabs.
+Open `http://localhost:4173/review.html` for the lightweight hosted desktop/mobile portfolio review, including Home, Pison, Qwen, and Defying Freud. `/en/` and `/zh/` are the actual pages. `/pison-review.html` and `/qwen-review.html` redirect to the relevant hosted-review tabs.
 
 ```sh
 npm run check
