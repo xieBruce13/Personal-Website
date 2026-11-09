@@ -65,4 +65,20 @@ const focusedPreview=preview
  .replace('<button id="pison" aria-pressed="false">Pison</button>','')
  .replace("document.getElementById('pison').addEventListener('click',()=>show(current.startsWith('/zh/')?'/zh/work/pison/':'/en/work/pison/'));",'');
 await writeFile('previews/home-qwen-review.html',focusedPreview);
+
+// Open this case directly from disk. Other portfolio links continue in the full review.
+const eyeReviewFile = language => language === 'en' ? 'eye-tracking-review.html' : 'eye-tracking-zh-review.html';
+for (const language of ['en', 'zh']) {
+  const route = '/' + language + '/work/eye-tracking-thingz/';
+  const page = (await readFile('dist' + route + 'index.html', 'utf8'))
+    .replace('<link rel="stylesheet" href="/styles.css">', () => '<style>' + css + '</style>')
+    .replace('<script type="module" src="/site.js"></script>', () => '<script type="module">' + behavior + '</script>')
+    .replace(/(src|poster)="(\/media\/[^"]+)"/g, (_, attr, path) => {
+      const {type, data} = media[path];
+      return attr + '="data:' + type + ';base64,' + data + '"';
+    })
+    .replace(/href="(\/(en|zh)\/[^"]*)"/g, (_, path, lang) =>
+      'href="' + (path === '/' + lang + '/work/eye-tracking-thingz/' ? eyeReviewFile(lang) : 'review.html#' + path) + '"');
+  await writeFile('previews/' + eyeReviewFile(language), page);
+}
 console.log('Created standalone previews/review.html with bilingual routes and responsive review controls.');

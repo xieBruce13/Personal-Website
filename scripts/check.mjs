@@ -100,14 +100,20 @@ for(const l of ['en','zh']){
  assert(html.includes('research-material-grid'),'Freud study must examine the visual qualities');
  assert(!html.includes('class="next-project"'),'Freud presentation should end cleanly');
  const eye=await readFile(`dist/${l}/work/eye-tracking-thingz/index.html`,'utf8');
- assert(eye.includes('research-eye-hero'),'Eye Tracking must have a media-first presentation');
- assert(eye.includes('/media/eye-tracking/attention-heatmap-loop.mp4'),'Eye Tracking must show the illustrative heatmap animation');
- assert(eye.includes('/media/eye-tracking/prototype-live-capture.jpg'),'Eye Tracking must show a real captured app interface');
- assert(eye.includes('https://eye-tracking-canva-bruce.brucexie13.chatgpt.site'),'Eye Tracking must link to its live prototype');
- assert.equal((eye.match(/<li><span>0[1-4]<\/span><strong>/g)||[]).length,4,'Eye Tracking should demonstrate four steps');
+ assert(eye.indexOf('id="eye-context-title"') >= 0 && eye.indexOf('id="eye-solution-title"') > eye.indexOf('id="eye-context-title"'),'Eye Tracking should introduce the research problem before the solution');
+ const opening=eye.slice(eye.indexOf('class="eye-landing"'),eye.indexOf('class="eye-brief"'));
+ assert(opening.includes('<a href="https://eye-tracking-canva-bruce.brucexie13.chatgpt.site"'),'Opening visual must link to the working prototype');
+ for(const size of ['wide','phone']){
+  for(const ext of ['mp4','webp'])assert(opening.includes('/media/eye-tracking/landing-'+size+'.'+ext),'Missing landing film or poster');
+ }
+ for(const stage of ['positions','dwell','heatmap'])assert(eye.includes('/media/eye-tracking/layout-'+stage+'.svg'),'Missing illustrated heatmap stage: '+stage);
+ assert(!/class="(?:research-meta|eye-screens)"|HealParallel|study-upload|study-cast|Start a session|Open a portfolio/.test(eye),'Omit the retired examples, setup panels and metadata');
+ assert(eye.includes('class="eye-model"') && eye.includes('class="eye-detail-flow"'),'Explain calibration and heatmap generation visually');
+ assert(eye.includes(l==='en'?'Why this is useful':'这对设计研究有什么用') && eye.includes('https://pubmed.ncbi.nlm.nih.gov/22309059/') && eye.includes('https://www.nngroup.com/articles/eyetracking-tasks-efficient-scanning/'),'Ground the design rationale in the linked studies');
+ assert(eye.includes('id="eye-next-title"') && eye.includes(l==='en'?'Measure the error':'测量追踪误差'),'Describe the upcoming accuracy and design-review tests');
+ assert(!eye.includes('camera-setup.webp'),'Omit the retired seated-person illustration');
  assert(!eye.includes('class="next-project"'),'Eye Tracking presentation should end cleanly');
 }
-assert((await stat('dist/media/eye-tracking/prototype-live-capture.jpg')).isFile(),'Verified Eye Tracking interface screenshot required');
 console.log(`Passed: bilingual copy, ${projects.length} project records, ${files.length} generated pages, internal assets/links, and language-pair navigation.`);
 
 const pison=JSON.parse(await readFile('src/case-studies/pison.json','utf8'));

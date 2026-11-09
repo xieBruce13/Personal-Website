@@ -4,7 +4,7 @@ import {resolve,extname,sep} from 'node:path';
 const option = name => { const i=process.argv.indexOf(name); return i>=0?process.argv[i+1]:undefined; };
 const root=resolve('dist'),port=Number(option('--port')||process.env.PORT||4173);
 const host=option('--host')||'127.0.0.1';
-const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.ico':'image/x-icon'};
+const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.mp4':'video/mp4','.ico':'image/x-icon'};
 createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,'http://localhost');let file=resolve(root,'.'+decodeURIComponent(url.pathname));

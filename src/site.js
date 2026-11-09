@@ -169,6 +169,26 @@ const demoObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{const 
 pisonVideos.forEach(v=>demoObserver.observe(v));
 document.addEventListener('visibilitychange',()=>pisonVideos.forEach(v=>document.hidden?pauseVideo(v):tryVideo(v)));
 reducedMotion.addEventListener('change',()=>pisonVideos.forEach(v=>reducedMotion.matches?pauseVideo(v):tryVideo(v)));
+const landingPreview=document.querySelector('.eye-landing');
+if(landingPreview){
+ const toggle=landingPreview.querySelector('.eye-playback');
+ const films=[...landingPreview.querySelectorAll('video')];
+ const phone=matchMedia('(max-width:690px)');
+ const current=()=>films[phone.matches?1:0];
+ function updateToggle(){toggle.textContent=current().paused?toggle.dataset.play:toggle.dataset.pause}
+ for(const film of films){
+  film.addEventListener('play',updateToggle);
+  film.addEventListener('pause',updateToggle);
+ }
+ toggle.addEventListener('click',()=>{
+  const film=current(), paused=film.paused;
+  for(const item of films)videoState.get(item).userPaused=!paused;
+  if(paused)film.play().catch(updateToggle);else film.pause();
+ });
+ phone.addEventListener('change',updateToggle);
+ updateToggle();
+ toggle.hidden=false;
+}
 document.querySelectorAll('[data-video-target]').forEach(button=>button.addEventListener('click',async()=>{
  const v=document.getElementById(button.dataset.videoTarget);if(!v)return;
  videoState.get(v).userPaused=false;

@@ -201,6 +201,8 @@ html[lang=zh-CN] .hero h1 {
 .qwen-audience h2,
 .qwen-overview-intro h2,
 .qwen-workflow-heading h3,
+.eye-brief h2,
+.eye-chapter h2,
 .research-section-heading h2,
 .about-contact h2 {
   font-size: var(--type-section-heading);
@@ -217,6 +219,8 @@ html[lang=zh-CN] .hero h1 {
 .qwen-intro,
 .qwen-audience > p,
 .qwen-overview-intro > p,
+.eye-brief section > p,
+.eye-lead,
 .research-opening > p,
 .research-section-heading > p,
 .about-position-story .about-position-lead {
@@ -271,6 +275,8 @@ html[lang=zh-CN] .hero h1 {
   .qwen-audience h2,
   .qwen-overview-intro h2,
   .qwen-workflow-heading h3,
+  .eye-brief h2,
+  .eye-chapter h2,
   .research-section-heading h2,
   .about-contact h2 { font-size: 34px; }
   .pison-opening .pison-lead,
@@ -280,6 +286,8 @@ html[lang=zh-CN] .hero h1 {
   .qwen-intro,
   .qwen-audience > p,
   .qwen-overview-intro > p,
+  .eye-brief section > p,
+  .eye-lead,
   .research-opening > p,
   .research-section-heading > p,
   .about-position-story .about-position-lead { font-size: 19px; }

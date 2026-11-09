@@ -32,6 +32,7 @@
       <button type="button" data-route="home" aria-pressed="true">Home</button>
       <button type="button" data-route="pison" aria-pressed="false">Pison</button>
       <button type="button" data-route="qwen" aria-pressed="false">Qwen</button>
+      <button type="button" data-route="eye" aria-pressed="false">Eye Tracking</button>
       <button type="button" data-route="freud" aria-pressed="false">Defying Freud</button>
       <button type="button" data-size="desktop" aria-pressed="true">Desktop</button>
       <button type="button" data-size="mobile" aria-pressed="false">Mobile</button>
@@ -46,12 +47,13 @@
     const destination = kind => {
       const lang = route.startsWith('/zh/') ? 'zh' : 'en';
       if (kind === 'freud') return `/${lang}/work/lucian-freud-lora/`;
+      if (kind === 'eye') return `/${lang}/work/eye-tracking-thingz/`;
       if (kind === 'pison') return `/${lang}/work/pison/`;
       if (kind === 'qwen') return `/${lang}/work/qwen-create/`;
       return `/${lang}/`;
     };
     function setSelection() {
-      const active = route.includes('/work/pison/') ? 'pison' : route.includes('/work/qwen-create/') ? 'qwen' : route.includes('/work/lucian-freud-lora/') ? 'freud' : /^\/(en|zh)\/$/.test(route) ? 'home' : '';
+      const active = route.includes('/work/pison/') ? 'pison' : route.includes('/work/qwen-create/') ? 'qwen' : route.includes('/work/eye-tracking-thingz/') ? 'eye' : route.includes('/work/lucian-freud-lora/') ? 'freud' : /^\/(en|zh)\/$/.test(route) ? 'home' : '';
       document.querySelectorAll('[data-route]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.route === active)));
     }
     document.querySelectorAll('[data-route]').forEach(button => button.addEventListener('click', () => {
@@ -70,7 +72,7 @@
       setSelection();
       history.replaceState(null, '', '#' + route);
     });
-    if (/^\/(en|zh)\/(?:work\/(?:pison|qwen-create|lucian-freud-lora)\/)?$/.test(location.hash.slice(1))) {
+    if (/^\/(en|zh)\/(?:work\/(?:pison|qwen-create|eye-tracking-thingz|lucian-freud-lora)\/)?$/.test(location.hash.slice(1))) {
       route = location.hash.slice(1);
       frame.src = route;
       setSelection();

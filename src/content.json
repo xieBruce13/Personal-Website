@@ -260,13 +260,13 @@
         "zh": "研究原型"
       },
       "summary": {
-        "en": "A browser-local prototype for viewing a design portfolio through estimated gaze and page-level heatmaps.",
-        "zh": "一个利用浏览器本地眼动估计与按页热图观察作品集观看过程的原型。"
+        "en": "A webcam tool I built to collect gaze estimates during portfolio reviews.",
+        "zh": "我为作品集评审开发的摄像头眼动采集工具。"
       },
       "wip": true,
       "body": {
-        "en": "The working prototype loads documents, calibrates camera-based gaze estimation, displays page-specific attention heatmaps and exports data. Tracking accuracy and AI-assisted redesign still require evaluation.",
-        "zh": "当前可运行原型已支持文档加载、摄像头眼动校准、按页注意力热图和数据导出。追踪准确度与 AI 辅助版式重排仍需验证。"
+        "en": "A reader calibrates the webcam, opens a PDF and reads at their own pace. I can then review and export a heatmap for each page.",
+        "zh": "读者校准摄像头、打开 PDF，按自己的节奏翻页。我可以在阅读结束后查看并导出每一页的热图。"
       },
       "focus": {
         "en": "Eye tracking · Interaction experiments",

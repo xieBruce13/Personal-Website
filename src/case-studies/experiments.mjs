@@ -1,89 +1,153 @@
-// Experimental case studies share the site's editorial layout and verified project evidence.
-// The animated references and illustrative heatmaps are not presented as measured model outputs.
+import {icon} from '../icons.mjs';
+
+const media = '/media/eye-tracking';
+const prototype = 'https://eye-tracking-canva-bruce.brucexie13.chatgpt.site';
+const placementStudy = 'https://pubmed.ncbi.nlm.nih.gov/22309059/';
+const scanningStudy = 'https://www.nngroup.com/articles/eyetracking-tasks-efficient-scanning/';
+
 const copy = {
   en: {
-    labels: {role:'Role',format:'Format',stage:'Stage',reference:'Reference',motion:'Motion study'},
-    eye: {
-      title:'Eye Tracking', headline:'What did they actually look at?',
-      intro:'A browser-based experiment that turns estimated visual attention into evidence for reviewing design portfolios.',
-      role:'Research & prototyping',format:'Browser tool · HCI',stage:'Working prototype',
-      heat:'Illustrative attention animation. This is not recorded participant gaze.',
-      interface:'Current browser prototype · document upload, webcam setup and reading workflow.',
-      problemLabel:'01 / The question', problem:'A portfolio can look right and still communicate the wrong thing.',
-      problemBody:'Designers choose what should stand out. Viewers decide—often unconsciously—what they actually see. The gap is hard to inspect with ordinary feedback.',
-      buildLabel:'02 / The prototype', build:'From a document to a view of attention.',
-      buildBody:'I built a browser-local workflow for loading a page, calibrating webcam-based gaze estimation, reading the document and reviewing page-specific heatmaps.',
-      live:'Open the live prototype',private:'Camera access is optional and requested explicitly. The demo currently requires owner access.',
-      flowLabel:'How it works',
-      steps:[
-        ['01','Upload','Open a PDF, DOCX or text document.'],
-        ['02','Calibrate','Use 17 gaze targets and five held-out checks.'],
-        ['03','Read','Estimate where attention lands while a page is visible.'],
-        ['04','Review','Inspect per-page heatmaps and export the data.']
-      ],
-      decisionsLabel:'03 / Design decisions', decisions:'Attention is evidence, not an answer.',
-      decisionsBody:'I separated gaze estimation from interpretation. A long fixation may signal interest, confusion or effort; it cannot tell us which without asking the viewer.',
-      notes:[
-        ['Check before measuring','A separate calibration check makes tracking quality visible before interpreting the heatmap.'],
-        ['Keep the context','Page transitions and tab inactivity are excluded from viewing-time estimates.'],
-        ['Protect the source','Camera frames and documents remain in browser memory rather than being uploaded to a server.']
-      ],
-      sample:'A separate heatmap study used to explore how attention might be visualized. The colors are illustrative.',
-      nextLabel:'04 / Where it goes',next:'From seeing to redesigning.',
-      nextBody:'The current prototype can collect and display gaze estimates. The next research cycle is to improve accuracy, pair gaze with explicit feedback, and test whether an editable AI layout revision helps the creator communicate more clearly.',
-      built:'Built now',builtList:['Document viewing and camera calibration','Page-specific heatmaps, quality warnings and JSON export','Automated tests for the processing workflow'],
-      later:'To validate next',laterList:['Tracking accuracy with real viewing conditions','Liked, confusing and missed areas as separate signals','AI-assisted layout revision and a before/after study'],
-      repo:'View project source',repoNote:'Source repository is private; access depends on GitHub permissions.'
-    }
+    premise: 'Gaze tracking with a laptop webcam.',
+    live: 'Open prototype', access: 'Private access',
+    landing: 'Where do your eyes go? Open the Eye Tracking prototype in a new tab.',
+    play: 'Play animation', pause: 'Pause animation',
+    context: 'Context & problem',
+    problem: 'In design reviews, I use eye tracking to see which images draw the eye and whether people look at the captions. Dedicated trackers are expensive and take time to set up for a short review.',
+    solution: 'Solution',
+    build: 'I built a browser tool that estimates gaze while someone reads a PDF. I can run a session on my laptop and save a heatmap for each page. Camera frames and documents stay on the device.',
+    calibration: 'How the webcam estimates gaze',
+    model: [
+      ['Find the eyes', 'WebGazer crops an image of each eye and records the position of the head.'],
+      ['Learn the screen', 'As the reader looks at 17 targets, ridge regression learns to map those features to screen coordinates.'],
+      ['Check the estimate', 'Five new targets test accuracy. The dotted line shows how far one prediction falls from its target.']
+    ],
+    observation: 'When I tested with glasses, tracking seemed less reliable. I use the calibration check to decide whether I can compare broad areas of the page.',
+    mapTitle: 'How a heatmap is made',
+    mapIntro: 'One image, one caption, and a few simulated gaze samples.',
+    stages: [
+      ['Page positions', 'Each dot marks one gaze estimate on the PDF.', 'Seven dots fall on the gray image square and two on the line representing its caption.'],
+      ['Time per cell', 'The tool adds viewing time to a 60 × 80 grid, skipping gaps over 750 ms.', 'A few grid cells mark the same positions. Darker cells hold more time.'],
+      ['Heatmap export', 'Smoothing blends nearby cells. Warmer areas show longer dwell on this page.', 'One warm spot sits on the image and a smaller, cooler spot sits on the caption.']
+    ],
+    why: 'Why this is useful',
+    use: 'When I put a caption beside an image, I want to know whether readers find the connection. Eye tracking shows where they spent time. Asking them to explain the image in their own words tells me what came through.',
+    findings: [
+      ['Placement changes how people read.', 'In experiments with a car-brake diagram, readers looked back and forth more often when the words sat beside the parts they described.', 'Johnson & Mayer, 2012', placementStudy],
+      ['The task changes where people look.', 'On the same travel page, a participant scanned photos to pick a destination and prices to find the cheapest trip. That’s why I would give readers the same task when comparing layouts.', 'Pernice, 2017', scanningStudy]
+    ],
+    next: 'Next steps',
+    plans: [
+      ['Measure the error', 'I’ll look at known points on screen and measure how far each webcam estimate lands from its target. I’ll pay particular attention to the errors when I wear my glasses.'],
+      ['Compare setups', 'I’ll keep the targets fixed and change the calibration, camera or monitor size one at a time. If the error still spans both image and text, I’ll compare another tracker with WebGazer.'],
+      ['Pilot a design review', 'Once I can distinguish those regions reliably, I’ll test two PDFs that differ only in caption placement. Each reader will get the same question. I’ll compare their heatmaps with what they can explain afterward.']
+    ]
   },
   zh: {
-    labels: {role:'我的工作',format:'形式',stage:'阶段',reference:'参考图',motion:'动态研究'},
-    eye: {
-      title:'Eye Tracking',headline:'观众真正看到了什么？',
-      intro:'一个基于浏览器的眼动研究原型，将估计的视觉注意力转化为作品集设计的观察证据。',
-      role:'研究与原型开发',format:'浏览器工具 · 人机交互',stage:'已有可运行原型',
-      heat:'示意性的注意力动态热图，并非真实参与者的眼动记录。',
-      interface:'当前浏览器原型：文档上传、摄像头设置与阅读流程。',
-      problemLabel:'01 / 研究问题',problem:'作品集看起来很好，不代表它传达了正确的信息。',
-      problemBody:'创作者决定什么内容最重要，观众却有自己的观看路径。仅靠传统反馈，很难看清二者之间的差距。',
-      buildLabel:'02 / 原型',build:'从一页作品，到可观察的注意力。',
-      buildBody:'我开发了一套本地浏览器流程：加载文档、校准摄像头眼动估计、阅读页面，并查看对应的注意力热图。',
-      live:'打开在线原型',private:'摄像头权限需要主动开启；当前演示仅对项目所有者开放。',
-      flowLabel:'使用流程',
-      steps:[
-        ['01','上传文档','支持 PDF、DOCX 和文本文件。'],
-        ['02','完成校准','17 个校准点及 5 个独立检验点。'],
-        ['03','阅读页面','估计观众在页面上的注视位置。'],
-        ['04','查看证据','按页查看热图并导出数据。']
-      ],
-      decisionsLabel:'03 / 设计决策',decisions:'注意力是证据，而不是结论。',
-      decisionsBody:'我把眼动估计与行为解释分开处理。长时间注视可能意味着喜欢、困惑或费力理解，不能单凭注视时长判断。',
-      notes:[
-        ['先检验，再解释','独立的校准检验可以在分析热图前提示追踪质量。'],
-        ['保留观看语境','翻页与切离标签页的时间不计入页面有效观看。'],
-        ['保护原始数据','摄像头画面与文档保存在浏览器内存中，不上传服务器。']
-      ],
-      sample:'用于研究注意力可视化的示意热图，颜色并非实测数据。',
-      nextLabel:'04 / 下一步',next:'从观察，到重新设计。',
-      nextBody:'当前原型已经能够采集并展示眼动估计。接下来要提升追踪准确度，加入明确的主观反馈，并验证 AI 生成的可编辑版式能否更好地传达重点。',
-      built:'已经实现',builtList:['文档阅读、摄像头校准','按页热图、质量提示与 JSON 导出','处理流程的自动化测试'],
-      later:'下一步验证',laterList:['真实观看条件下的追踪准确度','分别采集喜欢、困惑与未看到的区域','AI 辅助重排与前后效果对比'],
-      repo:'查看项目源码',repoNote:'源码仓库为私有，访问需具备 GitHub 权限。'
-    }
+    premise: '用笔记本摄像头记录注视位置。',
+    live: '打开原型', access: '访问权限受限',
+    landing: '你的目光停在哪里？在新标签页打开眼动追踪原型。',
+    play: '播放动画', pause: '暂停动画',
+    context: '背景与问题',
+    problem: '在设计评审中，我常用眼动追踪来了解哪些图像最先吸引目光，以及读者是否看了图注。专用眼动仪价格昂贵，每次都要设置设备，很难在简短的评审中随手收集数据。',
+    solution: '解决方案',
+    build: '我开发了一款浏览器工具，在读者翻阅 PDF 时估计注视位置。只用笔记本就能完成采集，并逐页保存热图。摄像头画面和文档都保留在本机。',
+    calibration: '摄像头如何估计视线',
+    model: [
+      ['提取双眼特征', 'WebGazer 分别截取两只眼睛的图像，并记录头部的位置。'],
+      ['建立坐标映射', '读者依次看向 17 个目标点。工具通过岭回归学习如何将这些特征映射为屏幕坐标。'],
+      ['检验估计误差', '再用 5 个新位置检验精度。虚线示意真实目标与预测位置之间的距离。']
+    ],
+    observation: '早期测试时，我戴眼镜后感觉追踪更不稳定。因此我会先看校准误差，再判断能否用这次记录比较页面上的几个较大区域。',
+    mapTitle: '一张热图怎样生成',
+    mapIntro: '用一张图、一段图注和几个模拟注视点，演示热图的生成过程。',
+    stages: [
+      ['页面位置', '每个点代表一次估计的注视位置。', '七个点落在代表图像的灰色方块上，两个点落在代表图注的横线上。'],
+      ['累计停留时间', '工具在 60 × 80 的网格中累加停留时间，跳过超过 750 毫秒的间隔。', '相应位置的网格颜色越深，表示停留时间越长。'],
+      ['导出热图', '相邻网格经过平滑处理。颜色越暖，表示在本页该处停留得越久。', '图像上有一处暖色热点，图注上的热点较小，颜色也较冷。']
+    ],
+    why: '这对设计研究有什么用',
+    use: '把说明放在图像旁边时，我想知道读者能否把两者联系起来。眼动记录能让我看到读者在哪里停留。再请他们用自己的话解释图像，我就能知道他们读懂了什么。',
+    findings: [
+      ['图注的位置会改变阅读方式。', '在一项关于汽车制动原理图的研究中，当说明文字紧邻对应部件时，读者的目光更常在文字和图示之间往返。', 'Johnson 与 Mayer，2012', placementStudy],
+      ['阅读目的会改变注视位置。', '面对同一个旅游页面，一位参与者挑选心仪的目的地时逐一看照片，寻找最便宜的行程时则逐一看价格。因此，比较两种版式时，我会给读者相同的任务。', 'Pernice，2017', scanningStudy]
+    ],
+    next: '下一步',
+    plans: [
+      ['测量追踪误差', '我会依次看向屏幕上的已知位置，测量每次预测与目标之间的距离。我最早是在戴眼镜时注意到视线漂移的，因此会专门重复测试这种情况。'],
+      ['比较采集条件', '我会使用相同的目标点，每次只调整校准方式、摄像头或显示器尺寸中的一项，与 WebGazer 的基线结果比较。如果误差仍大到无法区分图像和文字，我会再测试其他追踪工具。'],
+      ['试做一轮设计评审', '等追踪精度足以区分图文区域后，我会用两份只有图注位置不同的 PDF 做测试。所有读者回答同一个问题，再把他们的热图和读后解释放在一起比较。']
+    ]
   }
 };
 
-const meta=(c,labels)=>`<dl class="research-meta"><div><dt>${labels.role}</dt><dd>${c.role}</dd></div><div><dt>${labels.format}</dt><dd>${c.format}</dd></div><div><dt>${labels.stage}</dt><dd>${c.stage}</dd></div></dl>`;
-const opening=(c,labels)=>`<section class="research-opening"><h1>${c.title}</h1><h2>${c.headline}</h2><p>${c.intro}</p>${meta(c,labels)}</section>`;
-const sectionHead=(label,title,body='')=>`<div class="research-section-heading"><span>${label}</span><div><h2>${title}</h2>${body?`<p>${body}</p>`:''}</div></div>`;
+// Positions from the prototype’s initial calibration and separate validation pass.
+const targets = [[.5,.5],[.1,.12],[.5,.12],[.9,.12],[.1,.5],[.9,.5],[.1,.88],[.5,.88],[.9,.88],[.3,.3],[.7,.3],[.3,.7],[.7,.7],[.5,.3],[.5,.7],[.3,.5],[.7,.5]];
+const checks = [[.2,.23],[.8,.24],[.52,.55],[.22,.78],[.78,.77]];
+function targetDots(points, isCheck) {
+  return points.map(([x,y]) => `<circle cx="${26+208*x}" cy="${14+120*y}" r="${isCheck ? 4.2 : 3.1}" class="${isCheck ? 'check-target' : 'fit-target'}"/>`).join('');
+}
+function eyePatch(transform) {
+  return `<g transform="${transform}">
+    <path class="eye-brackets" d="M-5 0v-8H5m73 0h10v8m0 45v8H78M5 53H-5v-8"/>
+    <path class="eye-lid" d="M3 20C19 3 44-2 68 11"/>
+    <path class="eye-contour" d="M0 27C17 5 43 2 71 16c5 3 9 6 12 9-20 16-51 24-83 2Z"/>
+    <circle class="iris" cx="42" cy="24" r="14"/><circle class="fit-target" cx="42" cy="24" r="7"/>
+    <circle cx="45" cy="20" r="2.6" fill="white"/>
+  </g>`;
+}
+const centerMark = '<circle class="guide-ring" cx="130" cy="74" r="10"/>';
+const drawings = [
+  eyePatch('translate(28 53)') + eyePatch('translate(232 53) scale(-1 1)'),
+  centerMark + targetDots(targets,false),
+  targetDots(checks,true) + '<circle class="guide-ring" cx="134.16" cy="80" r="10"/><path class="error-line" d="m137.6 77.6 28-19.6"/><circle cx="169" cy="55.5" r="4.6" class="fit-target"/>'
+];
 
-export function eyeCase(l){
- const c=copy[l].eye;
- return `${opening(c,copy[l].labels)}
- <figure class="research-eye-hero" id="project-media"><div class="research-eye-film"><video muted loop playsinline controls preload="metadata" poster="/media/eye-tracking/attention-heatmap-poster.webp" aria-label="${c.heat}"><source src="/media/eye-tracking/attention-heatmap-loop.mp4" type="video/mp4"></video><span class="research-art-label">01 / ATTENTION STUDY</span></div><div class="research-eye-frame"><img src="/media/eye-tracking/prototype-live-capture.jpg" width="1200" height="750" alt="${c.interface}" loading="eager" decoding="async"><span class="research-art-label">02 / WORKING INTERFACE</span></div><figcaption>${c.heat}</figcaption></figure>
- <section class="research-section research-question">${sectionHead(c.problemLabel,c.problem,c.problemBody)}</section>
- <section class="research-section research-prototype">${sectionHead(c.buildLabel,c.build,c.buildBody)}<figure class="research-browser"><div class="research-browser-top" aria-hidden="true"><span></span><span></span><span></span><p>Eye Tracking Canva</p></div><img src="/media/eye-tracking/prototype-live-capture.jpg" width="1200" height="750" alt="${c.interface}" loading="lazy" decoding="async"></figure><div class="research-demo-link"><a href="https://eye-tracking-canva-bruce.brucexie13.chatgpt.site" target="_blank" rel="noopener noreferrer">${c.live}<span aria-hidden="true">↗</span></a><p>${c.private}</p></div></section>
- <section class="research-section research-flow"><div class="research-section-heading"><span>${c.flowLabel}</span></div><ol class="research-steps">${c.steps.map(([number,name,description])=>`<li><span>${number}</span><strong>${name}</strong><p>${description}</p></li>`).join('')}</ol></section>
- <section class="research-section research-decisions">${sectionHead(c.decisionsLabel,c.decisions,c.decisionsBody)}<div class="research-evidence"><figure><img src="/media/eye-tracking/attention-study.png" width="1154" height="1400" alt="${c.sample}" loading="lazy" decoding="async"><figcaption>${c.sample}</figcaption></figure><div class="research-evidence-notes">${c.notes.map(([title,description],i)=>`<article><span>0${i+1}</span><h3>${title}</h3><p>${description}</p></article>`).join('')}</div></div></section>
- <section class="research-section research-future">${sectionHead(c.nextLabel,c.next,c.nextBody)}<div class="research-status-grid"><div><h3>${c.built}</h3><ul>${c.builtList.map(t=>`<li>${t}</li>`).join('')}</ul></div><div><h3>${c.later}</h3><ul>${c.laterList.map(t=>`<li>${t}</li>`).join('')}</ul></div></div><div class="research-source"><a href="https://github.com/xieBruce13/Eye-Tracking-Canva" target="_blank" rel="noopener noreferrer">${c.repo} ↗</a><span>${c.repoNote}</span></div></section>`;
+// This unframed page sits under each signal layer, keeping every coordinate aligned.
+const pageArt = `<svg class="eye-page-art" viewBox="0 0 240 136" aria-hidden="true" focusable="false">
+  <rect x="80" y="10" width="80" height="80" fill="#d7d7d7"/>
+  <line x1="81" y1="101" x2="151" y2="101" stroke="#a6a6a6" stroke-width="4" stroke-linecap="round"/>
+</svg>`;
+
+export function eyeCase(language) {
+  const c=copy[language];
+  const landing = ['wide','phone'].map(size => `<video class="eye-landing-${size}" aria-hidden="true" muted loop playsinline preload="none"
+    poster="${media}/landing-${size}.webp" src="${media}/landing-${size}.mp4"></video>`).join('');
+  const views=['positions','dwell','heatmap'];
+  return `<article class="eye-study">
+    <header class="research-opening eye-heading"><h1>Eye Tracking</h1><h2>${c.premise}</h2></header>
+    <div class="eye-landing" id="project-media">
+      <a href="${prototype}" target="_blank" rel="noopener noreferrer" aria-label="${c.landing}" aria-describedby="eye-access-note">
+        <span class="eye-landing-frame">${landing}</span>
+        <span class="eye-landing-caption">${c.live} ${icon('arrow')}<small id="eye-access-note">${c.access}</small></span>
+      </a>
+      <button type="button" class="eye-playback" data-play="${c.play}" data-pause="${c.pause}" hidden>${c.play}</button>
+    </div>
+    <div class="eye-brief">
+      <section aria-labelledby="eye-context-title"><h2 id="eye-context-title">${c.context}</h2><p>${c.problem}</p></section>
+      <section aria-labelledby="eye-solution-title"><h2 id="eye-solution-title">${c.solution}</h2><p>${c.build}</p></section>
+    </div>
+    <section class="eye-chapter" aria-labelledby="eye-model-title">
+      <h2 id="eye-model-title">${c.calibration}</h2>
+      <ol class="eye-model">${c.model.map(([title,body],i)=>`<li>
+        <div class="eye-step-art"><svg viewBox="0 0 260 148" aria-hidden="true" focusable="false">${drawings[i]}</svg></div>
+        <div><h3>${title}</h3><p>${body}</p></div>
+      </li>`).join('')}</ol>
+      <p class="eye-observation">${c.observation}</p>
+    </section>
+    <section class="eye-chapter" aria-labelledby="eye-map-title">
+      <h2 id="eye-map-title">${c.mapTitle}</h2><p class="eye-lead">${c.mapIntro}</p>
+      <ol class="eye-detail-flow">${c.stages.map(([title,body,alt],i)=>`<li><figure>
+        <div class="eye-step-art">${pageArt}<img src="${media}/layout-${views[i]}.svg" loading="lazy" width="240" height="136" alt="${alt}"></div>
+        <figcaption><h3>${title}</h3><p>${body}</p></figcaption>
+      </figure></li>`).join('')}</ol>
+    </section>
+    <section class="eye-chapter eye-use" aria-labelledby="eye-use-title">
+      <div><h2 id="eye-use-title">${c.why}</h2><p class="eye-lead">${c.use}</p></div>
+      <div class="eye-findings">${c.findings.map(([title,body,source,url])=>`<div><h3>${title}</h3><p>${body} <cite><a href="${url}">${source}</a></cite></p></div>`).join('')}</div>
+    </section>
+    <section class="eye-chapter eye-next" aria-labelledby="eye-next-title">
+      <h2 id="eye-next-title">${c.next}</h2>
+      <ol>${c.plans.map(([title,body])=>`<li><h3>${title}</h3><p>${body}</p></li>`).join('')}</ol>
+    </section>
+  </article>`;
 }
