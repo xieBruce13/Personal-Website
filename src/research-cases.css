@@ -127,14 +127,7 @@
 .eye-study li:not(:last-child) .eye-step-art::before,.eye-study li:not(:last-child) .eye-step-art::after {content:'';position:absolute;top:50%;pointer-events:none}
 .eye-step-art::before {left:calc(100% + 2px);width:calc(var(--flow-gap) - 8px);border-top:2px dotted var(--text-muted)}
 .eye-step-art::after {left:calc(100% + var(--flow-gap) - 9px);margin-top:-3px;border-block:4px solid transparent;border-left:6px solid var(--text-secondary)}
-.eye-detail-flow {--wireframe-field:#191919}
-.eye-detail-flow .eye-step-art {background:var(--wireframe-field)}
-@media(min-width:691px){
-  .eye-detail-flow li:first-child .eye-step-art {border-radius:var(--gallery-radius) 0 0 var(--gallery-radius)}
-  .eye-detail-flow li:last-child .eye-step-art {border-radius:0 var(--gallery-radius) var(--gallery-radius) 0}
-}
-.eye-detail-flow li:not(:last-child) .eye-step-art::before {inset:0 auto 0 100%;width:var(--flow-gap);border:0;background:var(--wireframe-field)}
-.eye-detail-flow li:not(:last-child) .eye-step-art::after {content:'→';left:100%;width:var(--flow-gap);margin:0;border:0;transform:translateY(-50%);text-align:center;line-height:1;color:#c4c4c4}
+.eye-detail-flow {--flow-gap:clamp(28px,3.2vw,46px)}
 .eye-observation {max-width:78ch;margin:24px 0 0}
 .eye-use {display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);column-gap:clamp(40px,9vw,128px);align-items:start;padding-top:clamp(28px,4vw,54px);border-top:1px solid var(--edge)}
 .eye-use .eye-lead {max-width:41ch}
@@ -157,7 +150,7 @@
   .eye-model li {display:grid;grid-template-columns:minmax(110px,.9fr) minmax(0,1.1fr);gap:16px;align-items:center}
   .eye-model .eye-step-art {margin:0}
   .eye-study li:not(:last-child) .eye-step-art::before,.eye-study li:not(:last-child) .eye-step-art::after {display:none}
-  .eye-detail-flow .eye-step-art {max-width:360px;margin-inline:auto;border-radius:var(--gallery-radius)}
+  .eye-detail-flow .eye-step-art {max-width:360px;margin-inline:auto}
   .eye-detail-flow figcaption {margin-top:10px}
   .eye-use {grid-template-columns:1fr;gap:28px}
   .eye-next ol {grid-template-columns:1fr;gap:18px;margin-top:20px}

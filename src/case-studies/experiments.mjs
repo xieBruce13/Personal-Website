@@ -23,11 +23,11 @@ const copy = {
     ],
     observation: 'When I tested with glasses, tracking seemed less reliable. I use the calibration check to decide whether I can compare broad areas of the page.',
     mapTitle: 'How a heatmap is made',
-    mapIntro: 'One image, one caption, and a few simulated gaze samples.',
+    mapIntro: 'One image, a column of text, and a few simulated gaze samples.',
     stages: [
-      ['Page positions', 'Each dot marks one gaze estimate on the PDF.', 'Seven dots fall on the large rounded image block and two on the dark bars representing its caption.'],
+      ['Page positions', 'Each dot marks one gaze estimate on the PDF.', 'Seven dots fall on the image placeholder at right and two on the text at left.'],
       ['Time per cell', 'The tool adds viewing time to a 60 × 80 grid, skipping gaps over 750 ms.', 'A few grid cells mark the same positions. Darker cells hold more time.'],
-      ['Heatmap export', 'Smoothing blends nearby cells. Warmer areas show longer dwell on this page.', 'One warm spot sits on the image and a smaller, cooler spot sits on the caption.']
+      ['Heatmap export', 'Smoothing blends nearby cells. Warmer areas show longer dwell on this page.', 'A warm spot sits on the image and a smaller, cooler spot sits on the text.']
     ],
     why: 'Why this is useful',
     use: 'When I put a caption beside an image, I want to know whether readers find the connection. Eye tracking shows where they spent time. Asking them to explain the image in their own words tells me what came through.',
@@ -59,11 +59,11 @@ const copy = {
     ],
     observation: '早期测试时，我戴眼镜后感觉追踪更不稳定。因此我会先看校准误差，再判断能否用这次记录比较页面上的几个较大区域。',
     mapTitle: '一张热图怎样生成',
-    mapIntro: '用一张图、一段图注和几个模拟注视点，演示热图的生成过程。',
+    mapIntro: '用一张图、一栏文字和几个模拟注视点，演示热图的生成过程。',
     stages: [
-      ['页面位置', '每个点代表一次估计的注视位置。', '七个点落在代表图像的圆角大色块上，两个点落在代表图注的深灰色粗线上。'],
+      ['页面位置', '每个点代表一次估计的注视位置。', '七个点落在右侧的图像占位框中，两个点落在左侧文字上。'],
       ['累计停留时间', '工具在 60 × 80 的网格中累加停留时间，跳过超过 750 毫秒的间隔。', '相应位置的网格颜色越深，表示停留时间越长。'],
-      ['导出热图', '相邻网格经过平滑处理。颜色越暖，表示在本页该处停留得越久。', '图像上有一处暖色热点，图注上的热点较小，颜色也较冷。']
+      ['导出热图', '相邻网格经过平滑处理。颜色越暖，表示在本页该处停留得越久。', '图像上有一处暖色热点，左侧文字上的热点较小，颜色也较冷。']
     ],
     why: '这对设计研究有什么用',
     use: '把说明放在图像旁边时，我想知道读者能否把两者联系起来。眼动记录能让我看到读者在哪里停留。再请他们用自己的话解释图像，我就能知道他们读懂了什么。',
@@ -103,11 +103,19 @@ const drawings = [
 ];
 
 // Each stage uses the same document underneath its page-relative signal layer.
-const pageArt = `<svg class="eye-page-art" viewBox="0 0 240 136" aria-hidden="true" focusable="false">
-  <rect x="20" y="8" width="200" height="120" rx="11" fill="#5e5e5e"/>
-  <rect x="128" y="16" width="78" height="13" rx="6.5" fill="#84d98b"/>
-  <rect x="34" y="36" width="172" height="83" rx="9" fill="#a1a1a1"/>
-  <path d="M48 90h131v12h-50v9H48Z" fill="#606060"/>
+const pageArt = `<svg class="eye-page-art" viewBox="0 0 240 220" aria-hidden="true" focusable="false">
+  <rect width="240" height="220" rx="4" fill="#e6e6e6"/>
+  <path d="M4 0h232q4 0 4 4v18H0V4q0-4 4-4Z" fill="#5e6379"/>
+  <g fill="#b8bbc6"><circle cx="12" cy="11" r="2.5"/><circle cx="20" cy="11" r="2.5"/><circle cx="28" cy="11" r="2.5"/></g>
+  <rect x="26" y="35" width="188" height="12" rx="1" fill="#f7f7f8"/>
+  <g fill="none" stroke="#f8f8f9" stroke-width="2.6" stroke-linecap="round">
+    <path d="M27 60h77" stroke-width="4"/>
+    <path d="M27 68h120m-120 5h114m-114 5h119m-119 5h113m-113 5h120m-120 5h118m-118 5h121m-121 5h112m-112 5h91"/>
+    <path d="M27 124h120m-120 6h117m-117 6h121m-121 6h113m-113 6h119m-119 6h74"/>
+    <path d="M27 166h120m-120 5h115m-115 5h120m-120 5h91"/>
+  </g>
+  <rect x="163" y="57" width="50" height="50" rx="1" fill="#fff"/>
+  <path d="m164 58 48 48m0-48-48 48" stroke="#d7d8dd" stroke-width="1.2"/>
 </svg>`;
 
 export function eyeCase(language) {
@@ -139,7 +147,7 @@ export function eyeCase(language) {
     <section class="eye-chapter" aria-labelledby="eye-map-title">
       <h2 id="eye-map-title">${c.mapTitle}</h2><p class="eye-lead">${c.mapIntro}</p>
       <ol class="eye-detail-flow">${c.stages.map(([title,body,alt],i)=>`<li><figure>
-        <div class="eye-step-art">${pageArt}<img src="${media}/layout-${views[i]}.svg" loading="lazy" width="240" height="136" alt="${alt}"></div>
+        <div class="eye-step-art">${pageArt}<img src="${media}/layout-${views[i]}.svg" loading="lazy" width="240" height="220" alt="${alt}"></div>
         <figcaption><h3>${title}</h3><p>${body}</p></figcaption>
       </figure></li>`).join('')}</ol>
     </section>

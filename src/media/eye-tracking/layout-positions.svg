@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 136">
-  <circle cx="105" cy="65" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="114" cy="70" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="122" cy="64" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="129" cy="59" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="131" cy="67" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="139" cy="59" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="143" cy="65" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="85" cy="99" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
-  <circle cx="95" cy="103" r="2.5" fill="#343434" stroke="#fff" stroke-width=".65"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220">
+  <circle cx="170" cy="81" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="177" cy="87" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="183" cy="81" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="189" cy="76" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="191" cy="84" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="197" cy="76" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="203" cy="82" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="85" cy="130" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
+  <circle cx="95" cy="136" r="4.5" fill="#363a46" stroke="#fff" stroke-width="1"/>
 </svg>
