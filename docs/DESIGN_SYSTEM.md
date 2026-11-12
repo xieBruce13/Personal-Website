@@ -8,7 +8,7 @@ This document is the visual source of truth. Read it before adding a page, secti
 
 **A white editorial portfolio, with product craft in the foreground.**
 
-The site should communicate a product manager who can make clear choices and build with taste. Let the work provide the visual interest. Use few words, a consistent grid, quiet interface elements, and deliberate moments of motion. The hero’s glass B·XYZ is the signature artwork; it is not a material treatment to apply to every component.
+The site should communicate a product manager who can make clear choices and build with taste. Let the work provide the visual interest. Use few words, a consistent grid, quiet interface elements, and deliberate moments of motion. A scarlet engraved koi swims through the white space behind the landing page.
 
 ### Reference hierarchy
 
@@ -34,27 +34,23 @@ These are ranked influences, not separate themes to alternate between sections.
 | `--text-faint` | `#BFBFBF` | Nonessential subdued decoration only |
 | `--edge` | `#E6E6E6` | Decorative card edges and separators |
 
-Use #F3F3F3 on selected gallery covers for rhythm; other covers stay white. No beige wash, blue tint or colored gallery text. Product photography and the existing glass hero can retain authentic color. No red contact band or dark footer. Navigation remains About, Contact and language switching. The homepage gallery is the only project index; legacy Work URLs display the homepage. Essential controls need a visible outline or icon; pale decorative edges alone must not carry their meaning.
+Use #F3F3F3 on selected gallery covers for rhythm; other covers stay white. No beige wash, blue tint or colored gallery text. Product photography and the landing-page koi can retain authentic color. No red contact band or dark footer. Navigation includes Work, About, Contact and language switching. Work links to the homepage gallery, the only project index. Essential controls need a visible outline or icon; pale decorative edges alone must not carry their meaning.
 
 ### Typography
 
 Keep the bundled Inter variable font. Use the existing Chinese system fallbacks. Ordinary UI weight is 400; emphasis is 500–600. Use sentence case. Avoid new display fonts, all-caps microcopy, and heavy letter spacing.
 
-| Role | Desktop | Narrow screen | Leading / tracking |
-| --- | --- | --- | --- |
-| Home statement | **34 px** | **31 px** | 1.24 / −0.045em |
-| Home introduction | **23 px** | **20 px** | 1.4 / −0.018em |
-| Case-study title | **62–82 px** | **50–68 px** | 1.06 / −0.055em |
-| Case-study subtitle | **30–35 px** | **29 px** | 1.2 / −0.035em |
-| Section headline | **34–42 px** | **34 px** | 1.15 / −0.043em |
-| Gallery project title inside image | **18–25 px** | **22 px** | 1.1 / −0.035em |
-| Navigation and gallery categories | **20 px** | Gallery category 20 px; overlay menu is intentionally larger | 1.25 / −0.015em |
-| Lead / narrative statements | **23 px** | **19 px** | 1.4 / −0.02em |
-| Detailed explanatory copy | **16 px** | **16 px** | 1.45–1.6 / near neutral |
-| Metadata label, annotation, footnote and compact UI | **14 px** | **14 px** | 1.4–1.6 / neutral |
-| Metadata value | **20 px** | **18 px** | 1.3 / neutral |
+Use five shared sizes for live text on every portfolio route, including navigation, case-study diagrams, localized pages and expanded views. Keep the Inter family, existing text colors and emphasis. The named levels are also available in the local editor.
 
-Use `--type-small: 14px` for **compact editorial annotation**, including Pison/Qwen labels, both research studies' evidence captions, numbered notes and overlines. The visibly larger reference-style header and homepage categories share `--type-navigation: 20px`, while gallery project names are about 23 px. Do not add one-off 10–13 px type to editorial UI, including mobile. Explanatory body copy retains the shared 16 px base, with 23 px reserved for high-level prose; titles and section statements use the scale above. The “Bruce” masthead and menu-open links are intentional controls with their own scale. Text inside miniature phone screens, system-node diagrams and screenshot browser chrome depicts artifacts and is not part of the editorial scale. Essential meaning in those visuals must remain in accessible text outside them. Do not shrink text to fit overloaded layouts; cut copy or reflow first. Chinese text should use natural wrapping.
+| Level | Desktop | Up to 620 px wide | Typical use |
+| --- | --- | --- | --- |
+| Title | 76 px | 44 px | Homepage statement and page title |
+| Section heading | 36 px | 30 px | Section titles and expanded decision headings |
+| Subheading | 24 px | 22 px | Card titles, introductions and subsection titles |
+| Body | 17 px | 17 px | Reading text, navigation and messages |
+| Label | 14 px | 14 px | Captions, metadata and diagram annotations |
+
+Define the sizes in `src/design-tokens.css` and assign their roles in `src/typography.css`. Components inherit the nearest text role. The source media retain their original lettering. Saved custom sizes from earlier editing sessions map to the closest desktop level and use its responsive size on narrow screens.
 
 ### Layout and shape
 
@@ -67,9 +63,15 @@ Use `--type-small: 14px` for **compact editorial annotation**, including Pison/Q
 
 ## 3. Component contracts
 
-### Hero B·XYZ
+### Landing-page koi
 
-Keep the existing glass artwork, separate glyph positions, centered dot, rotation rates, pointer repulsion, reduced-motion support, and offscreen pausing. The canonical glyph scale is **0.405**, modestly smaller than the prior 0.44. Letter silhouettes have slightly thinner strokes and the layered glass depth is 4.25 px per slice, creating a lighter sculptural presence. Keep the loose staggered arrangement, with B and Z in the middle band, X above, Y below, and the dot beside B, matching the supplied formation. Scale the inner glyph wrapper, not the stage. Do not enlarge the letters at wide breakpoints. Preserve empty space around them and keep them clear of navigation and the headline.
+On a fresh homepage visit, frame the first project covers about 73.5% down the viewport, with the headline visible above them. Keep the full pond accessible by scrolling up. Honor section links and normal browser Back navigation.
+
+Place eight stationary, colorless glass lotus leaves above the koi. Give each leaf a distinct outline with softly uneven lobes. Crop two leaves along the top edge, centered about 20% and 29% across the page. Show a shallow slice of the first and a little over half of the second. Center the left leaf on the viewport edge so half of its 399 px maximum span is visible. The largest leaf grows to 510 px. Overlap its lower-right edge with a leaf about 47% of its width and give both continuous lower edges. Set a small leaf above the headline at 17% of the viewport width and crop another at the upper right. Tuck the lower third of the gallery leaf behind the rightmost project cover in the first row. Its maximum width is 246 px. Use 8.2875 px of frost and a fine directional highlight along each outline.
+
+Carry a turn to the same side while the dot crosses behind the koi. Near an edge, let the shoulders and tail follow the nose around the bend. Draw the engraving in a background worker when available. On devices using the canvas fallback, redraw only the area occupied by the engraving. Stagger the start of visible cover films so scrolling into the gallery stays responsive.
+
+Use the approved koi illustration at 2.275 times the study’s responsive size. It enters from the left and follows curved paths beneath the navigation, text and opaque project covers. Keep the closed homepage header transparent so the ink is visible up to the viewport edge. The koi alternates glides with quicker strokes driven by the tail stalk. Its side fins row fore and aft and its whisker tips flex gently. At the dot it swims away for 25 seconds and can bank into a broad U-turn. It plans free swims within the visible water. Allow an edge exit after at least one minute of swimming on the first visit. After the tail clears the edge, the koi spends about five seconds offscreen. On each return, allow 90–150 seconds of swimming before the next exit becomes possible. Reduced motion shows a stationary koi.
 
 The homepage moves directly from hero to project cards and ends there. Keep biography and focus details on the dedicated About page; do not restore the removed homepage About block.
 
@@ -79,8 +81,8 @@ The homepage moves directly from hero to project cards and ends there. Keep biog
 - Place **Pison Agent**, **Qwen Create**, **Eye Tracking**, and **Defying Freud** inside their respective lower-left cover corners in white, over the uniform **85% #181818 shade**. Put their categories **Personal Agent**, **Agent Team**, **Research Tool**, and **Model Training** on a separate, left-aligned line directly beneath each cube in #777 gray. The whole image tile links to the case study, with visible keyboard focus.
 - Pison's homepage cover draws only from the **13.00–30.00-second span of the original 35.6-second concept film**, cropped to 600×600 without top or bottom bands. The current **9.75-second loop** contains exactly three shots: the **first phone-holding shot** (start), the **watch-hand opening/closing** (middle), and **Marcus smiling and departing** (end). The second locker-room phone-holding shot and all partially cut-off “heading to game” / “Good luck Marcus” message overlays are removed. The cut removes frames 164–236 from the previous 12.79-second no-bubbles loop, retaining 234 frames at 24 fps. Keep the complete concept film on its detail page and retain the established first-phone-shot poster.
 - Qwen's homepage cover shows the shampoo product changing through visual styles and ends **while the product is on the moon, after the light sweep, before the pullback/billboard reveal**. The current **5.54-second loop** retains the balanced 7 November timing (0.21-second opening hold and first 2.5 seconds slowed an additional 20%) and applies four-frame dissolves at eight style-change cuts. These transitions soften visual jumps without altering the duration or the moon ending; do not append the zoom-out. Both Pison and Qwen cover loops run at normal browser playback rate because their final timing is baked into the files, silently only while visible, with the same **85% #181818 overlay** as the other two. Keep the full originals in the existing project media. Eye Tracking uses an eight-second animated heatmap of Bruce's supplied interior reference image; the traveling color patches are an **illustrative attention visualization, not measured participant gaze**. Defying Freud uses the subtle 16-second blink-loop animation of Bruce's supplied portrait reference with the original artwork as its poster; it is **animated reference artwork, not a claimed trained model output**. All motion pauses offscreen and obeys reduced-motion preferences.
-- Put arrow feedback in the top-right. Reveal it on hover/focus and keep it visible on touch layouts. The complete real card is a normal link with an accessible project name.
-- Keep a card’s container and title still. All four cover artworks share a very slight hover/focus magnification and bounded pointer-driven movement (at most 2 px per axis); the card itself never tilts or shifts. Disable this effect for reduced motion. Do not move surrounding content.
+- A 24 px dot trails the mouse, appearing black on white. Hide the system arrow whenever the custom dot or project label is visible. Over a project cover it becomes a 96 × 46 px “see more” or “查看更多” label with 16 px corners. Difference blending responds to the image underneath. Keyboard focus, touch and reduced motion use the top-right arrow. The whole cover links to the project.
+- Keep the card and title still. On hover or keyboard focus, magnify the artwork by 4% around its center. Disable magnification for reduced motion.
 
 ### Case studies and demos
 
@@ -140,8 +142,12 @@ Example: replace a paragraph explaining membership pilots with **“Pilot with e
 
 ## 5. Interaction, accessibility and performance
 
+Keep “Bruce Xie 谢凌翔” and the navigation steady on white in the shared portfolio typeface. The English headline reads “Ideate Create Innovate”. Apply a fixed blur to the “ate” ending of each word, including on hover. Editing shows the original plain text. Place the introduction just above the gallery so the first covers are visible on entry.
+
+The cursor and project slide follow [Anyang Zu’s portfolio](https://anyangzu.com/). On project entry, the old page moves up by 30% of the viewport and fades over 600 ms. After 500 ms the project rises from 30% below its final position and fades in over 600 ms. Reduced motion provides an immediate page change.
+
 - Native scroll; no scroll hijacking. A scroll story must also offer buttons or a readable static arrangement.
-- Feedback: 220 ms. Object motion: roughly 550 ms. Easing: `cubic-bezier(.2,.7,.2,1)`. Hero rotation retains its existing slower timing.
+- Feedback: 220 ms. Object motion: roughly 550 ms. Easing: `cubic-bezier(.2,.7,.2,1)`. The koi follows its own swimming rhythm.
 - Animate transform and opacity. Run pointer work with requestAnimationFrame, only for fine pointers. Reset on exit, pointer cancellation, visibility changes, and preference changes.
 - `prefers-reduced-motion` disables decorative drift, rotations and autoplay. All text and navigation remain available.
 - Hover is enhancement, never the only way to discover a project or understand content. Visible keyboard focus must remain. Use real links/buttons; pending tiles are not interactive.
@@ -173,4 +179,4 @@ Textually revisited: https://dmcg.co/work/archiv , https://www.adhamdannaway.com
 
 Earlier user-supplied Apple product URLs and https://www.ricardougarcia.com/work/pmf are retained as historical references, not asserted as newly verified sources. No reference photography, code, icons, or branding was copied.
 
-Mobile hero: no viewport-height minimum. Artwork height clamps from 260 to 370 px; retain the staggered formation with 22%-wide glyph wrappers. Avoid empty vertical space above or below the artwork.
+On mobile, size the koi for both screen width and available height. Keep the headline and introduction together and leave a visible portion of the gallery below.

@@ -12,6 +12,8 @@ const paths = {
  sliders:'<path d="M4 7h7m4 0h5M4 17h3m4 0h9M11 4v6M7 14v6"/>',
  route:'<circle cx="5" cy="18" r="2"/><path d="M7 18h8a4 4 0 0 0 0-8H9a3 3 0 0 1 0-6h9m-3-3 3 3-3 3"/>',
  calendar:'<rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 10h16M8 14h2m4 0h2m-8 3h2"/>',
+ googleCalendar:'<path fill="currentColor" stroke="none" fill-rule="evenodd" d="M4 2h16a2 2 0 0 1 2 2v13l-5 5H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm2 4v12h12V6Z"/><path stroke-width="1.35" d="M8 9.6c.6-1.5 3.6-1.6 3.6.4 0 1.2-.9 1.8-2.1 1.9 1.3 0 2.4.7 2.4 2s-1 2-2.1 2c-1 0-1.8-.5-2.1-1.2m5.9-4.8 1.9-1.5v7.3"/>',
+ gmail:'<path fill="currentColor" stroke="none" d="M2.5 4.2 12 11.3l9.5-7.1A1.6 1.6 0 0 1 24 5.5v13.2a1.6 1.6 0 0 1-1.6 1.6H19V11l-7 5.2L5 11v9.3H1.6A1.6 1.6 0 0 1 0 18.7V5.5a1.6 1.6 0 0 1 2.5-1.3Z"/>',
  mail:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>',
  watch:'<rect x="6" y="6" width="12" height="12" rx="3"/><path d="m9 2-1 4m7-4 1 4M8 18l1 4m7-4-1 4m3-12h2M9 12h2l1-3 2 6 1-3"/>',
  chat:'<path d="M7 19 3 22V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3Z"/><path d="M7 8h10M7 12h7"/>',

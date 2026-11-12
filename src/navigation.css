@@ -1,0 +1,84 @@
+.header {
+  background: var(--canvas);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.header .language:hover { opacity: 1; }
+body:has(> .home-page):not(.menu-open) > .header {
+  background: transparent;
+  text-shadow: 0 0 3px var(--canvas), 0 0 6px var(--canvas);
+}
+@media (min-width: 810px) {
+  .header { grid-template-columns: max-content 1fr auto; }
+  .header nav { gap: 20px; }
+  .header nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0;
+  }
+  .header .nav-link::after { content: none; }
+  .header .nav-link[aria-current="page"] { text-decoration: underline; text-underline-offset: 5px; }
+  .header nav a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+}
+@media (forced-colors: none) {
+  .headline-ending { filter: blur(.048em); }
+}
+
+.pointer-lens { display: none; }
+@media (hover: hover) and (pointer: fine) and (forced-colors: none) {
+  /* Reduced motion uses this dot directly, without a trailing animation. */
+  :root:not(.copy-editing) :is(.header, main, main a, main button, .header a, .header button) {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='12' fill='black'/%3E%3C/svg%3E") 12 12, auto;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  :root.has-dot-cursor, :root.has-dot-cursor * { cursor: none !important; }
+  .pointer-lens {
+    display: block;
+    position: fixed;
+    inset: 0 auto auto 0;
+    z-index: 80;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    opacity: 0;
+  }
+  .pointer-lens.is-visible { opacity: 1; }
+  .pointer-lens::before, .pointer-lens > span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    translate: -50% -50%;
+  }
+  .pointer-lens::before {
+    content: '';
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    transition: width 180ms var(--motion-ease), height 180ms var(--motion-ease),
+                translate 180ms var(--motion-ease), border-radius 180ms var(--motion-ease);
+  }
+  .pointer-lens.over-project::before {
+    width: 96px;
+    height: 46px;
+    translate: -50% -50%;
+    border-radius: 16px;
+    background: #ebe8e0;
+  }
+  .pointer-lens > span {
+    color: #141414;
+    font-size: var(--type-body);
+    font-weight: 500;
+    letter-spacing: -.04em;
+    white-space: nowrap;
+    opacity: 0;
+  }
+  .pointer-lens.over-project > span { opacity: 1; transition: opacity 100ms ease 75ms; }
+  .work-gallery a.project-image.has-project-cursor .project-open { opacity: 0; }
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .work-gallery .project-open { opacity: 1; transform: none; }
+}

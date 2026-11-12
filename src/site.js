@@ -32,72 +32,163 @@ if(menuButton&&menu){
   }
  });
 }
-const hero=document.querySelector('.hero-object');
-if(hero){
- // Pointer repulsion moves each glyph; damping settles it without pulling it home.
- const pointer={x:0,y:0,active:false};
- const glyphs=[...hero.querySelectorAll('.letter-position')].map(el=>({el,x:0,y:0,vx:0,vy:0,bounds:null}));
- let frame=0,lastTime=0;
- const measure=()=>glyphs.forEach(g=>{g.bounds=g.el.getBoundingClientRect()});
- function render(g){
-  g.el.style.setProperty('--letter-x',`${g.x.toFixed(2)}px`);
-  g.el.style.setProperty('--letter-y',`${g.y.toFixed(2)}px`);
-  g.el.style.setProperty('--letter-ry',`${(g.x*.12).toFixed(2)}deg`);
-  g.el.style.setProperty('--letter-rx',`${(-g.y*.1).toFixed(2)}deg`);
- }
- function tick(time){
-  frame=0;
-  const dt=Math.min((time-lastTime)/1000||1/60,1/30);lastTime=time;
-  const area=hero.getBoundingClientRect();let moving=false;
-  for(const g of glyphs){
-   const r=g.bounds;if(!r)continue;
-   const cx=r.left+r.width/2,cy=r.top+r.height*.5;
-   let ax=-g.vx*9,ay=-g.vy*9;
-   if(pointer.active){
-    let dx=cx+g.x-pointer.x,dy=cy+g.y-pointer.y;
-    let distance=Math.hypot(dx,dy);
-    if(distance<1){dx=1;dy=-.7;distance=Math.hypot(dx,dy)}
-    const radius=Math.max(120,r.width*.6+90);
-    const force=2900*Math.pow(Math.max(0,1-distance/radius),1.5);
-    ax+=dx/distance*force;ay+=dy/distance*force;
-   }
-   g.vx+=ax*dt;g.vy+=ay*dt;g.x+=g.vx*dt;g.y+=g.vy*dt;
-   // Keep the moving glass inside the hero, away from navigation and headline.
-   const half=r.width*(g.el.classList.contains('letter-dot')?.1:.38);
-   const loX=Math.max(-155,area.left+half+12-cx),hiX=Math.min(155,area.right-half-12-cx);
-   const loY=Math.max(-125,area.top+r.height*.38+16-cy),hiY=Math.min(125,area.bottom-r.height*.38-22-cy);
-   const nx=Math.max(loX,Math.min(hiX,g.x)),ny=Math.max(loY,Math.min(hiY,g.y));
-   if(nx!==g.x)g.vx=0;if(ny!==g.y)g.vy=0;g.x=nx;g.y=ny;
-   if(Math.abs(g.vx)+Math.abs(g.vy)<.05){g.vx=g.vy=0}
-   render(g);moving ||= Math.abs(g.vx)+Math.abs(g.vy)>.01;
+const headline=document.querySelector('html[lang="en"] .hero h1 .hero-line-muted');
+if(headline) {
+ function markHeadlineEndings() {
+  for(const mark of headline.querySelectorAll('.headline-ending')) {
+   const parent=mark.parentNode;
+   mark.replaceWith(...mark.childNodes);
+   parent.normalize();
   }
-  if((pointer.active||moving)&&!document.hidden&&!reducedMotion.matches)frame=requestAnimationFrame(tick);
+  if(document.documentElement.classList.contains('copy-editing')) return;
+
+  // The editor may split a word across several colored text nodes.
+  const runs=[];
+  const walker=document.createTreeWalker(headline,NodeFilter.SHOW_TEXT);
+  let offset=0;
+  while(walker.nextNode()) {
+   const node=walker.currentNode;
+   runs.push({node,start:offset,end:offset+node.length});
+   offset+=node.length;
+  }
+  // Work backwards so splitting a text node preserves all earlier offsets.
+  const words=[...headline.textContent.matchAll(/\b(?:ide|cre|innov)ate\b/gi)];
+  for(const word of words.reverse()) {
+   const end=word.index+word[0].length;
+   for(const run of runs) {
+    const startInNode=Math.max(end-3,run.start)-run.start;
+    const endInNode=Math.min(end,run.end)-run.start;
+    if(startInNode>=endInNode) continue;
+    const range=document.createRange();
+    range.setStart(run.node,startInNode);
+    range.setEnd(run.node,endInNode);
+    const mark=document.createElement('span');
+    mark.className='headline-ending';
+    range.surroundContents(mark);
+   }
+  }
  }
- const wake=()=>{if(!frame&&!reducedMotion.matches){lastTime=performance.now();frame=requestAnimationFrame(tick)}};
- hero.addEventListener('pointermove',event=>{
-  if(reducedMotion.matches||!finePointer.matches)return;
-  pointer.x=event.clientX;pointer.y=event.clientY;pointer.active=true;wake();
- },{passive:true});
- // Stop at the current position on exit, scroll or tab changes.
- const stop=()=>{pointer.active=false;cancelAnimationFrame(frame);frame=0;glyphs.forEach(g=>{g.vx=g.vy=0})};
- hero.addEventListener('pointerleave',stop);
- reducedMotion.addEventListener('change',stop);
- finePointer.addEventListener('change',stop);
- document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
- window.addEventListener('scroll',()=>{stop();measure()},{passive:true});
- new ResizeObserver(()=>{stop();measure();wake()}).observe(hero);
- measure();
- new IntersectionObserver(entries=>{hero.classList.toggle('is-offscreen',!entries[0].isIntersecting)},{threshold:0}).observe(hero);
- document.addEventListener('visibilitychange',()=>hero.classList.toggle('is-offscreen',document.hidden||hero.getBoundingClientRect().bottom<0));
+ document.addEventListener('portfolio-copy-preview',markHeadlineEndings);
+ markHeadlineEndings();
 }
 
-// Decorative pointer feedback never replaces the native cursor or the link label.
-const glow=document.createElement('div');glow.className='cursor-glow';glow.setAttribute('aria-hidden','true');document.body.append(glow);
-document.addEventListener('pointermove',event=>{
- if(!finePointer.matches||reducedMotion.matches){glow.style.opacity='0';return;}
- glow.style.transform=`translate(${event.clientX}px,${event.clientY}px)`;glow.style.opacity='1';
-},{passive:true});
-document.documentElement.addEventListener('pointerleave',()=>{glow.style.opacity='0'});
+// Frame the opening on the first cover. Keep the full pond available above it.
+const firstCover=document.querySelector('.home-page .work-gallery .project-image');
+const navigationType=performance.getEntriesByType('navigation')[0]?.type;
+if(firstCover && !location.hash && navigationType!=='back_forward') {
+ // On refresh, the browser can restore the old position after scripts run.
+ // Resume normal history restoration once this entry has finished loading.
+ if(navigationType==='reload' && history.scrollRestoration==='auto') {
+  history.scrollRestoration='manual';
+  window.addEventListener('pageshow',()=>setTimeout(()=>{history.scrollRestoration='auto'},0),{once:true});
+ }
+ const coverTop=firstCover.getBoundingClientRect().top;
+ const headlineTop=document.querySelector('.hero h1').getBoundingClientRect().top;
+ const headerBottom=document.querySelector('.header').getBoundingClientRect().bottom;
+ const offset=Math.min(coverTop-window.innerHeight*.735,headlineTop-headerBottom);
+ window.scrollTo({top:Math.max(0,window.scrollY+offset),behavior:'instant'});
+}
+
+if(document.documentElement.hasAttribute('data-project-page') && !('onpagereveal' in window)) {
+ document.body.classList.add('project-slide-fallback');
+}
+// Back navigation or a motion-preference change can cancel a slide before its
+// snapshots are ready. The browser already displays the destination in that case.
+function handleSlide(event) {
+ event.viewTransition?.ready.catch(error=>{
+  if(error.name!=='AbortError' && error.name!=='InvalidStateError') throw error;
+ });
+}
+window.addEventListener('pageswap',handleSlide);
+window.addEventListener('pagereveal',handleSlide);
+
+// A trailing dot changes into the project label. Hit testing uses the real pointer.
+const lens=document.createElement('div');
+lens.className='pointer-lens';
+lens.setAttribute('aria-hidden','true');
+const lensLabel=document.createElement('span');
+lensLabel.textContent=document.documentElement.lang.startsWith('zh')?'查看更多':'see more';
+lens.append(lensLabel);
+document.body.append(lens);
+let lensFrame=0,lastFrame=0,lensX=0,lensY=0,targetX=0,targetY=0,pointedProject=null;
+let leadX=0,leadY=0;
+let lastLensElement=null,checkScrolledTarget=false;
+function setPointedProject(link) {
+ if(pointedProject===link) return;
+ pointedProject?.classList.remove('has-project-cursor');
+ pointedProject=link;
+ link?.classList.add('has-project-cursor');
+ lens.classList.toggle('over-project',Boolean(link));
+}
+function hideLens() {
+ cancelAnimationFrame(lensFrame);
+ lensFrame=0;
+ lastLensElement=null;
+ checkScrolledTarget=false;
+ lens.classList.remove('is-visible');
+ document.documentElement.classList.remove('has-dot-cursor');
+ setPointedProject(null);
+}
+function followPointer(now) {
+ if(checkScrolledTarget) {
+  checkScrolledTarget=false;
+  if(!updateLensTarget(document.elementFromPoint(targetX,targetY))) return;
+ }
+ // Two damped stages reproduce the short initial lag and longer settling tail.
+ // Integrating them over elapsed time also keeps the response stable at 120 Hz.
+ const dt=Math.max(0,now-lastFrame)/1000;
+ const fast=Math.exp(-50*dt), slow=Math.exp(-10*dt);
+ const coupling=(slow-fast)/4;
+ lastFrame=now;
+ lensX=targetX+(lensX-targetX)*slow+(leadX-targetX)*coupling;
+ lensY=targetY+(lensY-targetY)*slow+(leadY-targetY)*coupling;
+ leadX=targetX+(leadX-targetX)*fast;
+ leadY=targetY+(leadY-targetY)*fast;
+ const moving=Math.max(Math.hypot(targetX-lensX,targetY-lensY),Math.hypot(targetX-leadX,targetY-leadY))>.25;
+ if(!moving) {lensX=leadX=targetX; lensY=leadY=targetY;}
+ lens.style.transform=`translate3d(${lensX}px,${lensY}px,0)`;
+ lensFrame=moving?requestAnimationFrame(followPointer):0;
+}
+function updateLensTarget(element) {
+ if(element && element===lastLensElement) return true;
+ if(!element || element.closest('input,textarea,video:not(.gallery-preview-video),[contenteditable]:not([contenteditable="false"]),aside[aria-label="Portfolio editor"]')) {
+  hideLens(); return false;
+ }
+ setPointedProject(element.closest('.work-gallery a.project-image'));
+ lastLensElement=element;
+ return true;
+}
+function moveLens(event) {
+ if(event.pointerType!=='mouse' || !finePointer.matches || reducedMotion.matches ||
+    document.documentElement.classList.contains('copy-editing')) {
+  hideLens(); return;
+ }
+ if(!updateLensTarget(event.target)) return;
+ targetX=event.clientX; targetY=event.clientY;
+ if(!lens.classList.contains('is-visible')) {
+  lensX=leadX=targetX; lensY=leadY=targetY;
+  lens.style.transform=`translate3d(${lensX}px,${lensY}px,0)`;
+  lens.classList.add('is-visible');
+  document.documentElement.classList.add('has-dot-cursor');
+ }
+ if(!lensFrame) {lastFrame=performance.now();lensFrame=requestAnimationFrame(followPointer);}
+}
+document.addEventListener('pointermove',moveLens,{passive:true});
+document.addEventListener('pointerover',moveLens,{passive:true});
+document.documentElement.addEventListener('pointerleave',hideLens);
+document.addEventListener('pointercancel',hideLens);
+document.addEventListener('keydown',hideLens);
+document.addEventListener('portfolio-copy-preview',hideLens);
+window.addEventListener('scroll',()=>{
+ if(!lens.classList.contains('is-visible')) return;
+ checkScrolledTarget=true;
+ if(!lensFrame) {lastFrame=performance.now();lensFrame=requestAnimationFrame(followPointer);}
+},{passive:true,capture:true});
+window.addEventListener('blur',hideLens);
+window.addEventListener('pagehide',hideLens);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)hideLens()});
+reducedMotion.addEventListener('change',hideLens);
+finePointer.addEventListener('change',hideLens);
 document.querySelectorAll('.project-image:not(.work-gallery .project-image)').forEach(link=>{
  link.addEventListener('pointermove',event=>{
   if(!finePointer.matches||reducedMotion.matches)return;
@@ -109,45 +200,45 @@ document.querySelectorAll('.project-image:not(.work-gallery .project-image)').fo
  link.addEventListener('blur',()=>link.classList.remove('is-pointer'));
 });
 
-// Keep the gallery frame still; only the artwork responds to a fine pointer.
-const galleryTiles=[...document.querySelectorAll('[data-gallery-tile]')];
-galleryTiles.forEach(tile=>{
- let frame=0,point=null;
- const reset=()=>{
-  cancelAnimationFrame(frame);frame=0;point=null;tile.classList.remove('is-interacting');
-  ['--tile-x','--tile-y'].forEach(key=>tile.style.removeProperty(key));
- };
- tile.addEventListener('pointermove',event=>{
-  if(!finePointer.matches||reducedMotion.matches)return;
-  point={x:event.clientX,y:event.clientY};
-  if(frame)return;
-  frame=requestAnimationFrame(()=>{
-   frame=0;if(!point)return;
-   const r=tile.getBoundingClientRect();
-   const x=Math.max(-1,Math.min(1,(point.x-r.left)/r.width*2-1));
-   const y=Math.max(-1,Math.min(1,(point.y-r.top)/r.height*2-1));
-   tile.classList.add('is-interacting');
-   tile.style.setProperty('--tile-x',`${(x*4).toFixed(2)}px`);
-   tile.style.setProperty('--tile-y',`${(y*4).toFixed(2)}px`);
-  });
- },{passive:true});
- tile.addEventListener('pointerleave',reset);
- tile.addEventListener('pointercancel',reset);
- tile.addEventListener('focusout',reset);
- reducedMotion.addEventListener('change',reset);
- finePointer.addEventListener('change',reset);
- document.addEventListener('visibilitychange',()=>{if(document.hidden)reset()});
-});
-
 // Homepage films loop only while visible; posters cover reduced motion.
 const galleryPreviewVideos=[...document.querySelectorAll('.gallery-preview-video')];
-const visibleGalleryPreviewVideos=new WeakSet();
-function syncGalleryPreviewVideos(){galleryPreviewVideos.forEach(v=>{
- if(visibleGalleryPreviewVideos.has(v)&&!document.hidden&&!reducedMotion.matches)v.play().catch(()=>{});
- else v.pause();
-})}
 if(galleryPreviewVideos.length){
- const previewObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.intersectionRatio>=.3)visibleGalleryPreviewVideos.add(e.target);else visibleGalleryPreviewVideos.delete(e.target)});syncGalleryPreviewVideos()},{threshold:[0,.3]});
+ const visible=new Set(),pending=new Set(),started=new Set();
+ let nextStart=0,timer=0;
+ function queueStart(){
+  if(timer || !pending.size) return;
+  timer=setTimeout(()=>{
+   timer=0;
+   const pointed=pointedProject?.querySelector('video');
+   const video=pending.has(pointed)?pointed:pending.values().next().value;
+   pending.delete(video);
+   started.add(video);
+   video.play().catch(()=>{});
+   // Let the browser present one first frame before opening another decoder.
+   nextStart=performance.now()+250;
+   queueStart();
+  },Math.max(0,nextStart-performance.now()));
+ }
+ function syncGalleryPreviewVideos(){
+  for(const video of galleryPreviewVideos){
+   if(visible.has(video) && !document.hidden && !reducedMotion.matches){
+    if(!started.has(video)) pending.add(video);
+   } else {
+    pending.delete(video);
+    started.delete(video);
+    video.pause();
+   }
+  }
+  if(!pending.size){clearTimeout(timer);timer=0;}
+  queueStart();
+ }
+ const previewObserver=new IntersectionObserver(entries=>{
+  for(const entry of entries){
+   if(entry.intersectionRatio>=.3) visible.add(entry.target);
+   else visible.delete(entry.target);
+  }
+  syncGalleryPreviewVideos();
+ },{threshold:[0,.3]});
  galleryPreviewVideos.forEach(v=>{v.muted=true;v.playbackRate=Number(v.dataset.playbackRate)||1;previewObserver.observe(v)});
  document.addEventListener('visibilitychange',syncGalleryPreviewVideos);
  reducedMotion.addEventListener('change',syncGalleryPreviewVideos);

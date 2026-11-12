@@ -108,7 +108,7 @@
 .eye-chapter h2[id] {text-wrap:balance;scroll-margin-top:96px}
 .eye-brief p {margin:0;max-width:51ch}
 .eye-lead {margin:16px 0 0;max-width:51ch}
-.eye-study h3 {font-size:var(--type-lead);font-weight:500;line-height:1.25;letter-spacing:-.025em;margin:0}
+.eye-study h3 {font-size:var(--type-subheading);font-weight:500;line-height:1.25;letter-spacing:-.025em;margin:0}
 .eye-detail-flow figcaption {margin-top:18px}
 .eye-detail-flow p,.eye-model p,.eye-observation {color:var(--text-secondary);font-size:var(--type-body);line-height:1.5;letter-spacing:0}
 .eye-detail-flow p,.eye-model p {margin:6px 0 0;max-width:42ch}
@@ -174,7 +174,7 @@
 .layer-diagram svg {display:block;width:100%;height:auto;max-width:490px;margin:auto}
 .layer-detail {font-size:14px;fill:#565b56}
 .folio-section {margin-top:clamp(56px,7.5vw,100px);scroll-margin-top:80px}
-.folio-section h2 {margin:0;font-size:var(--type-section-heading);font-weight:400;line-height:1.12;letter-spacing:-.035em}
+.folio-section h2 {margin:0;font-size:var(--type-section);font-weight:400;line-height:1.12;letter-spacing:-.035em}
 .folio-deck {margin:12px 0 24px}
 .folio-works,.freud-study .folio-portraits {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.5vw,20px);align-items:start}
 .work-print {position:relative;display:block;aspect-ratio:2/3;overflow:hidden}

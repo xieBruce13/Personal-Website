@@ -1,0 +1,24 @@
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  /* The standalone review names its iframe so its toolbar stays in place. */
+  :root[data-project-page]::view-transition-old(root),
+  ::view-transition-old(review-project) {
+    animation: project-slide-out 600ms cubic-bezier(.73,0,.33,1) both;
+  }
+  :root[data-project-page]::view-transition-new(root),
+  ::view-transition-new(review-project) {
+    animation: project-slide-in 600ms cubic-bezier(.73,0,.33,1) 500ms both;
+  }
+  .project-slide-fallback {
+    animation: project-slide-in 600ms cubic-bezier(.73,0,.33,1);
+  }
+}
+@keyframes project-slide-out {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-30%); opacity: 0; }
+}
+@keyframes project-slide-in {
+  from { transform: translateY(30%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

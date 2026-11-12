@@ -1,12 +1,15 @@
 // Generate an offline review file; this does not publish or commit anything.
 import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
 const font=(await readFile('dist/fonts/InterVariable.woff2')).toString('base64');
-const css=(await readFile('dist/styles.css','utf8')).replaceAll('/fonts/InterVariable.woff2',`data:font/woff2;base64,${font}`);
+const css=(await readFile('dist/styles.css','utf8'))
+ .replaceAll('/fonts/InterVariable.woff2',`data:font/woff2;base64,${font}`);
 const behavior=await readFile('dist/site.js','utf8');
+const projectTransition=await readFile('src/project-transition.css','utf8');
 const particles=await readFile('dist/particles.js','utf8');
+const koi=await readFile('dist/landing-koi.js','utf8');
 const pages={};
 const media={};
-const mimeTypes={mp4:'video/mp4',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',pdf:'application/pdf',webp:'image/webp',svg:'image/svg+xml'};
+const mimeTypes={mp4:'video/mp4',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',pdf:'application/pdf',webp:'image/webp',svg:'image/svg+xml',js:'text/javascript'};
 
 
 const bridge=`<script>document.addEventListener('click',event=>{const link=event.target.closest('a');if(!link)return;const href=link.getAttribute('href');if(href?.startsWith('#')){event.preventDefault();const target=document.getElementById(decodeURIComponent(href.slice(1)));target?.scrollIntoView();target?.setAttribute('tabindex','-1');target?.focus({preventScroll:true});return;}if(href?.startsWith('/')){event.preventDefault();parent.postMessage({type:'portfolio-route',path:href},'*');}});</script>`;
@@ -16,24 +19,49 @@ async function collect(dir){for(const entry of await readdir(dir,{withFileTypes:
   let html=await readFile(file,'utf8');
   html=html.replace('<link rel="stylesheet" href="/styles.css">','<style>__PORTFOLIO_STYLES__</style>')
    .replace('<script type="module" src="/site.js"></script>','')
-   .replace('<script type="module" src="/particles.js"></script>','');
+   .replace('<script type="module" src="/particles.js"></script>','')
+   .replace('<script defer src="/landing-koi.js"></script>', () => '<script>' + koi + '</script>');
   const hasParticles=html.includes('id="particles"');
   html=html.replace('</body>',`<script>${behavior}</script>${hasParticles?`<script>${particles}</script>`:''}${bridge}</body>`);
   pages[file.slice(4,-10)]=html;
  }
 }}
 await collect('dist/en');await collect('dist/zh');
-for(const project of ['pison','qwen','lora','eye-tracking'])for(const name of await readdir(`dist/media/${project}`)){const ext=name.split('.').pop(),path=`/media/${project}/${name}`;if(mimeTypes[ext]&&Object.values(pages).some(page=>page.includes(path)))media[path]={type:mimeTypes[ext],data:(await readFile(`dist/media/${project}/${name}`)).toString('base64')};}
+for(const project of ['pison','qwen','lora','eye-tracking','koi'])for(const name of await readdir(`dist/media/${project}`)){const ext=name.split('.').pop(),path=`/media/${project}/${name}`;if(mimeTypes[ext]&&Object.values(pages).some(page=>page.includes(path)))media[path]={type:mimeTypes[ext],data:(await readFile(`dist/media/${project}/${name}`)).toString('base64')};}
 const serialized=JSON.stringify(pages).replaceAll('<','\\u003c');
 const preview=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bruce — Portfolio review</title><style>
+${projectTransition}
+#preview{view-transition-name:review-project}::view-transition-group(review-project){background:white;overflow:clip}
 *{box-sizing:border-box}html,body{height:100%;margin:0;background:#151613;color:#eee;font:13px Arial,sans-serif}header{height:55px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid #34362e;gap:12px}header p{margin:0;color:#aeb3a5}header strong{font-weight:400;color:#eee}nav{display:flex;gap:6px}button{font:12px Arial;padding:8px 13px;border-radius:20px;border:1px solid #4d5246;color:#ddd;background:transparent;cursor:pointer;min-height:34px}button[aria-pressed=true]{background:#e2e3ec;color:#151613;border-color:#e2e3ec}button:focus-visible{outline:2px solid #bfc4eb;outline-offset:3px}main{height:calc(100% - 55px);display:flex;justify-content:center;overflow:hidden}iframe{height:100%;width:100%;border:0;background:#000}iframe.mobile{width:390px;max-width:100%;border-left:1px solid #34362e;border-right:1px solid #34362e}@media(max-width:600px){header{padding:0 10px}header p span{display:none}button{padding:8px 9px}}
 </style></head><body><header><p><strong>Portfolio review</strong><span> · Local preview</span></p><nav aria-label="Preview controls"><button id="restart" aria-pressed="true">Home</button><button id="pison" aria-pressed="false">Pison</button><button id="qwen" aria-pressed="false">Qwen</button><button id="desktop" aria-pressed="true">Desktop</button><button id="mobile" aria-pressed="false">Mobile</button></nav></header><main><iframe title="Portfolio preview" id="preview" allow="autoplay; fullscreen" allowfullscreen></iframe></main><script>
-const media=${JSON.stringify(media)};const assetURLs=Object.fromEntries(Object.entries(media).map(([path,file])=>[path,URL.createObjectURL(new Blob([Uint8Array.from(atob(file.data),c=>c.charCodeAt(0))],{type:file.type}))]));
+const media=${JSON.stringify(media)};const assetURLs=new Map();
+function assetURL(path){
+ if(!media[path])return path;
+ if(!assetURLs.has(path)){
+  const file=media[path];let bytes;
+  if(Uint8Array.fromBase64)bytes=Uint8Array.fromBase64(file.data);
+  else{const raw=atob(file.data);bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);}
+  assetURLs.set(path,URL.createObjectURL(new Blob([bytes],{type:file.type})));
+ }
+ return assetURLs.get(path);
+}
 const styles=${JSON.stringify(css).replaceAll('<','\\u003c')};const pages=${serialized};const frame=document.getElementById('preview');let current='/en/';let fragment='';
-function show(path,record=true){const parts=path.split('#');current=parts[0]||current;fragment=parts[1]||'';if(!pages[current])current='/en/';frame.srcdoc=pages[current].replace('__PORTFOLIO_STYLES__',styles).replace(/(?:src|poster|href)="(\\/media\\/[^"]+)"/g,(match,path)=>match.replace(path,assetURLs[path]||path));if(record)history.pushState({route:path},'', '#'+path);}
+function show(path,record=true){const parts=path.split('#');current=parts[0]||current;fragment=parts[1]||'';if(!pages[current])current='/en/';frame.srcdoc=pages[current].replace('__PORTFOLIO_STYLES__',styles).replace(/(?:data-(?:ink|worker)-src|src|poster|href)="(\\/media\\/[^"]+)"/g,(match,path)=>match.replace(path,assetURL(path)));if(record)history.pushState({route:path},'', '#'+path);}
 window.addEventListener('popstate',()=>show(location.hash.slice(1)||'/en/',false));
 frame.addEventListener('load',()=>{if(fragment)frame.contentDocument.getElementById(fragment)?.scrollIntoView();const active=current.includes('/work/pison/')?'pison':current.includes('/work/qwen-create/')?'qwen':'restart';for(const id of ['restart','pison','qwen'])document.getElementById(id)?.setAttribute('aria-pressed',String(id===active));});
-window.addEventListener('message',event=>{if(event.source===frame.contentWindow&&event.data?.type==='portfolio-route')show(event.data.path);});
+window.addEventListener('message',event=>{
+ if(event.source!==frame.contentWindow||event.data?.type!=='portfolio-route')return;
+ const route=event.data.path;
+ if(typeof route!=='string')return;
+ const page=pages[route.split('#')[0]];
+ if(!page?.includes('<html data-project-page')||!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){
+  show(route);return;
+ }
+ document.startViewTransition(()=>new Promise(resolve=>{
+  frame.addEventListener('load',resolve,{once:true});
+  show(route);
+ }));
+});
 for(const mode of ['desktop','mobile'])document.getElementById(mode).addEventListener('click',()=>{frame.className=mode==='mobile'?'mobile':'';document.getElementById('desktop').setAttribute('aria-pressed',String(mode==='desktop'));document.getElementById('mobile').setAttribute('aria-pressed',String(mode==='mobile'));});
 document.getElementById('pison').addEventListener('click',()=>show(current.startsWith('/zh/')?'/zh/work/pison/':'/en/work/pison/'));
 document.getElementById('qwen').addEventListener('click',()=>show(current.startsWith('/zh/')?'/zh/work/qwen-create/':'/en/work/qwen-create/'));

@@ -1,27 +1,19 @@
+import {typeLevels,levelForSize} from './type-scale.mjs';
+import {pages} from '../build.mjs';
+import {readEdits,renderCopy} from './portfolio-copy.mjs';
 import assert from 'node:assert/strict';
 import {readFile,stat} from 'node:fs/promises';
 const {site,copy,projects:allProjects}=JSON.parse(await readFile('src/content.json','utf8'));
 const projects=site.featuredProjects.map(slug=>allProjects.find(p=>p.slug===slug));
 const editorialTypography=await readFile('src/typography.css','utf8');
 const builtStyles=await readFile('dist/styles.css','utf8');
-assert(builtStyles.includes('--type-small: 14px;'),'Small editorial typography must have one canonical 14 px token');
-assert(builtStyles.includes('--type-body: 16px;'),'Core explanatory copy must have one 16 px base');
-for(const token of [
- '--text-primary: #252525;', '--text-secondary: #737373;', '--text-muted: #999999;',
- '--type-navigation: 20px;', '--type-gallery-category: 20px;', '--type-lead: 23px;',
- '--type-home-intro: 34px;', '--type-page-title: clamp(62px, 6vw, 82px);',
- '--type-page-subtitle: clamp(30px, 3vw, 35px);'
-])assert(builtStyles.includes(token),`Reference-inspired design token missing: ${token}`);
-assert(builtStyles.trimEnd().endsWith(editorialTypography.trimEnd()),'Shared editorial typography overrides must load last');
-for(const selector of [
- '.header .language', '.work-gallery .gallery-card-category',
- '.pison-case .pison-eyebrow', '.pison-film-media figcaption',
- '.qwen-role', '.qwen-preview figcaption', '.qwen-workflow li > span',
- '.research-meta dt', '.research-eye-hero figcaption', '.research-freud-hero figcaption',
- '.research-evidence figcaption', '.about-overline', '.about-index'
-])assert(editorialTypography.includes(selector),`Shared small-type scale missing selector: ${selector}`);
-for(const selector of ['.pison-opening h1','.qwen-opening h1','.research-opening h1','.about-opening h1','.hero h1 .hero-line-muted'])
- assert(editorialTypography.includes(selector),`Reference type scale missing selector: ${selector}`);
+assert.equal(typeLevels.length,5,'The portfolio uses five text sizes');
+for(const level of typeLevels){
+ assert(builtStyles.includes(level.token + ': ' + level.size + 'px;'), 'Missing size for ' + level.label);
+ assert(editorialTypography.includes('var(' + level.token + ')'), 'Unused type level: ' + level.label);
+}
+assert.equal(levelForSize(41).size,36,'Legacy size edits should use the nearest role');
+assert(builtStyles.trimEnd().endsWith(editorialTypography.trimEnd()),'Shared type roles must load after components');
 assert.deepEqual(site.featuredProjects,['pison','qwen-create','eye-tracking-thingz','lucian-freud-lora'],'Homepage must feature four projects in the requested order');
 assert(site.email.includes('@'),'Contact email required');
 assert.deepEqual(Object.keys(copy.en).sort(),Object.keys(copy.zh).sort(),'Language interface keys must match');
@@ -40,8 +32,24 @@ for(const file of files){
  }
  if(file.includes('/work/')&&!file.endsWith('/work/index.html')){const other=file.includes('/en/')?'/zh/':'/en/';const slug=file.split('/')[3];assert(html.includes(`href="${other}work/${slug}/"`),'Language toggle must preserve project')}
 }
+// Existing editorial assertions describe the source templates. Verify every edited
+// page against the actual build before checking those original copy contracts.
+const edits = await readEdits();
+function template(route) { return pages.get(route); }
+for (const [route, source] of pages) {
+ const built = await readFile('dist' + route + 'index.html', 'utf8');
+ const landing = /^\/(en|zh)\/$/.test(route);
+ assert.equal(built.includes('class="landing-koi" aria-hidden="true"'), landing, 'Decorative koi on ' + route);
+ assert.equal(built.includes('src="/landing-koi.js"'), landing, 'Koi asset loading on ' + route);
+ if(landing) for(const key of ['ink','worker']){
+  const path=built.match(new RegExp('data-'+key+'-src="([^"]+)"'))?.[1];
+  assert(path && (await stat('dist'+path)).isFile(),'Missing koi '+key+' on '+route);
+ }
+ assert.equal(built, renderCopy(source, route, edits).html, 'Saved edits missing from ' + route);
+ assert(!built.includes('data-copy-key=') && !built.includes('/__editor/tools.js'), 'Editor leaked into ' + route);
+}
 for(const l of ['en','zh']){
- const html=await readFile(`dist/${l}/index.html`,'utf8');
+ const html=template(`/${l}/`);
  assert(html.includes('class="hero-line-muted"')&&html.includes('class="hero-line-emphasis"'),'Homepage statement must use gray/charcoal phrase hierarchy');
  assert(!html.includes('Co-Hive'),'Removed Co-Hive should not appear on the homepage');
  const gallery=html.slice(html.indexOf('<section id="work"'));
@@ -62,14 +70,14 @@ for(const l of ['en','zh']){
  assert.equal((gallery.match(/data-playback-rate="1"/g)||[]).length,4,'Pre-rendered clips must play at intended timing without a second slowdown');
  assert(gallery.includes('/media/eye-tracking/attention-heatmap-loop.mp4'),'Eye Tracking must use the eight-second moving heatmap');
  assert(gallery.includes('poster="/media/eye-tracking/attention-heatmap-poster.webp"'),'Eye Tracking needs a still poster for reduced motion');
- assert(gallery.includes('/media/lora/blink-loop.mp4'),'Lucian Freud LoRA must use the blinking portrait video');
- assert(gallery.includes('poster="/media/lora/reference-portrait.jpg"'),'Lucian Freud LoRA must retain the supplied portrait as a video poster');
+ assert(gallery.includes('/media/lora/gallery-blink.mp4'),'Lucian Freud LoRA must use the gallery-sized blinking portrait video');
+ assert(gallery.includes('poster="/media/lora/gallery-blink-poster.webp"'),'Lucian Freud LoRA must display the gallery crop of the supplied portrait');
  assert(!gallery.includes('project-placeholder'),'Remove the two coming-soon tiles');
  for(const p of projects){assert(gallery.includes(p.galleryTitle[l]),`${p.slug} display title missing`);assert(gallery.includes(p.galleryCategory[l]),`${p.slug} gallery category missing`)}
  const css=await readFile('dist/styles.css','utf8');assert(css.includes('--gallery-aspect: 1;'),'The four gallery covers must be square');
  assert(css.includes('background:rgba(24,24,24,.85)'),'All four covers must use 85% #181818 shading');
  assert(css.includes('.work-gallery .gallery-card-category'),'Gallery needs gray category typography under cards');
- const about=await readFile(`dist/${l}/about/index.html`,'utf8');
+ const about=template(`/${l}/about/`);
  assert(about.includes('class="detail about-page"'),'About must use the résumé-based editorial layout');
  assert.equal((about.match(/class="about-position"/g)||[]).length,3,'Three detailed experience positions must appear');
  assert.equal((about.match(/class="about-section-content about-education"/g)||[]).length,1,'Two institutions must appear in the education list');
@@ -87,11 +95,11 @@ assert((await stat('dist/media/pison/card-no-bubbles-clean-loop.mp4')).isFile(),
 assert((await stat('dist/media/pison/card-three-shots-loop.mp4')).isFile(),'Pison three-shot cover loop missing');
 assert((await stat('dist/media/qwen/card-shampoo-moon-soft-loop.mp4')).isFile(),'Qwen smoothed cover loop missing');
 assert((await stat('dist/media/lora/reference-portrait.jpg')).isFile(),'Supplied LoRA portrait cover must be copied into the site');
-assert((await stat('dist/media/lora/blink-loop.mp4')).isFile(),'Freud blink video must be copied into the site');
+assert((await stat('dist/media/lora/gallery-blink-poster.webp')).isFile(),'Freud card must include its matching poster');
 assert((await stat('dist/media/eye-tracking/attention-study.png')).isFile(),'Eye Tracking cover must be copied into the site');
 for(const name of ['attention-heatmap-loop.mp4','attention-heatmap-poster.webp'])assert((await stat(`dist/media/eye-tracking/${name}`)).isFile(),`Eye Tracking video asset ${name} missing`);
 for(const l of ['en','zh']){
- const html=await readFile(`dist/${l}/work/lucian-freud-lora/index.html`,'utf8');
+ const html=template(`/${l}/work/lucian-freud-lora/`);
  assert(html.includes('Defying Freud'),'New Freud project page title required');
  assert(html.includes('research-freud-hero'),'Freud study must have a substantive media-first presentation');
  for(const id of ['173','002','003','004'])assert(html.includes('/media/lora/ref-LF-'+id+'.webp'),'Missing one of the four Freud reference plates');
@@ -99,7 +107,7 @@ for(const l of ['en','zh']){
  assert(html.includes('class="folio-flow"') && html.includes('class="folio-branches"'),'Freud study must explain the training and refinement process');
  assert(html.includes('research-material-grid'),'Freud study must examine the visual qualities');
  assert(!html.includes('class="next-project"'),'Freud presentation should end cleanly');
- const eye=await readFile(`dist/${l}/work/eye-tracking-thingz/index.html`,'utf8');
+ const eye=template(`/${l}/work/eye-tracking-thingz/`);
  assert(eye.indexOf('id="eye-context-title"') >= 0 && eye.indexOf('id="eye-solution-title"') > eye.indexOf('id="eye-context-title"'),'Eye Tracking should introduce the research problem before the solution');
  const opening=eye.slice(eye.indexOf('class="eye-landing"'),eye.indexOf('class="eye-brief"'));
  assert(opening.includes('<a href="https://eye-tracking-canva-bruce.brucexie13.chatgpt.site"'),'Opening visual must link to the working prototype');
@@ -119,9 +127,11 @@ console.log(`Passed: bilingual copy, ${projects.length} project records, ${files
 const pison=JSON.parse(await readFile('src/case-studies/pison.json','utf8'));
 assert.deepEqual(Object.keys(pison.en).sort(),Object.keys(pison.zh).sort(),'Pison language keys must match');
 for(const l of ['en','zh']){
- const html=await readFile(`dist/${l}/work/pison/index.html`,'utf8');
+ const html=template(`/${l}/work/pison/`);
  for(const id of ['pison-overview','pison-background','pison-solution','pison-system','pison-demos'])assert(html.includes(`id="${id}"`),`Pison section missing: ${id}`);
- assert.equal((html.match(/<video /g)||[]).length,3,'All three supplied videos must be present');
+ for (const id of ['pison-athlete','pison-film','pison-hockey']) assert(html.includes('<video id="'+id+'"'), 'Missing Pison video: '+id);
+ const messagePanel=html.split('id="pison-decision-1"')[1].split('</section>')[0];
+ assert(messagePanel.includes(pison[l].messageExchange.reminder) && messagePanel.includes(pison[l].messageExchange.reply) && !messagePanel.includes('<video'), 'Message decision must show the two text bubbles');
  assert(!html.includes('pison-credits'),'Pison credits section should be removed');
  assert(!html.includes('class="next-project"'),'Pison next-project footer should be removed');
  assert(!html.includes('project-deck.pdf'),'Pison deck link should be removed');
@@ -129,11 +139,11 @@ for(const l of ['en','zh']){
  assert(!html.includes('Project page in preparation.'),'Pison placeholder must be replaced');
  for(const match of html.matchAll(/poster="(\/[^"#]+)"/g))assert((await stat('dist'+match[1])).isFile(),'Video poster missing');
 }
-console.log('Passed: bilingual Pison sections, three local videos, clean ending and posters.');
+console.log('Passed: bilingual Pison sections, local videos, message exchange, clean ending and posters.');
 const qwen=JSON.parse(await readFile('src/case-studies/qwen.json','utf8'));
 assert.deepEqual(Object.keys(qwen.en).sort(),Object.keys(qwen.zh).sort(),'Qwen language keys must match');
 for(const l of ['en','zh']){
- const html=await readFile(`dist/${l}/work/qwen-create/index.html`,'utf8');
+ const html=template(`/${l}/work/qwen-create/`);
  assert(html.includes('class="qwen-opening"'),'Qwen should share the Pison-style editorial opening');
  assert(html.includes(`<h2>${qwen[l].headline}</h2>`),'Qwen headline missing');
  assert(html.includes('/media/qwen/ad-video-creator-english.png'),'Qwen must use the supplied English Ad video creator screenshot');

@@ -15,18 +15,55 @@
 .pison-chapters a:hover{background:#f5f5f5}
 .pison-chapters a[aria-current]{background:#efefef;color:#515151}
 .pison-capabilities{border-top:0;gap:24px;margin-top:40px;padding-top:0}
+.pison-research-finding{max-width:none;margin-top:40px;font-size:var(--type-body);line-height:1.55;color:var(--text-primary)}
+#pison-background:has(.pison-research-finding){padding-block-end:0}
+#pison-background:has(.pison-research-finding) + #pison-solution{padding-block-start:clamp(32px,4vw,48px)}
 .pison-capabilities article{padding:22px 0;border-radius:0;border-top:1px solid var(--edge);background:transparent}
 .pison-capabilities article>.ui-icon{width:27px;height:27px;margin-bottom:16px}
 .pison-capabilities h3{font-size:20px}
 .pison-capabilities p{font-size:15px;line-height:1.5;color:#666;margin-top:8px}
 .pison-watch img{height:clamp(390px,43vw,650px)}
-.pison-decision-card{border:0;border-radius:18px;min-height:285px;padding:26px 26px 58px}
+#pison-solution,.pison-film{margin-inline:3%}
+#pison-solution{padding-inline:0}
+.pison-decision-card{border:0;border-radius:18px;min-height:285px;padding:26px 26px 64px}
 .pison-decision-card:nth-child(n){background:var(--pison-surface)}
 .pison-decision-card:hover{background:#efefef;transform:translateY(-2px);box-shadow:none}
 .pison-decision-card h3{font-size:clamp(26px,2.2vw,34px);font-weight:500;letter-spacing:-.045em}
 .pison-card-plus{background:#eaeaea;color:#636363;transition:transform .25s}
 .pison-decision-card[aria-expanded=true] .pison-card-plus{background:#555;color:#fff;transform:rotate(45deg)}
-.pison-film{display:flex;flex-direction:column;gap:32px;background:var(--pison-surface);border-radius:24px;margin:0 3% 72px;padding:48px 6%}
+.pison-decision-evidence{
+ display:grid;
+ grid-template-columns:minmax(0,1fr);
+ align-items:center;
+ width:100%;
+ min-width:0;
+ min-height:304px;
+ box-sizing:border-box;
+ padding:clamp(12px,2vw,24px);
+ border-radius:16px;
+ background:var(--surface);
+}
+.pison-message-exchange{display:grid;gap:20px}
+.pison-message-in,.pison-message-out{display:grid;gap:6px;max-width:90%;justify-self:start;justify-items:start}
+.pison-message-out{justify-self:end;justify-items:end}
+.pison-message-exchange>div>span{color:var(--text-secondary);font-size:var(--type-small)}
+.pison-message-exchange p{margin:0;padding:10px 16px;border-radius:18px 18px 18px 4px;background:#e5e5ea;color:var(--text-primary);font-size:var(--type-body);line-height:1.4}
+.pison-message-out p{border-radius:18px 18px 4px 18px;background:#1767cf;color:white}
+@media(prefers-reduced-motion:no-preference){
+ .pison-message-in,.pison-message-out{animation:pison-message-arrive .32s ease-out both}
+ .pison-message-out{animation-delay:.8s}
+}
+@keyframes pison-message-arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.pison-context-map{color:var(--text-primary);text-align:center;font-size:var(--type-body);line-height:1.4}
+.pison-context-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.pison-context-node,.pison-context-output{display:grid;justify-items:center;gap:8px}
+.pison-context-node{align-content:start}
+.pison-context-node>span{display:grid;justify-items:center;text-align:center}
+.pison-context-map .ui-icon{width:32px;height:32px}
+.pison-context-node small{color:var(--text-secondary);font-size:var(--type-small)}
+.pison-context-inputs::after{content:"";grid-column:1/-1;width:50%;height:16px;justify-self:center;margin-top:8px;border:1px solid #999;border-top:0;border-radius:0 0 4px 4px}
+.pison-context-output::before{content:"";width:1px;height:16px;background:#999}
+.pison-film{display:flex;flex-direction:column;gap:32px;background:var(--pison-surface);border-radius:24px;margin-block:0 72px;padding:48px 6%}
 .pison-film-heading{text-align:center;max-width:700px}
 .pison-film-heading h2{font-size:clamp(38px,4.4vw,62px)}
 .pison-film-heading>p{font-size:17px;max-width:48ch;margin:22px auto 0}
@@ -34,12 +71,23 @@
 .pison-film-media video{border-radius:17px;box-shadow:0 20px 55px #38383815}
 .pison-film-media figcaption{color:#7b7b7b}
 .pison-demo-heading{max-width:760px;margin-bottom:36px}
-.pison-demo-story{gap:8%;align-items:center}
-.pison-cinema{align-items:center}
-.pison-cinema video{border-radius:26px}
+.pison-demo-story{column-gap:8%;row-gap:24px;align-items:center}
+.pison-cinema{align-items:flex-start}
+.pison-cinema video{width:min(100%,42.1875svh,495px);height:auto;aspect-ratio:9/16;border-radius:26px}
 .pison-timestamps{margin-top:0}
 .pison-demo-copy>.pison-lead{font-size:24px;max-width:29ch;color:#6a6a6a}
 .pison-system-story{border-bottom:0}
+
+/* Collapse deleted copy in the reading layout. The editor can still restore it. */
+html:not(.copy-editing) .pison-case :is(.pison-eyebrow, .pison-decision-card > p, .pison-context-node small, .pison-step-name):empty,
+html:not(.copy-editing) .pison-current-step:not(:has(> [data-stage-copy]:not([hidden]):not(:empty))),
+html:not(.copy-editing) .pison-case h2 > br:is(:first-child, :last-child),
+html:not(.copy-editing) .pison-case h2 > br:has(+ span:empty:last-child),
+html:not(.copy-editing) .pison-case h2 > span:empty:first-child + br,
+html:not(.copy-editing) .pison-case h2 > span:empty {display:none}
+
+.pison-decision-card:has(> p:empty){min-height:0}
+.pison-decision-card:has(> p:empty) :is(.pison-eyebrow,.pison-card-icon){margin-bottom:16px}
 .pison-tech-panel{border:0;border-radius:28px;background:var(--pison-surface)}
 .pison-business{padding-top:88px}
 .pison-model-roadmap{border-top:0;background:var(--pison-surface);border-radius:20px;padding:32px;margin-top:40px}

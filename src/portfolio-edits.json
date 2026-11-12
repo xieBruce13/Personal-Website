@@ -1,0 +1,489 @@
+{
+  "/zh/header": {
+    "a0aedd6f66058517f1726a22": {
+      "original": "Bruce",
+      "text": "Bruce Xie 谢凌翔",
+      "size": 20
+    },
+    "5086f04be25ad4a5237793d9": {
+      "original": "AI 产品经理与创造者",
+      "text": "",
+      "size": null
+    }
+  },
+  "/zh/": {
+    "9c01c0c0bac657b91d355cc1": {
+      "original": "个人 Agent",
+      "text": "Personal Agent",
+      "size": null
+    },
+    "838a843ea13a2686844a9cd5": {
+      "original": "Agent 团队",
+      "text": "Agent Teams",
+      "size": null
+    },
+    "7bce815a6611363043b93c26": {
+      "original": "研究工具",
+      "text": "Research Tool",
+      "size": null
+    },
+    "4e772a5a232f05cf0efff254": {
+      "original": "模型训练",
+      "text": "Model Traning",
+      "size": null
+    }
+  },
+  "/en/header": {
+    "287442aac4e931c6cc242119": {
+      "original": "AI Product Manager & Builder",
+      "text": "",
+      "size": null
+    },
+    "1531258d090d42fed0b7b5f3": {
+      "original": "About",
+      "text": "About",
+      "size": 20
+    },
+    "dc0b847d316221010d4c4771": {
+      "original": "Contact",
+      "text": "Contact",
+      "size": 20
+    },
+    "36c3a7d2b6a0fb30b551592d": {
+      "original": "EN",
+      "text": "EN",
+      "size": 20
+    },
+    "3dae58c4500c7afbe613a21d": {
+      "original": "中文",
+      "text": "中文",
+      "size": 20
+    },
+    "a0aedd6f66058517f1726a22": {
+      "original": "Bruce",
+      "text": "Bruce Xie 谢凌翔",
+      "size": 20
+    }
+  },
+  "/en/": {
+    "001518effca5f9cdd165d676": {
+      "original": "I’m Bruce, an AI product manager & builder.",
+      "text": "Hi, I’m Bruce, Product Builder & Designer.",
+      "size": 35,
+      "color": "#999999",
+      "ranges": [
+        {
+          "start": 15,
+          "end": 42,
+          "color": "#252525"
+        }
+      ]
+    },
+    "0a5f9e1dbd85f1b8161b1756": {
+      "original": "Built with intent.",
+      "text": "",
+      "size": null
+    },
+    "51a5b48f86e9ba9b710708aa": {
+      "original": "AI products.",
+      "text": "Ideate Create Innovate",
+      "size": 82,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 3,
+          "color": "#252525"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "color": "#999999"
+        },
+        {
+          "start": 6,
+          "end": 10,
+          "color": "#252525"
+        },
+        {
+          "start": 10,
+          "end": 13,
+          "color": "#999999"
+        },
+        {
+          "start": 13,
+          "end": 19,
+          "color": "#252525"
+        },
+        {
+          "start": 19,
+          "end": 22,
+          "color": "#999999"
+        }
+      ]
+    },
+    "62c9f7f02a44d81d951e3808": {
+      "original": "Pison Agent",
+      "text": "Pison Agent",
+      "size": 35
+    },
+    "3263ab51acfd096904856067": {
+      "original": "Qwen Create",
+      "text": "Qwen Create",
+      "size": 35
+    },
+    "19917b89d204728a4d52f62b": {
+      "original": "Eye Tracking",
+      "text": "Eye Tracking",
+      "size": 35
+    },
+    "d823ee193e06c557e22ae6c0": {
+      "original": "Defying Freud",
+      "text": "Defying Freud",
+      "size": 35
+    }
+  },
+  "/en/work/pison/": {
+    "91a1f7b3666d3ade7d4f26bb": {
+      "original": "Pison",
+      "text": "Pison Agent",
+      "size": null
+    },
+    "672e635656a59114bac3e8b9": {
+      "original": "A little context.",
+      "text": "Biometrics based",
+      "size": null
+    },
+    "937395a23e6a0689c3757353": {
+      "original": "A better next move.",
+      "text": "personal agent",
+      "size": null
+    },
+    "e55bd6e87fdadcd736f37072": {
+      "original": "A prototype turning Pison Watch data into timely advice, through iMessage.",
+      "text": "An health agent that knows about your day",
+      "size": 17,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 41,
+          "color": "#848484"
+        }
+      ]
+    },
+    "a668ce60ba9b4a72fb617285": {
+      "original": "Pison measures neural and physiological signals. I explored the next step: helping people act on them.",
+      "text": "Pison is a startup that specializes in neural data collection. Its watch uses electroneurography to detect electrical signals traveling from the brain through the nerves to the muscles.                               In this project, Pison invited my team to develop new AI features for its existing products.",
+      "size": 17
+    },
+    "3d291417a86936dcecf54ea2": {
+      "original": "About Pison",
+      "text": "More about Pison",
+      "size": null
+    },
+    "830629a1d0bbb1b2d9aa2e63": {
+      "original": "The opportunity",
+      "text": "Background",
+      "size": 17
+    },
+    "3f56f52cdbc29e129bf961db": {
+      "original": "The opportunity",
+      "text": "",
+      "size": null
+    },
+    "ac135e43b8834469d53b0db8": {
+      "original": "Through user interviews and market research, we found that Pison was already collecting a wealth of physiological and neural data on an ongoing basis. For users, the real gap was between seeing the data and knowing how to act on it. They could track more and more metrics, yet still struggled to understand what a change meant or what to do about it in the moment.",
+      "text": "Through user interviews and market research, we found that Pison was already collecting a wealth of physiological and neural data on an ongoing basis. For users, the real gap was between seeing the data and knowing how to act on it. They could track more and more metrics, yet still struggled to understand what a change meant or what to do about it in the moment.",
+      "size": 17,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 364,
+          "color": "#626262"
+        }
+      ]
+    },
+    "b1c08f524fa03142a986ab9f": {
+      "original": "My product decisions",
+      "text": "",
+      "size": null
+    },
+    "bc7e4fecf2eb583fe690ad52": {
+      "original": "From signals",
+      "text": "From signals",
+      "size": 78
+    },
+    "18f207c6b706a013ab3f23a5": {
+      "original": "to decisions.",
+      "text": "to decisions.",
+      "size": 78
+    },
+    "346eaff5803f2d73d96bbc91": {
+      "original": "Design for the next move.",
+      "text": "Three major design choices",
+      "size": 35
+    },
+    "8e35d2fda01720854af8a22c": {
+      "original": "A clear",
+      "text": "Action",
+      "size": 35,
+      "color": "#737373"
+    },
+    "35a57294056760f8267ce47b": {
+      "original": "next step.",
+      "text": "Over Dashboard",
+      "size": 24,
+      "color": "#949494",
+      "ranges": [
+        {
+          "start": 0,
+          "end": 14,
+          "color": "#737373"
+        }
+      ]
+    },
+    "fa1a41083117f59f9a3e501c": {
+      "original": "The right",
+      "text": "Message",
+      "size": 35,
+      "color": "#949494",
+      "ranges": [
+        {
+          "start": 0,
+          "end": 7,
+          "color": "#737373"
+        }
+      ]
+    },
+    "97482055d25af92a5f31a63f": {
+      "original": "moment.",
+      "text": "Direct To User",
+      "size": 24,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 14,
+          "color": "#737373"
+        }
+      ]
+    },
+    "2b6bcdcfb4d56c6db2d78e20": {
+      "original": "Action over dashboards",
+      "text": "",
+      "size": null
+    },
+    "4a34733e127f530336fa4494": {
+      "original": "Messages over app checking",
+      "text": "",
+      "size": null
+    },
+    "24a27d8f71f5fa70a8a79ca3": {
+      "original": "The whole",
+      "text": "Context",
+      "size": 36,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 7,
+          "color": "#737373"
+        }
+      ]
+    },
+    "00959b08f6217402f9ec6048": {
+      "original": "day.",
+      "text": "of the whole day",
+      "size": 24,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 16,
+          "color": "#737373"
+        }
+      ]
+    },
+    "077f49727a3d98b0bf4c8ca9": {
+      "original": "Context over a single score",
+      "text": "",
+      "size": null
+    },
+    "ef51d2189f28280d3d07c43c": {
+      "original": "A clear",
+      "text": "Action",
+      "size": 41
+    },
+    "c24f3a785fc229300ef0c7c9": {
+      "original": "next step.",
+      "text": "Over Dashboard",
+      "size": 41
+    },
+    "b355d47e1d8f06e484229342": {
+      "original": "I chose one useful recommendation over another dashboard.",
+      "text": "We stopped adding charts and designed the agent to combine multiple metrics into advice users could act on right away. The focus shifted from “What’s my heart rate variability (HRV)?” to “What should I adjust today?”",
+      "size": null
+    },
+    "8da6b8b9c750f8b73f3b31b8": {
+      "original": "(Proposed)",
+      "text": "",
+      "size": null
+    },
+    "22144dacc4da60fccf13351e": {
+      "original": "Pison Ultimate Agent",
+      "text": "Pison Agent",
+      "size": null
+    },
+    "50a97196d84647f32fddd6a3": {
+      "original": "The right",
+      "text": "Message",
+      "size": 41
+    },
+    "13838516934103f5e9d6a9e0": {
+      "original": "moment.",
+      "text": "Direct To User",
+      "size": 41
+    },
+    "1dfeced8bcf7e4af11e30837": {
+      "original": "I brought guidance into iMessage, where people already reply.",
+      "text": "Health advice is time-sensitive. People are unlikely to open a new app every time their readings change, so we chose to send recommendations by text. A text message has limited space, but it can reach someone at the moment the advice matters.",
+      "size": 17
+    },
+    "c46264348f8150ce944f05b5": {
+      "original": "The whole",
+      "text": "Context of the",
+      "size": 41
+    },
+    "166df2c01c9ebc98ff6ed363": {
+      "original": "day.",
+      "text": "whole day",
+      "size": 41
+    },
+    "5cda0fb235135313195af7ee": {
+      "original": "I combined baselines, calendar, goals and history to make advice relevant.",
+      "text": "A poor night’s sleep has different implications on a day off than it does two hours before a job interview. The agent connects to the user’s calendar and considers their schedule alongside their physiological data, profile, and past conversations to decide whether a recommendation makes sense in that moment.",
+      "size": 17
+    },
+    "5632985bc883a6c58ebb4b5c": {
+      "original": "A day with Pison.",
+      "text": "Concept Film : A day with Pison.",
+      "size": null
+    },
+    "c1254328ac2c89dcf6fec71a": {
+      "original": "Overview",
+      "text": "Overview",
+      "size": 17
+    },
+    "a02808c5f172f0b8f06c3fd6": {
+      "original": "Product decisions",
+      "text": "Product decisions",
+      "size": 17
+    },
+    "ffb32be1b107dce1e4a74ac4": {
+      "original": "The system",
+      "text": "The system",
+      "size": 17
+    },
+    "d3ae7518d53abfe88fc78d41": {
+      "original": "In use",
+      "text": "Demo",
+      "size": 17
+    },
+    "1d67c3cd1ac108aaae107976": {
+      "original": "Pison Watch",
+      "text": "Pison Watch",
+      "size": 20
+    },
+    "7efbb84a74758e8cfbe03a4f": {
+      "original": "Calendar",
+      "text": "Calendar",
+      "size": 20
+    },
+    "f6bfd01a9d27ecfb9b148729": {
+      "original": "Email",
+      "text": "Email",
+      "size": 20
+    },
+    "3a1660bd83674a4a3d151ed7": {
+      "original": "Sleep · recovery",
+      "text": "Sleep · recovery",
+      "size": 14
+    },
+    "585a52d702b8ee28a2e0d3d5": {
+      "original": "Game tomorrow",
+      "text": "Game tomorrow",
+      "size": 14
+    },
+    "bca5af08e997b0cfef65c9e8": {
+      "original": "Proposed",
+      "text": "Proposed",
+      "size": 14
+    },
+    "2a035eee87bb822dc4285931": {
+      "original": "Context first.",
+      "text": "Context first.",
+      "size": 78
+    },
+    "d3ed4aed4753ac771ca2e969": {
+      "original": "Conversation follows.",
+      "text": "Conversation follows.",
+      "size": 78
+    },
+    "227e7701dcdb42c8ba69ee67": {
+      "original": "Connect",
+      "text": "",
+      "size": null
+    },
+    "0df57295d7ea799f0c90db50": {
+      "original": "Follow through",
+      "text": "",
+      "size": 20
+    },
+    "30e52196a0dd08653b071849": {
+      "original": "Anticipate",
+      "text": "",
+      "size": 20
+    },
+    "c78cdd8ad65195c4b671aec5": {
+      "original": "Listen",
+      "text": "",
+      "size": 20
+    },
+    "bd972a900e82276f45293dd0": {
+      "original": "Explain",
+      "text": "",
+      "size": 20
+    },
+    "7e424f588b22cd1a0b48da40": {
+      "original": "to response.",
+      "text": "",
+      "size": 41
+    },
+    "6bd26e925976a8e49b4f1c09": {
+      "original": "From signal",
+      "text": "From signal to response.",
+      "size": 41
+    },
+    "3fd720cd2681254eabdc0027": {
+      "original": "Establish a baseline.",
+      "text": "Establish a baseline.",
+      "size": 42
+    },
+    "faed2581c5390dd49372d6ff": {
+      "original": "Analyze once. Reuse.",
+      "text": "Analyze once. Reuse.",
+      "size": 42
+    },
+    "bd49bb27e77f32192f27c791": {
+      "original": "Answer in context.",
+      "text": "Answer in context.",
+      "size": 42
+    },
+    "83d2ecb4aa0b9fbd24595a30": {
+      "original": "Know when to wait.",
+      "text": "Know when to wait.",
+      "size": 42
+    },
+    "fb187dbbbcfd049eedd3285b": {
+      "original": "See it in use.",
+      "text": "Really Life Demo",
+      "size": null
+    }
+  }
+}

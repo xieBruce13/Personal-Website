@@ -51,41 +51,25 @@
     "contextTitle": "From signals<br>to decisions.",
     "company": "Pison measures neural and physiological signals. I explored the next step: helping people act on them.",
     "watchAlt": "Pison Watch, shown with the Pison app",
-    "capabilities": [
-      [
-        "Neural signals",
-        "Wrist-based ENG."
-      ],
-      [
-        "Sleep & recovery",
-        "Sleep, heart rate and HRV."
-      ],
-      [
-        "Personal patterns",
-        "Readiness against your baseline."
-      ]
-    ],
-    "companySource": "The science ↗",
+    "contextDetails": "Through user interviews and market research, we found that Pison was already collecting a wealth of physiological and neural data on an ongoing basis. For users, the real gap was between seeing the data and knowing how to act on it. They could track more and more metrics, yet still struggled to understand what a change meant or what to do about it in the moment.",
+    "companySource": null,
     "solutionLabel": "My product decisions",
     "solutionTitle": "Design for the next move.",
     "decisions": [
       {
         "shift": "Action over dashboards",
         "title": "A clear<br>next step.",
-        "body": "I chose one useful recommendation over another dashboard.",
-        "tradeoff": "Keep the evidence available through follow-up questions."
+        "body": "I chose one useful recommendation over another dashboard."
       },
       {
         "shift": "Messages over app checking",
         "title": "The right<br>moment.",
-        "body": "I brought guidance into iMessage, where people already reply.",
-        "tradeoff": "Each proactive message must earn the interruption."
+        "body": "I brought guidance into iMessage, where people already reply."
       },
       {
         "shift": "Context over a single score",
         "title": "The whole<br>day.",
-        "body": "I combined baselines, calendar, goals and history to make advice relevant.",
-        "tradeoff": "Qualify advice when context is incomplete or stale."
+        "body": "I combined baselines, calendar, goals and history to make advice relevant."
       }
     ],
     "visualOne": [
@@ -94,19 +78,6 @@
       "Strain",
       "Interpret together",
       "A useful next step"
-    ],
-    "visualTwo": [
-      "08:00",
-      "Signals sync",
-      "08:05",
-      "A timely message",
-      "The user can simply reply."
-    ],
-    "contextTags": [
-      "Personal baseline",
-      "Calendar",
-      "Goals",
-      "History"
     ],
     "moreTitle": "See it in use.",
     "hockeyLabel": "Pison Ultimate Agent — real-life hockey demo",
@@ -265,7 +236,13 @@
       "send": "Respond when relevant",
       "wait": "Otherwise, wait"
     },
-    "decisionTradeoff": "The tradeoff"
+    "calendarName": "Google Calendar",
+    "contextOutput": "Daily context",
+    "messageExchange": {
+      "reminder": "Time for water now.",
+      "reply": "As you wish.",
+      "user": "You"
+    }
   },
   "zh": {
     "headline": "多一点上下文。<br>更合适的下一步。",
@@ -319,7 +296,7 @@
     "contextTitle": "从信号，<br>到决定。",
     "company": "Pison 采集神经与生理信号。我探索下一步：帮助人们据此行动。",
     "watchAlt": "Pison Watch 与 Pison App",
-    "capabilities": [
+    "contextDetails": [
       [
         "神经信号",
         "腕部 ENG 感知。"
@@ -340,20 +317,17 @@
       {
         "shift": "从看数据到做决定",
         "title": "清晰的<br>下一步。",
-        "body": "我选择给出一个有用的建议，而不是再做一个仪表盘。",
-        "tradeoff": "用户可以通过追问了解依据。"
+        "body": "我选择给出一个有用的建议，而不是再做一个仪表盘。"
       },
       {
         "shift": "从打开应用到收到消息",
         "title": "合适的<br>时机。",
-        "body": "将建议带入用户熟悉的 iMessage 对话。",
-        "tradeoff": "每次主动提醒都要值得打扰。"
+        "body": "将建议带入用户熟悉的 iMessage 对话。"
       },
       {
         "shift": "从单个分数到完整情境",
         "title": "理解<br>一整天。",
-        "body": "结合个人基线、日历、目标与历史，让建议与当下相关。",
-        "tradeoff": "上下文缺失或过时，就明确说明。"
+        "body": "结合个人基线、日历、目标与历史，让建议与当下相关。"
       }
     ],
     "visualOne": [
@@ -362,19 +336,6 @@
       "活动负荷",
       "综合理解",
       "有用的下一步"
-    ],
-    "visualTwo": [
-      "08:00",
-      "同步信号",
-      "08:05",
-      "及时的一条消息",
-      "用户可以直接回复。"
-    ],
-    "contextTags": [
-      "个人基线",
-      "日历",
-      "目标",
-      "历史"
     ],
     "moreTitle": "看看实际体验。",
     "hockeyLabel": "Pison Ultimate Agent — real-life hockey demo",
@@ -533,6 +494,12 @@
       "send": "在合适时回应",
       "wait": "否则，等待"
     },
-    "decisionTradeoff": "取舍"
+    "calendarName": "Google 日历",
+    "contextOutput": "日常情境",
+    "messageExchange": {
+      "reminder": "该喝水了。",
+      "reply": "好，听你的。",
+      "user": "你"
+    }
   }
 }

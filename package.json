@@ -4,11 +4,15 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node --check src/particles.js && node --check src/site.js && node --check build.mjs && node --check scripts/preview.mjs && node --check scripts/serve.mjs && node --check scripts/check.mjs && node --check src/case-studies/pison.mjs && node --check src/case-studies/experiments.mjs && node --check src/hero-object.mjs && node --check src/icons.mjs && node --check src/project-covers.mjs",
+    "check": "node --check src/particles.js && node --check src/site.js && node --check build.mjs && node --check scripts/preview.mjs && node --check scripts/serve.mjs && node --check scripts/check.mjs && node --check src/case-studies/pison.mjs && node --check src/case-studies/experiments.mjs && node --check src/koi/koi.js && node --check src/koi/koi-render.js && node --check src/koi/koi-worker.js && node --check src/icons.mjs && node --check src/project-covers.mjs",
     "test": "node scripts/check.mjs",
-    "preview": "node build.mjs && node scripts/preview.mjs"
+    "preview": "node build.mjs && node scripts/preview.mjs",
+    "edit": "node build.mjs && node scripts/serve.mjs --edit"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "parse5": "7.3.0"
   }
 }

@@ -1,0 +1,512 @@
+[
+  {
+    "id": "LF-003",
+    "title": "Reflection (Self-Portrait)",
+    "date": "1985",
+    "split": "train"
+  },
+  {
+    "id": "LF-004",
+    "title": "Queen Elizabeth II",
+    "date": "2000-2001",
+    "split": "train"
+  },
+  {
+    "id": "LF-021",
+    "title": "Head of a woman (Portrait of Lady Elizabeth Cavendish)",
+    "date": "1950",
+    "split": "train"
+  },
+  {
+    "id": "LF-023",
+    "title": "Girl in Bed",
+    "date": "1952",
+    "split": "train"
+  },
+  {
+    "id": "LF-025",
+    "title": "A Woman Painter",
+    "date": "1954",
+    "split": "validation"
+  },
+  {
+    "id": "LF-026",
+    "title": "Woman in a White Shirt",
+    "date": "1956-1957",
+    "split": "train"
+  },
+  {
+    "id": "LF-027",
+    "title": "Child with a Toy Dog",
+    "date": "1956-1958",
+    "split": "train"
+  },
+  {
+    "id": "LF-028",
+    "title": "Woman Smiling",
+    "date": "1958-1959",
+    "split": "train"
+  },
+  {
+    "id": "LF-031",
+    "title": "A Painter",
+    "date": "1962",
+    "split": "train"
+  },
+  {
+    "id": "LF-032",
+    "title": "Sleeping Head",
+    "date": "1962",
+    "split": "train"
+  },
+  {
+    "id": "LF-033",
+    "title": "Man's Head, Small Portrait III (Self-Portrait)",
+    "date": "1963",
+    "split": "train"
+  },
+  {
+    "id": "LF-034",
+    "title": "A Man and his Daughter",
+    "date": "1963-1964",
+    "split": "validation"
+  },
+  {
+    "id": "LF-035",
+    "title": "John Deakin",
+    "date": "1963-1964",
+    "split": "train"
+  },
+  {
+    "id": "LF-037",
+    "title": "Naked Girl Asleep I",
+    "date": "1967",
+    "split": "train"
+  },
+  {
+    "id": "LF-040",
+    "title": "Paddington Interior, Harry Diamond",
+    "date": "1970",
+    "split": "train"
+  },
+  {
+    "id": "LF-041",
+    "title": "Annabel",
+    "date": "1972",
+    "split": "validation"
+  },
+  {
+    "id": "LF-042",
+    "title": "The Painter's Mother II",
+    "date": "1972",
+    "split": "train"
+  },
+  {
+    "id": "LF-044",
+    "title": "Ali",
+    "date": "1974",
+    "split": "train"
+  },
+  {
+    "id": "LF-046",
+    "title": "The Painter's Mother Reading",
+    "date": "1975",
+    "split": "train"
+  },
+  {
+    "id": "LF-047",
+    "title": "The Painter's Mother Resting I",
+    "date": "1975-1976",
+    "split": "train"
+  },
+  {
+    "id": "LF-049",
+    "title": "Night Portrait",
+    "date": "1978",
+    "split": "validation"
+  },
+  {
+    "id": "LF-050",
+    "title": "Portrait of Rose",
+    "date": "1978-1979",
+    "split": "train"
+  },
+  {
+    "id": "LF-051",
+    "title": "Naked Man with his Friend",
+    "date": "1978-1980",
+    "split": "train"
+  },
+  {
+    "id": "LF-053",
+    "title": "Naked Girl with Egg",
+    "date": "1980-1981",
+    "split": "train"
+  },
+  {
+    "id": "LF-054",
+    "title": "Guy Half Asleep",
+    "date": "1981-1982",
+    "split": "train"
+  },
+  {
+    "id": "LF-055",
+    "title": "Man in a Sports Shirt",
+    "date": "1982",
+    "split": "train"
+  },
+  {
+    "id": "LF-056",
+    "title": "Esther",
+    "date": "1982-1983",
+    "split": "train"
+  },
+  {
+    "id": "LF-059",
+    "title": "Blond Girl, Night Portrait",
+    "date": "1980-1985",
+    "split": "train"
+  },
+  {
+    "id": "LF-068",
+    "title": "Man Smoking",
+    "date": "1986-1987",
+    "split": "train"
+  },
+  {
+    "id": "LF-090",
+    "title": "John Richardson",
+    "date": "1998",
+    "split": "validation"
+  },
+  {
+    "id": "LF-092",
+    "title": "Head of a Naked Girl",
+    "date": "1999",
+    "split": "train"
+  },
+  {
+    "id": "LF-093",
+    "title": "Head of an Irishman",
+    "date": "1999",
+    "split": "train"
+  },
+  {
+    "id": "LF-094",
+    "title": "Robert Fellowes",
+    "date": "1999",
+    "split": "train"
+  },
+  {
+    "id": "LF-108",
+    "title": "Woman with Eyes Closed",
+    "date": "2002",
+    "split": "train"
+  },
+  {
+    "id": "LF-112",
+    "title": "Albie",
+    "date": "2003-2004",
+    "split": "train"
+  },
+  {
+    "id": "LF-117",
+    "title": "New Yorker",
+    "date": "2006",
+    "split": "validation"
+  },
+  {
+    "id": "LF-118",
+    "title": "Donegal Man",
+    "date": "2007",
+    "split": "train"
+  },
+  {
+    "id": "LF-119",
+    "title": "Francis Bacon",
+    "date": "1956",
+    "split": "train"
+  },
+  {
+    "id": "LF-144",
+    "title": "Girl in a Dark Dress",
+    "date": "1951",
+    "split": "train"
+  },
+  {
+    "id": "LF-145",
+    "title": "Boy's Head",
+    "date": "1952",
+    "split": "train"
+  },
+  {
+    "id": "LF-147",
+    "title": "Girl Reading",
+    "date": "1952",
+    "split": "train"
+  },
+  {
+    "id": "LF-150",
+    "title": "Head of a Boy",
+    "date": "1953",
+    "split": "train"
+  },
+  {
+    "id": "LF-151",
+    "title": "Head of a Child",
+    "date": "1954",
+    "split": "train"
+  },
+  {
+    "id": "LF-152",
+    "title": "Man in a Headscarf (also known as The Procurer)",
+    "date": "1954",
+    "split": "train"
+  },
+  {
+    "id": "LF-154",
+    "title": "A Young Painter",
+    "date": "1958",
+    "split": "train"
+  },
+  {
+    "id": "LF-155",
+    "title": "Man in a Mackintosh",
+    "date": "1957-1958",
+    "split": "train"
+  },
+  {
+    "id": "LF-158",
+    "title": "Figure with Bare Arms",
+    "date": "1961",
+    "split": "validation"
+  },
+  {
+    "id": "LF-159",
+    "title": "Head on a Green Sofa",
+    "date": "1960-1961",
+    "split": "train"
+  },
+  {
+    "id": "LF-160",
+    "title": "Pregnant Girl",
+    "date": "1961",
+    "split": "train"
+  },
+  {
+    "id": "LF-161",
+    "title": "Annie",
+    "date": "1962",
+    "split": "train"
+  },
+  {
+    "id": "LF-162",
+    "title": "Man's Head, Self Portrait",
+    "date": "1963",
+    "split": "train"
+  },
+  {
+    "id": "LF-163",
+    "title": "Naked Child Laughing",
+    "date": "1963",
+    "split": "train"
+  },
+  {
+    "id": "LF-167",
+    "title": "Naked Girl",
+    "date": "1966",
+    "split": "train"
+  },
+  {
+    "id": "LF-168",
+    "title": "Girl in a Fur Coat",
+    "date": "1967",
+    "split": "train"
+  },
+  {
+    "id": "LF-171",
+    "title": "Naked Girl Asleep II",
+    "date": "1968",
+    "split": "train"
+  },
+  {
+    "id": "LF-176",
+    "title": "The Painter's Mother III",
+    "date": "1972",
+    "split": "train"
+  },
+  {
+    "id": "LF-177",
+    "title": "Large Interior, London W.9.",
+    "date": "1973",
+    "split": "train"
+  },
+  {
+    "id": "LF-181",
+    "title": "Annie and Alice",
+    "date": "1975",
+    "split": "train"
+  },
+  {
+    "id": "LF-182",
+    "title": "Head of the Big Man",
+    "date": "1975",
+    "split": "train"
+  },
+  {
+    "id": "LF-183",
+    "title": "Frank Auerbach",
+    "date": "1975-1976",
+    "split": "train"
+  },
+  {
+    "id": "LF-184",
+    "title": "Head of a Girl",
+    "date": "1975-1976",
+    "split": "train"
+  },
+  {
+    "id": "LF-186",
+    "title": "Naked Man with Rat",
+    "date": "1977",
+    "split": "train"
+  },
+  {
+    "id": "LF-192",
+    "title": "Bella",
+    "date": "1981",
+    "split": "train"
+  },
+  {
+    "id": "LF-193",
+    "title": "Guy and Speck",
+    "date": "1980-1981",
+    "split": "train"
+  },
+  {
+    "id": "LF-194",
+    "title": "Naked Portrait",
+    "date": "1980-1981",
+    "split": "train"
+  },
+  {
+    "id": "LF-195",
+    "title": "Head of a Man",
+    "date": "1981-1982",
+    "split": "train"
+  },
+  {
+    "id": "LF-199",
+    "title": "Ib",
+    "date": "1983-1984",
+    "split": "train"
+  },
+  {
+    "id": "LF-202",
+    "title": "Fred",
+    "date": "1985",
+    "split": "train"
+  },
+  {
+    "id": "LF-203",
+    "title": "Girl in Striped Nightshirt",
+    "date": "1985",
+    "split": "train"
+  },
+  {
+    "id": "LF-206",
+    "title": "Two Irishmen in W11",
+    "date": "1984-1985",
+    "split": "train"
+  },
+  {
+    "id": "LF-207",
+    "title": "Bella",
+    "date": "1986",
+    "split": "train"
+  },
+  {
+    "id": "LF-209",
+    "title": "The Painter's Brother, Stephen",
+    "date": "1985-1986",
+    "split": "train"
+  },
+  {
+    "id": "LF-216",
+    "title": "Susie",
+    "date": "1988",
+    "split": "train"
+  },
+  {
+    "id": "LF-217",
+    "title": "Woman in a Grey Sweater",
+    "date": "1988",
+    "split": "train"
+  },
+  {
+    "id": "LF-219",
+    "title": "Susie",
+    "date": "1988-1989",
+    "split": "train"
+  },
+  {
+    "id": "LF-221",
+    "title": "Portrait of Ib",
+    "date": "1990",
+    "split": "train"
+  },
+  {
+    "id": "LF-222",
+    "title": "Leigh Bowery",
+    "date": "1991",
+    "split": "train"
+  },
+  {
+    "id": "LF-223",
+    "title": "Woman in a Butterfly Jersey",
+    "date": "1990-1991",
+    "split": "train"
+  },
+  {
+    "id": "LF-245",
+    "title": "Man in Silver Suit",
+    "date": "1998",
+    "split": "train"
+  },
+  {
+    "id": "LF-259",
+    "title": "Small Portait",
+    "date": "2001",
+    "split": "train"
+  },
+  {
+    "id": "LF-261",
+    "title": "David Hockney",
+    "date": "2002",
+    "split": "train"
+  },
+  {
+    "id": "LF-277",
+    "title": "Eli and David",
+    "date": "2005-2006",
+    "split": "validation"
+  },
+  {
+    "id": "LF-279",
+    "title": "Sally Clarke",
+    "date": "2008",
+    "split": "train"
+  },
+  {
+    "id": "LF-280",
+    "title": "Self-Portrait",
+    "date": "1956",
+    "split": "train"
+  },
+  {
+    "id": "LF-281",
+    "title": "Girl with Fair Hair",
+    "date": "?",
+    "split": "train"
+  }
+]
