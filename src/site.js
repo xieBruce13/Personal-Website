@@ -72,21 +72,12 @@ if(headline) {
  markHeadlineEndings();
 }
 
-// Frame the opening on the first cover. Keep the full pond available above it.
-const firstCover=document.querySelector('.home-page .work-gallery .project-image');
-const navigationType=performance.getEntriesByType('navigation')[0]?.type;
-if(firstCover && !location.hash && navigationType!=='back_forward') {
- // On refresh, the browser can restore the old position after scripts run.
- // Resume normal history restoration once this entry has finished loading.
- if(navigationType==='reload' && history.scrollRestoration==='auto') {
-  history.scrollRestoration='manual';
-  window.addEventListener('pageshow',()=>setTimeout(()=>{history.scrollRestoration='auto'},0),{once:true});
- }
- const coverTop=firstCover.getBoundingClientRect().top;
- const headlineTop=document.querySelector('.hero h1').getBoundingClientRect().top;
- const headerBottom=document.querySelector('.header').getBoundingClientRect().bottom;
- const offset=Math.min(coverTop-window.innerHeight*.735,headlineTop-headerBottom);
- window.scrollTo({top:Math.max(0,window.scrollY+offset),behavior:'instant'});
+// A fresh visit starts at the top naturally. Use the same opening on refresh.
+if(document.querySelector('.home-page') && !location.hash && performance.getEntriesByType('navigation')[0]?.type==='reload') {
+ const previousRestoration=history.scrollRestoration;
+ history.scrollRestoration='manual';
+ window.scrollTo({top:0,behavior:'instant'});
+ window.addEventListener('pageshow',()=>setTimeout(()=>{history.scrollRestoration=previousRestoration},0),{once:true});
 }
 
 if(document.documentElement.hasAttribute('data-project-page') && !('onpagereveal' in window)) {

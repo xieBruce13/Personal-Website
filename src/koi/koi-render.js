@@ -1,6 +1,6 @@
 // A single ink plate follows a deforming grid. Both renderers sample the same
 // coverage map, including the transparent paper cuts inside each scale and fin.
-const koiInk = [179, 38, 22];
+const koiInk = [244, 50, 28];
 
 function createKoiRenderer(canvas, mesh, mask) {
   const gl = canvas.getContext('webgl', {

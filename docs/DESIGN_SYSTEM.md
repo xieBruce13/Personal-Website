@@ -65,7 +65,7 @@ Define the sizes in `src/design-tokens.css` and assign their roles in `src/typog
 
 ### Landing-page koi
 
-On a fresh homepage visit, frame the first project covers about 73.5% down the viewport, with the headline visible above them. Keep the full pond accessible by scrolling up. Honor section links and normal browser Back navigation.
+Open the homepage at the top of the koi pond on visits and refreshes. Honor section links and normal browser Back navigation. Render the koi engraving in bright scarlet ink (`#F4321C`).
 
 Place eight stationary, colorless glass lotus leaves above the koi. Give each leaf a distinct outline with softly uneven lobes. Crop two leaves along the top edge, centered about 20% and 29% across the page. Show a shallow slice of the first and a little over half of the second. Center the left leaf on the viewport edge so half of its 399 px maximum span is visible. The largest leaf grows to 510 px. Overlap its lower-right edge with a leaf about 47% of its width and give both continuous lower edges. Set a small leaf above the headline at 17% of the viewport width and crop another at the upper right. Tuck the lower third of the gallery leaf behind the rightmost project cover in the first row. Its maximum width is 246 px. Use 8.2875 px of frost and a fine directional highlight along each outline.
 
