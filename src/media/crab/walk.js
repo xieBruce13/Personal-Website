@@ -50,6 +50,7 @@
   let headlineWalkStart = 0;
   let pointer = null, threat = null, followAfter = 0, frame = 0, last = 0;
   const dotBreak = painting ? 20 : 25;
+  let motionSample=null, followTarget=null, followElapsed=0, blockedElapsed=0;
   const claws = [-1,1].map(side => ({side, wrist:0, gape:0}));
   let probeSide=1, probeAt=0, nextProbe=3;
 
@@ -227,9 +228,71 @@
     }
   }
   function wander() {
+    if(painting){
+      const box=copyObstacle(24), origin=outsideCopy(body,box);
+      const start=between(0,2*Math.PI);
+      const candidates=[];
+      for(let i=0;i<8;i++){
+        const direction=start+i*Math.PI/4, reach=between(28,48)*scale;
+        candidates.push(point(clamp(origin.x+Math.cos(direction)*reach,24,width-24),
+          clamp(origin.y+Math.sin(direction)*reach,40,height-24)));
+      }
+      let best=null, bestScore=-Infinity;
+      for(const candidate of candidates){
+        const distance=Math.hypot(candidate.x-body.x,candidate.y-body.y);
+        if(distance<12*scale || (box && crossesCopy(origin,candidate,box)))continue;
+        const visible=candidate.x>=24 && candidate.x<=width-24 &&
+          candidate.y>=window.scrollY+64 && candidate.y<=window.scrollY+viewHeight-24;
+        const score=distance*(visible?1.4:1)+between(0,8*scale);
+        if(score>bestScore){best=candidate;bestScore=score;}
+      }
+      if(!best && box){
+        const corners=[point(box.left-20,box.top-20),point(box.right+20,box.top-20),
+          point(box.right+20,box.bottom+20),point(box.left-20,box.bottom+20)];
+        for(const corner of corners){
+          const distance=Math.hypot(corner.x-body.x,corner.y-body.y);
+          if(distance<12*scale || crossesCopy(origin,corner,box))continue;
+          if(!best || distance<bestScore){best=corner;bestScore=distance;}
+        }
+      }
+      goal=best || outsideCopy(point(origin.x,origin.y-32*scale),box);
+      mode='walk';motionSample=null;
+      return;
+    }
     const sign = body.x < width*.35 ? 1 : body.x > width*.65 ? -1 : (Math.random()<.5 ? -1 : 1);
     goal=limit(point(body.x+sign*between(.23,.54)*width,body.y+between(-.22,.22)*viewHeight));
     mode='walk';
+  }
+  function leaveUnreachableTarget() {
+    followAfter=Math.max(followAfter,clock+between(5,8));
+    followTarget=null;followElapsed=blockedElapsed=0;
+    wander();
+    nextProbe=clock;
+  }
+  function checkMovement(dt,dot) {
+    if(mode!=='walk' && mode!=='follow'){
+      motionSample=null;followTarget=null;followElapsed=blockedElapsed=0;
+      return;
+    }
+    if(mode==='follow' && dot){
+      if(!followTarget || Math.hypot(dot.x-followTarget.x,dot.y-followTarget.y)>24){
+        followTarget=point(dot.x,dot.y);followElapsed=blockedElapsed=0;
+      }
+      followElapsed+=dt;
+      const possible=outsideCopy(dot,copyObstacle());
+      blockedElapsed=Math.hypot(possible.x-dot.x,possible.y-dot.y)>2 ? blockedElapsed+dt : 0;
+      if(blockedElapsed>=1.2 || followElapsed>=30){
+        leaveUnreachableTarget();
+        return;
+      }
+    }else{
+      followTarget=null;followElapsed=blockedElapsed=0;
+    }
+    if(!motionSample)motionSample={x:body.x,y:body.y,time:clock};
+    if(clock-motionSample.time<1.6)return;
+    const progress=Math.hypot(body.x-motionSample.x,body.y-motionSample.y);
+    motionSample={x:body.x,y:body.y,time:clock};
+    if(progress<1.5*scale)leaveUnreachableTarget();
   }
   function startHeadlineWalk(progress=0) {
     // The last letter can wrap onto another line or span several styled elements.
@@ -295,6 +358,7 @@
         if(distance<=10)startle(dot,.24);
       }else if(mode==='follow'||(mode==='pause' && remaining<=0))wander();
     }
+    if(painting)checkMovement(dt,dot);
     const steering=painting ? routeAroundCopy(goal) : goal;
     const dx=steering.x-body.x,dy=steering.y-body.y;
     const range=Math.hypot(dx,dy);

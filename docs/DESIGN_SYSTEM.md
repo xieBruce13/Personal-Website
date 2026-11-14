@@ -67,6 +67,8 @@ Define the sizes in `src/design-tokens.css` and assign their roles in `src/typog
 
 BRUCE XIE, the headline and the introduction form one protected rectangle sized to their rendered text. The complete animated crab keeps 24 px clear of this rectangle and can walk beside and below it. Route across its four corners when a direct path crosses the text. Measure each painted part once at startup and transform its bounds during animation. Cache the text position and refresh it after layout or font changes, including saved text edits.
 
+If a pointer target stays inside the crab's blocked area for 1.2 seconds, the crab chooses a clear place to explore and waits five to eight seconds before following again. Check movement every 1.6 seconds and choose another destination when it stalls. A fixed pointer gets at most 30 seconds per attempt. Wandering favors clear, visible destinations, with an escape through a nearby corner when space is tight. Reaching or tapping the crab keeps its separate 20-second retreat.
+
 Leave an open white area above the headline for the crab. On desktop its height is the small viewport height minus 300 px, bounded between 210 and 900 px, below a 64 px header allowance. On phones and tablets limit it to 47% of the small viewport height. On direct visits and refreshes, start at the top. Work and Scroll down jump to the gallery. Back restores the reading position. Stagger the start of visible cover films.
 
 The homepage ends with 16 px of space below the last row of project captions. Keep biography and focus details on the dedicated About page.
