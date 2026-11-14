@@ -29,14 +29,22 @@ function systemVisual(c,i){const v=c.systemVisualLabels;
  return `<div class="tech-memory-top">${icon('database')}<div><h4>${v.memory}</h4><p>PostgreSQL</p></div><span class="tech-memory-orbit" aria-hidden="true"></span></div><div class="tech-guard-path">${icon('down')}<div>${icon('clock')}<span>${v.fresh}</span></div>${icon('down')}<div>${icon('shield')}<span>${v.cooldown}</span></div></div><div class="tech-outcomes"><span>${icon('chat')}${v.send}</span><span>${icon('clock')}${v.wait}</span></div>`;
 }
 function system(c){return `<section id="pison-system" class="pison-scroll-story pison-system-story" data-scroll-story="system" data-step-count="4"><div class="pison-sticky-scene"><div class="pison-scene-heading"><div><h2>${c.techTitle}</h2></div></div><div class="pison-system-stage"><div class="pison-system-description">${c.systemSteps.map(([label,title,body],i)=>`<div data-stage-copy="${i}" ${i?'hidden':''}><span class="pison-phase-number">0${i+1}</span><span class="pison-eyebrow">${label}</span><h3>${title}</h3><p>${body}</p></div>`).join('')}</div><div class="pison-tech-scenes">${c.systemSteps.map(([label],i)=>`<div class="pison-tech-panel" data-tech-panel="${i}" ${i?'hidden':''}>${systemVisual(c,i)}</div>`).join('')}</div></div>${stepNav(c.systemSteps.map(s=>s[0]),c.systemHint)}</div></section>`;}
-function contextDetails(details) {
- if (typeof details === 'string') return `<p class="pison-research-finding">${details}</p>`;
- return `<div class="pison-capabilities">${details.map(([title,body],i)=>`<article>${icon(['pulse','moon','trend'][i])}<h3>${title}</h3><p>${body}</p></article>`).join('')}</div>`;
+function existingSolutions(l) {
+ const images = [
+  ['existing-cognitive-performance.jpg', 1085, 2000, l === 'zh' ? 'Pison 认知表现与每日认知模式界面' : 'Pison cognitive performance and daily cognitive pattern screen'],
+  ['existing-sleep-performance.png', 1200, 2212, l === 'zh' ? 'Pison 睡眠表现与睡眠指标界面' : 'Pison sleep performance and sleep metrics screen'],
+  ['existing-focus-score.png', 1085, 2000, l === 'zh' ? 'Pison 专注力评分与反应时间界面' : 'Pison focus score and reaction time screen'],
+ ];
+ return `<section class="pison-existing-solutions" aria-labelledby="pison-existing-title"><div class="pison-section-heading"><h2 id="pison-existing-title">${l === 'zh' ? '现有解决方案' : 'Existing Solutions'}</h2></div><div class="pison-existing-images">${images.map(([file,width,height,alt]) => `<img src="${media+file}" alt="${alt}" width="${width}" height="${height}" loading="lazy" decoding="async">`).join('')}</div></section>`;
+}
+function contextDetails(details,l) {
+ if (typeof details === 'string') return `<p class="pison-research-finding">${details}</p>${existingSolutions(l)}`;
+ return `<div class="pison-capabilities">${details.map(([title,body],i)=>`<article>${icon(['pulse','moon','trend'][i])}<h3>${title}</h3><p>${body}</p></article>`).join('')}</div>${existingSolutions(l)}`;
 }
 export function pisonCase(data,l){const c=data[l];return `
 <section class="pison-opening" id="pison-overview"><div class="pison-opening-copy"><h1>Pison</h1><h2>${c.headline}</h2><p class="pison-lead">${c.summary}</p></div><div class="pison-lead-demo"><div class="pison-iphone">${video('pison-athlete','athlete-demo.mp4','athlete-poster.jpg',c.videoLabel)}</div></div></section>
 <nav class="pison-chapters" aria-label="${l==='zh'?'项目章节':'Project chapters'}">${c.nav.map((label,i)=>`<a href="#${ids[i]}">${label}</a>`).join('')}</nav>
-<section class="pison-section" id="pison-background"><div class="pison-watch-story"><div><span class="pison-eyebrow">${c.contextLabel}</span><h2>${c.contextTitle}</h2><p class="pison-lead">${c.company}</p><a class="pison-text-link" href="https://pison.com/" target="_blank" rel="noopener noreferrer">${external(c.companyLink)}</a></div><figure class="pison-watch"><img src="${media}timex-waveband.png" alt="${c.watchAlt}" width="1150" height="1400" loading="lazy"></figure></div>${contextDetails(c.contextDetails)}${c.companySource ? `<a class="pison-source-link" href="https://pison.com/science/" target="_blank" rel="noopener noreferrer">${external(c.companySource)}</a>` : ''}</section>
+<section class="pison-section" id="pison-background"><div class="pison-watch-story"><div><span class="pison-eyebrow">${c.contextLabel}</span><h2>${c.contextTitle}</h2><p class="pison-lead">${c.company}</p><a class="pison-text-link" href="https://pison.com/" target="_blank" rel="noopener noreferrer">${external(c.companyLink)}</a></div><figure class="pison-watch"><img src="${media}timex-waveband.png" alt="${c.watchAlt}" width="1150" height="1400" loading="lazy"></figure></div>${contextDetails(c.contextDetails,l)}${c.companySource ? `<a class="pison-source-link" href="https://pison.com/science/" target="_blank" rel="noopener noreferrer">${external(c.companySource)}</a>` : ''}</section>
 ${decisions(c)}
 <section class="pison-section pison-film" id="pison-concept"><div class="pison-film-heading"><h2>${c.extraTitle}</h2></div><figure class="pison-film-media">${video('pison-film','ultimate-film.mp4','ultimate-film-poster.jpg','Pison Ultimate Agent — concept film')}</figure></section>
 ${conversation(c)}${system(c)}

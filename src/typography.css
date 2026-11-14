@@ -7,15 +7,21 @@ body {
 :where(header, main, footer, .skip, header *, main *, footer *):not(:where(svg, svg *)) {
   font-size: inherit;
 }
-:where(h1, h2, h3, .hero-name) {
+:where(h1, h2, h3, .calling-inscription) {
   color: var(--text-primary);
   font-weight: 450;
 }
-h1, .hero h1, .hero-name {
+h1, .hero h1, .calling-inscription {
   font-size: var(--type-title);
   line-height: 1.06;
   letter-spacing: -.05em;
   overflow-wrap: break-word;
+}
+.calling-inscription {
+  font-size: min(8cqw, var(--type-title));
+}
+@media (orientation: landscape) and (max-height: 460px) {
+  .calling-inscription { font-size: min(8cqw, max(14px, calc(11svh - 22px))); }
 }
 h2, .pison-phase-number, .pison-decision-copy h3, .pison-system-description h3 {
   font-size: var(--type-section);
@@ -30,6 +36,7 @@ h3, .header .identity, .hero > p, .gallery-film-title, .contact-email,
 }
 .hero h1 .hero-line-muted { color: var(--text-muted); }
 .hero h1 .hero-line-emphasis { color: var(--text-primary); }
+.calling-water pre { font: 700 var(--water-cell, 9px)/1 ui-monospace, Consolas, monospace; letter-spacing: calc(var(--water-cell, 9px) - 1ch); }
 .hero > p { color: var(--text-secondary); margin-top: 12px; }
 .gallery-film-title { white-space: normal; overflow-wrap: anywhere; min-width: 0; }
 

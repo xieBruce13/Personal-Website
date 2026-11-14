@@ -21,7 +21,7 @@ function languageSwitch(l, path='') {
 function header(l,path=''){
  const c=copy[l];
  const nav=(route,label)=>`<a class="nav-link" href="/${l}/${route}/" ${path.startsWith(route+'/')?'aria-current="page"':''}>${label}</a>`;
- const homeGallery=['','crab/','painted-crab/'].includes(path);
+ const homeGallery=path==='';
  const work=`<div class="nav-work"><a class="nav-link" href="${homeGallery ? '' : '/'+l+'/'}#work">${c.index}</a></div>`;
  return `<a class="skip" href="#main">${c.skip}</a><header class="header"><a class="identity" href="/${l}/">${displayName(l)}</a><span class="header-role">${c.headerRole}</span><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation"><span>${c.menu}</span><i aria-hidden="true"></i></button><nav id="primary-navigation" aria-label="${c.navigation}">${work}${nav('about',c.about)}${nav('contact',c.contact)}${languageSwitch(l,path)}</nav></header>`
 }
@@ -61,15 +61,24 @@ const qwenGalleryFilm=()=>galleryFilm('gallery-qwen','/media/qwen/card-shampoo-m
 const eyeGalleryFilm=()=>galleryFilm('gallery-eye','/media/eye-tracking/attention-heatmap-loop.mp4','/media/eye-tracking/attention-heatmap-poster.webp','Eye Tracking');
 const loraGalleryFilm=()=>galleryFilm('gallery-lora','/media/lora/gallery-blink.mp4','/media/lora/gallery-blink-poster.webp','Defying Freud');
 function cards(l,subset=projects){const c=copy[l];return subset.map(p=>{const name=get(p,'galleryTitle',l)||p.name,category=get(p,'galleryCategory',l);const href=`/${l}/work/${p.slug}/`;const cover=p.slug==='pison'?pisonGalleryFilm():p.slug==='qwen-create'?qwenGalleryFilm():p.slug==='eye-tracking-thingz'?eyeGalleryFilm():p.slug==='lucian-freud-lora'?loraGalleryFilm():studyCover(p.slug,l);return `<article class="project-card" data-gallery-tile><a class="project-image" href="${href}" aria-label="${c.view} — ${name}: ${category}">${cover}<span class="project-open" aria-hidden="true">${icon('arrow')}</span></a><p class="gallery-card-category">${category}</p></article>`}).join('')}
-function home(l, path = ''){
+function home(l){
  const c=copy[l];
- const painted=path!=='crab/';
- const backdrop=painted
-   ? '<img id="crab-study" hidden alt="" src="/media/crab/van-gogh-study.webp"><img id="crab-legs" hidden alt="" src="/media/crab/walking-legs.webp"><script defer src="/media/crab/painted.js"></script><script defer src="/media/crab/letters.js"></script>'
-   : '<div class="crab-footprints" aria-hidden="true"></div>';
- const animal=backdrop+'<canvas class="walking-crab" aria-hidden="true"></canvas>';
- const name=painted ? '<span class="hero-name">BRUCE XIE</span>' : '';
- return shell(l,path,c.title,`<main id="main" class="home-page">${animal}<section class="hero"><div class="hero-water" aria-hidden="true"></div>${name}<h1 aria-labelledby="hero-phrase hero-emphasis"><span id="hero-phrase" class="hero-line-muted">${c.heroLineOne}</span><br class="mobile-break"> <span id="hero-emphasis" class="hero-line-emphasis">${c.heroLineTwo}</span></h1><p>${c.role}</p><div class="hero-bottom"><a href="#work">${c.scrollPrompt} ${icon('down')}</a></div></section><section id="work" class="work-gallery">${cards(l,featuredProjects)}</section></main><script defer src="/media/crab/walk.js"></script>`);
+ const fruitLabel=l==='zh'?'将水果递给基督':'Give the fruit to Christ';
+ const fruitHint=l==='zh'?'将水果拖到手中，或点击递出。':'Drag the fruit into the hand, or click to offer it.';
+ const fruit=`<button class="calling-fruit" type="button" aria-label="${fruitLabel}" title="${fruitHint}" hidden><img src="/media/home/fruit.webp" width="320" height="304" alt="" draggable="false"></button>`;
+ const artwork=`<div class="calling-scene">
+   <div class="calling-group">
+     <p class="calling-inscription" lang="en"><span>MY</span> <span>WEBSITE</span> <span>BRUCEXIE</span> <span>PORTFOLIO</span></p>
+     <img class="calling-figures" src="/media/home/figures.webp" width="1920" height="929" alt="" draggable="false">
+   </div>
+   <svg width="0" height="0" aria-hidden="true"><defs><clipPath id="calling-thumb-mask" clipPathUnits="objectBoundingBox">
+     <path transform="scale(.0011235955 .0026666667)" d="M223 247 C223 234 237 219 254 206 C272 191 300 180 314 169 C333 154 342 126 357 101 Q384 57 431 42 L604 28 L605 230 L330 230 Q279 263 240 268 Q220 268 223 247Z"/>
+   </clipPath></defs></svg>
+   <span class="calling-wrist" aria-hidden="true"><img class="calling-hand" src="/media/home/pointing-hand.webp" width="890" height="375" alt="" draggable="false"><span class="calling-grip"></span><img class="calling-thumb" src="/media/home/pointing-hand.webp" width="890" height="375" alt="" draggable="false"></span>
+ </div>
+ <div class="calling-water" aria-hidden="true" data-worker-src="/media/home/ascii-water-worker.js"><pre></pre></div>
+ <script defer src="/media/home/ascii-water.js"></script>`;
+ return shell(l,'',c.title,`<main id="main" class="home-page"><section class="hero"><h1 aria-labelledby="hero-phrase hero-emphasis"><span id="hero-phrase" class="hero-line-muted">${c.heroLineOne}</span><br class="mobile-break"> <span id="hero-emphasis" class="hero-line-emphasis">${c.heroLineTwo}</span>${fruit}</h1><p>${c.role}</p><div class="hero-bottom"><a href="#work">${c.scrollPrompt} ${icon('down')}</a></div>${artwork}</section><section id="work" class="work-gallery">${cards(l,featuredProjects)}</section></main>`);
 }
 function qwenProject(l,p){
  const c=copy[l],q=qwen[l],path=`work/${p.slug}/`;
@@ -151,8 +160,8 @@ async function build() {
  await mkdir(root,{recursive:true});
  await cp('src/fonts',`${root}/fonts`,{recursive:true});
  await cp('src/media',`${root}/media`,{recursive:true});
- for(const file of ['particles.js','site.js']) await copyFile(`src/${file}`,`${root}/${file}`);
- const componentFiles = ['styles', 'pison-product', 'project-covers', 'project-gallery', 'pond', 'qwen-product', 'research-cases', 'about-page', 'navigation', 'project-transition'];
+ for(const file of ['site.js']) await copyFile(`src/${file}`,`${root}/${file}`);
+ const componentFiles = ['styles', 'pison-product', 'project-covers', 'project-gallery', 'qwen-product', 'research-cases', 'about-page', 'navigation', 'project-transition'];
  const components = await Promise.all(componentFiles.map(name => readFile('src/' + name + '.css', 'utf8')));
  const tokens = await readFile('src/design-tokens.css', 'utf8');
  const typography = await readFile('src/typography.css', 'utf8');
@@ -164,10 +173,6 @@ async function build() {
   if (/^\/(en|zh)\/$/.test(route)) {
    await mkdir(root + route + 'work/', {recursive:true});
    await writeFile(root + route + 'work/index.html', html);
-   for (const variant of ['crab/', 'painted-crab/']) {
-    await mkdir(root + route + variant, {recursive:true});
-    await writeFile(root + route + variant + 'index.html', renderCopy(home(route.split('/')[1], variant), route, edits).html);
-   }
    if (route === '/en/') await writeFile(root + '/index.html', html);
   }
  }

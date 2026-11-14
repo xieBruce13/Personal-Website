@@ -9,12 +9,47 @@ export const readEdits = async () => JSON.parse(await readFile(editsFile, 'utf8'
 export const digest = value => createHash('sha256').update(value).digest('hex').slice(0, 24);
 const escape = value => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
+// Decorate after saved copy is applied, without changing the editor's stable keys.
+function headlineBlur(html) {
+  const patches=[];
+  function visit(node) {
+    const headline=node.attrs?.some(a=>a.name==='id' && a.value==='hero-phrase');
+    const inscription=node.parentNode?.attrs?.some(a=>a.name==='class' && a.value==='calling-inscription');
+    if(headline || (inscription && node.tagName==='span')) {
+      const runs=[];
+      let text='';
+      function collect(n) {
+        if(n.nodeName==='#text'){runs.push({node:n,start:text.length});text+=n.value;}
+        else for(const child of n.childNodes||[])collect(child);
+      }
+      collect(node);
+      const pattern=headline ? /(?<=\b(?:ide|cre|innov))ate\b/gi : /(?<=\bwe)bsite\b|(?<=\bbruce)xie\b|(?<=\bport)folio\b/gi;
+      const matches=[...text.matchAll(pattern)];
+      for(const {node:n,start} of runs) {
+        let result='',offset=0;
+        for(const match of matches) {
+          const from=Math.max(0,match.index-start),to=Math.min(n.value.length,match.index+match[0].length-start);
+          if(from>=to)continue;
+          result+=escape(n.value.slice(offset,from))+'<span class="headline-ending">'+escape(n.value.slice(from,to))+'</span>';
+          offset=to;
+        }
+        if(offset)patches.push([n.sourceCodeLocation.startOffset,n.sourceCodeLocation.endOffset,result+escape(n.value.slice(offset))]);
+      }
+      return;
+    }
+    for(const child of node.childNodes||[])visit(child);
+  }
+  visit(parse(html,{sourceCodeLocationInfo:true}));
+  for(const [start,end,value] of patches.sort((a,b)=>b[0]-a[0]))html=html.slice(0,start)+value+html.slice(end);
+  return html;
+}
+
 // Patch source ranges so unrelated HTML, embedded diagrams and inline markup survive unchanged.
 export function renderCopy(html, route, edits, editing = false) {
   const lang = route.split('/')[1];
   const shared = '/' + lang + '/header';
   const fields = new Map();
-  if (!editing && !edits[route] && !edits[shared]) return { html, fields };
+  if (!editing && !edits[route] && !edits[shared]) return { html:headlineBlur(html), fields };
   const replacements = [];
   function visit(node, path, scope) {
     const tag = node.tagName;
@@ -93,5 +128,5 @@ export function renderCopy(html, route, edits, editing = false) {
   for (const [start, end, value] of replacements.sort((a, b) => b[0] - a[0])) {
     html = html.slice(0, start) + value + html.slice(end);
   }
-  return { html, fields };
+  return { html:headlineBlur(html), fields };
 }

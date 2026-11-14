@@ -4,14 +4,14 @@ Bilingual AI product management portfolio. Build with Node.js 22+ and install th
 
 ## Design and content
 
-Read `docs/DESIGN_SYSTEM.md` before changing the UI. The white editorial layout opens with an interactive painted crab above Bruce’s introduction and a single row of four square project covers: Pison Health Agent (Personal Agent), Qwen (Agent Team), Eye Tracking (Research Tool), and Defying Freud, a completed private LoRA study (Model Training). Each title and specialty appears below its cover. About and Contact are separate pages.
+Read `docs/DESIGN_SYSTEM.md` before changing the UI. The white editorial layout opens with an interactive Caravaggio composition above Bruce’s introduction and a single row of four square project covers: Pison Health Agent (Personal Agent), Qwen (Agent Team), Eye Tracking (Research Tool), and Defying Freud, a completed private LoRA study (Model Training). Project titles appear inside their covers, with category captions beneath. About and Contact are separate pages.
 
 - `src/content.json`: bilingual portfolio copy and project order.
 - `src/case-studies/pison.json` and `pison.mjs`: bilingual Pison presentation, demonstrations and team credits.
 - `src/case-studies/qwen.json` and `src/qwen-product.css`: compact bilingual Qwen introduction, regional access note, and Bruce-supplied English product screenshot linked to the live Agent Team page.
 - `src/design-tokens.css` and `src/project-gallery.css`: shared visual rules.
 - `src/site.js` handles navigation, pointers and project interactions.
-- `src/media/crab/` contains the painted crab, animated joints and walking behavior.
+- `src/media/home/` contains the Caravaggio figures, hand, fruit and ASCII water.
 - `build.mjs`: static routes; `scripts/preview.mjs`: standalone previews.
 
 Preserve factual attribution, prototype status, accessible motion and concise copy. The Pison business-model comparison and roadmap have been removed by request.

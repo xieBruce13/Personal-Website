@@ -68,11 +68,13 @@ function markEndings(element, pattern) {
 }
 if(document.querySelector('.home-page')) {
  const headline=document.querySelector('html[lang="en"] .hero h1 .hero-line-muted');
+ const inscriptionLines=document.querySelectorAll('.calling-inscription > span');
  function markHomepageEndings() {
   if(headline) markEndings(headline,/(?<=\b(?:ide|cre|innov))ate\b/gi);
+  for(const line of inscriptionLines) markEndings(line,/(?<=\bwe)bsite\b|(?<=\bbruce)xie\b|(?<=\bport)folio\b/gi);
  }
  document.addEventListener('portfolio-copy-preview',markHomepageEndings);
- markHomepageEndings();
+ if(!headline?.querySelector('.headline-ending')) markHomepageEndings();
 }
 
 if(document.documentElement.hasAttribute('data-project-page') && !('onpagereveal' in window)) {
@@ -99,6 +101,231 @@ document.body.append(lens);
 let lensFrame=0,lastFrame=0,lensX=0,lensY=0,targetX=0,targetY=0,pointedProject=null;
 let leadX=0,leadY=0;
 let lastLensElement=null,checkScrolledTarget=false;
+const wrist=document.querySelector('.calling-wrist');
+function createPointingFinger(host) {
+ const image=host.querySelector('img');
+ // A small transparent margin lets the fingertip extend beyond the original plate.
+ const leftMargin=20, topMargin=90;
+ const canvas=document.createElement('canvas');
+ canvas.width=890+leftMargin; canvas.height=375+topMargin;
+ const ctx=canvas.getContext('2d');
+ const base=document.createElement('canvas');
+ base.width=canvas.width; base.height=canvas.height;
+ const fixed=base.getContext('2d');
+ const patch=document.createElement('canvas');
+ const knuckleX=240, knuckleY=103, bendLength=145;
+ patch.width=knuckleX+leftMargin; patch.height=topMargin+280;
+ const paint=patch.getContext('2d');
+ if(!ctx || !paint || !fixed) return;
+ // Trace the transparent cleft between index and middle fingers. The palm,
+ // sleeve and three curled fingers stay on the stationary base layer.
+ const outline=new Path2D('M0 0 H240 V129 L185 131 L150 145 L130 154 L110 178 L88 206 L0 212 Z');
+ const output=paint.createImageData(patch.width,patch.height);
+ const restDirection=Math.atan2(.60,-.80);
+ // At full extension the index still slopes six degrees down from horizontal.
+ const maxExtension=Math.PI-restDirection-6*Math.PI/180;
+ const maxCurl=-.47;
+ let pixels,active=false,pointerX=0,pointerY=0,lastAngle=NaN;
+
+ // Bend the first 145 source pixels into an arc of the same length. Beyond it,
+ // the fingertip follows the arc's tangent as one piece, preserving its shape.
+ function pose(angle) {
+  const radius=bendLength/angle;
+  return {radius,cos:Math.cos(angle),sin:Math.sin(angle),
+   endX:-radius*Math.sin(angle),endY:-2*radius*Math.sin(angle/2)**2};
+ }
+ function draw(angle) {
+  const {radius,cos,sin,endX,endY}=pose(angle);
+  const sign=Math.sign(radius), data=output.data;
+  data.fill(0);
+  for(let y=0;y<patch.height;y++) {
+   const dy=y-topMargin-knuckleY;
+   for(let x=0;x<patch.width;x++) {
+    const dx=x-leftMargin-knuckleX;
+    const along=(dx-endX)*cos+(dy-endY)*sin;
+    let sx,sy;
+    if(along<=0) {
+     sx=knuckleX-bendLength+along;
+     sy=knuckleY-(dx-endX)*sin+(dy-endY)*cos;
+    } else {
+     sx=knuckleX-radius*Math.atan2(-dx/radius,1+dy/radius);
+     sy=knuckleY+sign*(Math.sqrt(dx*dx+(radius+dy)**2)-Math.abs(radius));
+    }
+    if(sx<0 || sx>=knuckleX || sy<0 || sy>=211) continue;
+    const ix=Math.floor(sx), iy=Math.floor(sy), fx=sx-ix, fy=sy-iy;
+    const p=(iy*(knuckleX+1)+ix)*4, q=p+(knuckleX+1)*4;
+    const a=(1-fx)*(1-fy), b=fx*(1-fy), c=(1-fx)*fy, d=fx*fy;
+    const dest=(y*patch.width+x)*4;
+    for(let k=0;k<4;k++) data[dest+k]=a*pixels[p+k]+b*pixels[p+4+k]+c*pixels[q+k]+d*pixels[q+4+k];
+   }
+  }
+  paint.putImageData(output,0,0);
+  ctx.clearRect(0,0,patch.width,patch.height);
+  ctx.drawImage(base,0,0,patch.width,patch.height,0,0,patch.width,patch.height);
+  ctx.drawImage(patch,0,0);
+  canvas.hidden=false;
+  host.classList.add('is-pointing');
+ }
+ function reset() {
+  active=false;
+  lastAngle=NaN;
+  host.classList.remove('is-pointing');
+  canvas.hidden=true;
+ }
+ // Height of the fingertip's sightline at the dot. Inside the hand's reach,
+ // aim by fingertip height so moving across the joint cannot flip the finger.
+ function sightlineY(angle,x) {
+  const tipX=22-knuckleX, tipY=181-knuckleY;
+  let xAtTip=tipX, yAtTip=tipY;
+  if(angle!==0) {
+   const p=pose(angle), distal=tipX+bendLength;
+   xAtTip=p.endX+distal*p.cos-tipY*p.sin;
+   yAtTip=p.endY+distal*p.sin+tipY*p.cos;
+  }
+  return yAtTip-Math.max(0,xAtTip-x)*Math.tan(restDirection+angle);
+ }
+ function reachableAngle(x,y) {
+  if(y<=sightlineY(maxExtension,x)) return maxExtension;
+  if(y>=sightlineY(maxCurl,x)) return maxCurl;
+  let low=maxCurl, high=maxExtension;
+  while(high-low>.0005) {
+   const mid=(low+high)/2;
+   if(y<sightlineY(mid,x)) low=mid;
+   else high=mid;
+  }
+  return (low+high)/2;
+ }
+ function aim(x,y) {
+  if(host.classList.contains('is-holding')) return;
+  active=true; pointerX=x; pointerY=y;
+  if(!pixels) return;
+  const rect=image.getBoundingClientRect();
+  if(!rect.width || rect.bottom<0) return;
+  const dx=(x-rect.left)*890/rect.width-knuckleX, dy=(y-rect.top)*375/rect.height-knuckleY;
+  const angle=reachableAngle(dx,dy);
+  if(Math.abs(lastAngle-angle)<.001) return;
+  if(Math.abs(angle)<.001) {reset();return;}
+  lastAngle=angle;
+  draw(angle);
+ }
+ function prepare() {
+  fixed.translate(leftMargin,topMargin);
+  fixed.drawImage(image,0,0);
+  fixed.clip(outline); fixed.clearRect(0,0,knuckleX,212);
+  ctx.drawImage(base,0,0);
+  paint.save();
+  paint.clip(outline); paint.drawImage(image,0,0);
+  pixels=paint.getImageData(0,0,knuckleX+1,212).data;
+  paint.restore();
+  host.append(canvas);
+  if(active) aim(pointerX,pointerY);
+ }
+ reset();
+ if(image.complete && image.naturalWidth) prepare();
+ else image.addEventListener('load',prepare,{once:true});
+ return {aim,reset};
+}
+const pointingFinger=wrist && createPointingFinger(wrist);
+const fruitButton=document.querySelector('.calling-fruit');
+if(wrist && fruitButton) enableFruitOffering(fruitButton,wrist,pointingFinger);
+
+function enableFruitOffering(button,hand,finger) {
+ const source=button.querySelector('img');
+ const pocket=hand.querySelector('.calling-grip');
+ const fruit=source.cloneNode();
+ fruit.className='held-fruit';
+ fruit.hidden=true;
+ pocket.append(fruit);
+ button.hidden=false;
+ let drag=null;
+
+ function measureFruit() {
+  const box=source.getBoundingClientRect();
+  fruit.style.setProperty('--fruit-size',box.width+'px');
+  return box;
+ }
+ function offsetFromGrip(x,y,grip) {
+  return `translate(${x-grip.left-grip.width/2}px,${y-grip.top-grip.height/2}px)`;
+ }
+ function positionDrag() {
+  if(drag) fruit.style.transform=offsetFromGrip(drag.x,drag.y,pocket.getBoundingClientRect());
+ }
+ function releaseCapture() {
+  const id=drag?.id;
+  drag=null;
+  if(id!=null && button.hasPointerCapture(id)) button.releasePointerCapture(id);
+ }
+ function cancelDrag() {
+  if(!drag) return;
+  releaseCapture();
+  fruit.hidden=true;
+  fruit.style.transform='';
+  button.classList.remove('is-dragging');
+  hand.classList.remove('is-receiving');
+ }
+ function offer(x,y,grip) {
+  releaseCapture();
+  finger?.reset();
+  fruit.hidden=false;
+  fruit.style.transform='';
+  hand.classList.remove('is-receiving');
+  hand.classList.add('is-holding');
+  button.classList.remove('is-dragging');
+  button.disabled=true;
+  if(reducedMotion.matches) {
+   hand.animate([{opacity:1},{opacity:0}],{delay:650,duration:150,fill:'forwards'});
+  } else {
+   fruit.animate([{transform:offsetFromGrip(x,y,grip)},{transform:'none'}],
+    {duration:350,easing:'cubic-bezier(.2,.7,.2,1)'});
+   hand.animate([{transform:'translateX(0)'},{transform:'translateX(110%)'}],
+    {delay:650,duration:2400,easing:'cubic-bezier(.45,0,.35,1)',fill:'forwards'});
+  }
+ }
+ button.addEventListener('pointerdown',event=>{
+  if(event.button!==0 || !event.isPrimary || drag || button.disabled ||
+   document.documentElement.classList.contains('copy-editing')) return;
+  measureFruit();
+  drag={id:event.pointerId,startX:event.clientX,startY:event.clientY,x:event.clientX,y:event.clientY,moved:false};
+  button.setPointerCapture(event.pointerId);
+  positionDrag();
+  fruit.hidden=false;
+  button.classList.add('is-dragging');
+  hand.classList.add('is-receiving');
+  moveLens(event);
+ });
+ button.addEventListener('pointermove',event=>{
+  if(drag?.id!==event.pointerId) return;
+  drag.x=event.clientX; drag.y=event.clientY;
+  if(Math.hypot(drag.x-drag.startX,drag.y-drag.startY)>=4) drag.moved=true;
+  positionDrag();
+ });
+ button.addEventListener('pointerup',event=>{
+  if(drag?.id!==event.pointerId) return;
+  const grip=pocket.getBoundingClientRect(), cx=event.clientX, cy=event.clientY;
+  // Accept a drop across the fingers or palm, then settle it into the grip.
+  const palm=hand.getBoundingClientRect();
+  const pad=Math.max(12,grip.width*.22);
+  if(!drag.moved || (cx>=grip.left-pad && cx<=palm.left+palm.width*.65+pad &&
+   cy>=palm.top+palm.height*.12-pad && cy<=grip.bottom+pad)) offer(cx,cy,grip);
+  else cancelDrag();
+ });
+ button.addEventListener('click',event=>{
+  if(event.detail!==0 || button.disabled || document.documentElement.classList.contains('copy-editing')) return;
+  const box=measureFruit();
+  offer(box.left+box.width/2,box.top+box.height/2,pocket.getBoundingClientRect());
+ });
+ button.addEventListener('lostpointercapture',cancelDrag);
+ button.addEventListener('pointercancel',cancelDrag);
+ button.addEventListener('keydown',event=>{if(event.key==='Escape') cancelDrag()});
+ window.addEventListener('blur',cancelDrag);
+ window.addEventListener('pagehide',cancelDrag);
+ window.addEventListener('scroll',positionDrag,{passive:true,capture:true});
+ window.addEventListener('resize',positionDrag);
+}
+if(wrist) window.addEventListener('resize',()=>{
+ if(lens.classList.contains('is-visible')) pointingFinger?.aim(lensX,lensY);
+ else if(reducedMotion.matches && wrist.classList.contains('is-pointing')) pointingFinger?.aim(targetX,targetY);
+});
 function setPointedProject(link) {
  if(pointedProject===link) return;
  pointedProject?.classList.remove('has-project-cursor');
@@ -114,6 +341,7 @@ function hideLens() {
  lens.classList.remove('is-visible');
  document.documentElement.classList.remove('has-dot-cursor');
  setPointedProject(null);
+ pointingFinger?.reset();
 }
 function followPointer(now) {
  if(checkScrolledTarget) {
@@ -133,6 +361,7 @@ function followPointer(now) {
  const moving=Math.max(Math.hypot(targetX-lensX,targetY-lensY),Math.hypot(targetX-leadX,targetY-leadY))>.25;
  if(!moving) {lensX=leadX=targetX; lensY=leadY=targetY;}
  lens.style.transform=`translate3d(${lensX}px,${lensY}px,0)`;
+ pointingFinger?.aim(lensX,lensY);
  lensFrame=moving?requestAnimationFrame(followPointer):0;
 }
 function updateLensTarget(element) {
@@ -152,15 +381,17 @@ function moveLens(event) {
  targetX=event.clientX; targetY=event.clientY;
  if(reducedMotion.matches) {
   // The reduced-motion dot is a native cursor with no trailing animation.
+  pointingFinger?.aim(targetX,targetY);
   return;
  }
  if(!updateLensTarget(event.target)) return;
- if(!lens.classList.contains('is-visible')) {
+ if(!lens.classList.contains('is-visible') || fruitButton?.classList.contains('is-dragging')) {
   cancelAnimationFrame(lensFrame);
   lensFrame=0;
   checkScrolledTarget=false;
   lensX=leadX=targetX; lensY=leadY=targetY;
   lens.style.transform=`translate3d(${lensX}px,${lensY}px,0)`;
+  pointingFinger?.aim(lensX,lensY);
   lens.classList.add('is-visible');
   document.documentElement.classList.add('has-dot-cursor');
   return;
@@ -174,6 +405,8 @@ document.addEventListener('pointercancel',hideLens);
 document.addEventListener('keydown',hideLens);
 document.addEventListener('portfolio-copy-preview',hideLens);
 window.addEventListener('scroll',()=>{
+ if(fruitButton?.classList.contains('is-dragging')) return;
+ if(reducedMotion.matches && wrist?.classList.contains('is-pointing')) pointingFinger?.aim(targetX,targetY);
  if(!lens.classList.contains('is-visible')) return;
  checkScrolledTarget=true;
  if(!lensFrame) {lastFrame=performance.now();lensFrame=requestAnimationFrame(followPointer);}

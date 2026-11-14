@@ -7,6 +7,9 @@ const {site,copy,projects:allProjects}=JSON.parse(await readFile('src/content.js
 const projects=site.featuredProjects.map(slug=>allProjects.find(p=>p.slug===slug));
 const editorialTypography=await readFile('src/typography.css','utf8');
 const builtStyles=await readFile('dist/styles.css','utf8');
+for(const removed of ['dist/media/crab','dist/particles.js','dist/en/crab','dist/zh/crab','dist/en/painted-crab','dist/zh/painted-crab']) {
+ assert.equal(await stat(removed).then(()=>true,()=>false),false,'Archived visual leaked into the build: '+removed);
+}
 assert.equal(typeLevels.length,5,'The portfolio uses five text sizes');
 for(const level of typeLevels){
  assert(builtStyles.includes(level.token + ': ' + level.size + 'px;'), 'Missing size for ' + level.label);
@@ -40,11 +43,14 @@ for (const [route, source] of pages) {
  const built = await readFile('dist' + route + 'index.html', 'utf8');
  assert.equal(built, renderCopy(source, route, edits).html, 'Saved edits missing from ' + route);
  assert(!built.includes('data-copy-key=') && !built.includes('/__editor/tools.js'), 'Editor leaked into ' + route);
+ if(route==='/en/') assert.equal((built.match(/class="headline-ending"/g)||[]).length,6,'Headline and inscription endings must be blurred before JavaScript runs');
 }
 for(const l of ['en','zh']){
  const html=template(`/${l}/`);
- assert(html.includes('id="crab-study"')&&html.includes('id="crab-legs"'),'Homepage must load the painted crab assets');
- assert(html.includes('class="hero-name">BRUCE XIE</span>'),'Homepage must show Bruce above the headline');
+ assert(html.includes('class="calling-scene"')&&html.includes('class="calling-figures"'),'Homepage must show the selected Caravaggio composition');
+ assert(html.includes('class="calling-fruit"')&&html.includes('class="calling-wrist"'),'Homepage must retain the hand and fruit interaction');
+ assert(html.includes('/media/home/ascii-water.js'),'Homepage must retain ASCII water');
+ assert(!/walking-crab|landing-koi|hero-water|media\/crab/.test(html),'Archived experiments must not load on the homepage');
  assert(html.includes('class="hero-line-muted"')&&html.includes('class="hero-line-emphasis"'),'Homepage statement must preserve the two text tones');
  assert(!html.includes('Co-Hive'),'Removed Co-Hive should not appear on the homepage');
  const gallery=html.slice(html.indexOf('<section id="work"'));
