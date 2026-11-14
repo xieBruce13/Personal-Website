@@ -56,7 +56,7 @@ function createCrabLetters() {
       selected.range.surroundContents(placeholder);
       floating.style.width=rect.width+'px';
       floating.style.height=rect.height+'px';
-      document.body.append(floating);
+      selected.node.parentElement.closest('.home-page').append(floating);
     }
     function show(at,rotation=0,size=1,opacity=1) {
       if(!placeholder || finished)return;

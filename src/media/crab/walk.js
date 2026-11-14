@@ -50,6 +50,7 @@
   let headlineWalkStart = 0;
   let pointer = null, threat = null, followAfter = 0, frame = 0, last = 0;
   const dotBreak = painting ? 20 : 25;
+  const eatingCooldown=20;
   let motionSample=null, followTarget=null, followElapsed=0, blockedElapsed=0;
   const letters=painting ? createCrabLetters() : null;
   let meal=null,eatAgainAt=0;
@@ -116,12 +117,12 @@
     }
   }
 
-  function world(x,y) {
-    const c = Math.cos(angle), s = Math.sin(angle);
+  function world(x,y,orientation=angle) {
+    const c = Math.cos(orientation), s = Math.sin(orientation);
     return point(body.x + scale*(c*x-s*y), body.y + scale*(s*x+c*y));
   }
-  function local(p) {
-    const x=(p.x-body.x)/scale, y=(p.y-body.y)/scale, c=Math.cos(angle), s=Math.sin(angle);
+  function local(p,orientation=angle) {
+    const x=(p.x-body.x)/scale, y=(p.y-body.y)/scale, c=Math.cos(orientation), s=Math.sin(orientation);
     return point(x*c+y*s,-x*s+y*c);
   }
 
@@ -138,10 +139,10 @@
       offset:((index + Number(side > 0)) % 2)*.5 + [0,.022,-.012,.015][index],
       foot:null, swing:null, lift:0, landedAt:0}));
   }
-  function restFoot(leg) {
+  function restFoot(leg,orientation=angle) {
     if (painting) {
       const toe = painting.toes[(leg.side < 0 ? 0 : 4) + leg.index];
-      return world(toe.x, toe.y);
+      return world(toe.x, toe.y,orientation);
     }
     return world(leg.joint.tip[0]*leg.side,leg.joint.tip[1]);
   }
@@ -350,7 +351,7 @@
       mode='meal-chew';meal.since=clock;
     }else if(mode==='meal-chew' && clock-meal.since>=.85){
       meal.letter.finish();meal.until=clock+5;
-      followAfter=meal.until;eatAgainAt=clock+8;
+      followAfter=meal.until;eatAgainAt=clock+eatingCooldown;
       mode='meal-retreat';retreatFromLetters();
     }
   }
@@ -484,7 +485,7 @@
       }else angle+=clamp(targetTilt-angle,-dt*.95,dt*.95);
     }
     body=point(body.x+vx*dt,painting ? body.y+vy*dt : clamp(body.y+vy*dt,0,height));
-    const hz=pace/(painting ? 14 : 12);
+    const hz=painting?Math.max(pace/14,Math.abs(turnSpeed)*1.1):pace/12;
     const previous=stride;
     stride+=hz*dt;
     let lifted=legs.filter(leg=>leg.swing).length;
@@ -494,17 +495,18 @@
       const phase=(stride+leg.offset+1)%1;
       const before=(previous+leg.offset+1)%1;
       const scheduled=phase>=stance && (before<stance || before>phase);
-      const recovering=painting && lifted<3 && clock-leg.landedAt>.10 && painting.needsStep(index,local(leg.foot));
+      const recovering=painting && lifted<4 && clock-leg.landedAt>.10 && painting.needsStep(index,local(leg.foot));
       if (!leg.swing && moving && (!painting || lifted<4) && (scheduled || recovering)) {
         const cadence=Math.max(.8,hz);
         const duration=clamp((1-stance)/cadence,.085,painting ? .25 : .32);
         const leadTime=duration+stance/(2*cadence);
-        const landing=restFoot(leg);
+        const landingAngle=angle+(painting?clamp(turnSpeed*leadTime,-.25,.25):0);
+        const landing=restFoot(leg,landingAngle);
         landing.x+=vx*leadTime;
         landing.y+=vy*leadTime;
         if(painting){
-          const bounded=painting.constrainFoot(index,local(landing));
-          Object.assign(landing,world(bounded.x,bounded.y));
+          const bounded=painting.constrainFoot(index,local(landing,landingAngle));
+          Object.assign(landing,world(bounded.x,bounded.y,landingAngle));
         }
         leg.swing={from:leg.foot,to:landing,time:0,duration};
         lifted++;

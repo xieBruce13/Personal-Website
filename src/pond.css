@@ -1,10 +1,10 @@
 .home-page{position:relative;isolation:isolate;overflow-x:clip;--water-height:clamp(210px,calc(100svh - 300px),900px)}
 .home-page .hero{position:relative;height:auto;min-height:0;padding-top:64px}
 body:has(>.pond-ready):not(.menu-open)>.header{background:transparent}
-.walking-crab{position:fixed;top:0;left:0;z-index:-1;pointer-events:none;image-rendering:pixelated;max-width:none}
+.walking-crab{position:fixed;top:0;left:0;z-index:2;pointer-events:none;image-rendering:pixelated;max-width:none}
 #crab-study ~ .walking-crab{image-rendering:auto}
 .crab-letter-eaten{opacity:0}
-.crab-morsel{position:fixed;top:0;left:0;z-index:5;display:grid;place-items:center;pointer-events:none;user-select:none;white-space:pre;transform-origin:center;will-change:transform,opacity}
+.crab-morsel{position:fixed;top:0;left:0;z-index:1;display:grid;place-items:center;pointer-events:none;user-select:none;white-space:pre;transform-origin:center;will-change:transform,opacity}
 html.copy-editing .crab-letter-eaten{opacity:1}
 @media(prefers-reduced-motion:reduce){.crab-morsel{display:none}.crab-letter-eaten{opacity:1}}
 .crab-opening{position:absolute;z-index:-1;pointer-events:none;image-rendering:pixelated;max-width:none}
@@ -19,6 +19,7 @@ html.copy-editing .crab-letter-eaten{opacity:1}
 }
 .hero-water{grid-column:1/-1;position:relative;height:var(--water-height);min-height:0;flex:none}
 .home-page .hero,.home-page .work-gallery{background:transparent}
+.home-page .work-gallery{position:relative;z-index:3}
 .home-page :is(.hero-name,.hero h1,.hero>p,.hero-bottom,.gallery-card-category){text-shadow:0 0 3px white,0 0 6px white}
 
 @media(max-width:809px){

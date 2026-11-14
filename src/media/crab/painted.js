@@ -111,11 +111,14 @@ function createPaintedCrab(image, legImage) {
     legs[index+4] = {...left, hip:mirror(left.hip), knee:mirror(left.knee),
       toe:mirror(left.toe), bend:-left.bend, mirroredFrom:left};
   }
-  for(const rig of legs) {
+  for(const [index,rig] of legs.entries()) {
     rig.axis=angleBetween(rig.hip,rig.toe);
     rig.restLength=distance(rig.hip,rig.toe);
     rig.minReach=Math.max(Math.abs(rig.upperLength-rig.lowerLength)+10,rig.restLength*.73);
-    rig.maxReach=rig.upperLength+rig.lowerLength-10;
+    // The third pair keeps a pronounced knee instead of locking into a rod on turns.
+    rig.minimumFlex=index%4===2?.85:.40;
+    rig.maxReach=Math.sqrt(rig.upperLength**2+rig.lowerLength**2+
+      2*rig.upperLength*rig.lowerLength*Math.cos(rig.minimumFlex));
   }
   function constrainFoot(index, foot) {
     const rig=legs[index];
@@ -129,8 +132,12 @@ function createPaintedCrab(image, legImage) {
   }
   function needsStep(index,foot) {
     const rig=legs[index];
-    return Math.hypot(foot.x*texelsPerUnit+center.x-rig.toe[0],
-      foot.y*texelsPerUnit+center.y-rig.toe[1])>85;
+    const x=foot.x*texelsPerUnit+center.x, y=foot.y*texelsPerUnit+center.y;
+    const drift=Math.hypot(x-rig.toe[0],y-rig.toe[1]);
+    const axis=Math.atan2(y-rig.hip[1],x-rig.hip[0]);
+    const deviation=Math.abs(Math.atan2(Math.sin(axis-rig.axis),Math.cos(axis-rig.axis)));
+    return drift>(index%4===2?62:85) ||
+      Math.hypot(x-rig.hip[0],y-rig.hip[1])>rig.maxReach-12 || deviation>.28;
   }
   const claws = clawShapes.map(claw => {
     const [upper, forearm, palm] = splitAtJoints(claw.arm, [claw.hip, claw.elbow, claw.wrist, claw.tip]);
@@ -196,7 +203,7 @@ function createPaintedCrab(image, legImage) {
     const reach = Math.max(1, Math.hypot(dx, dy));
     const axis = Math.atan2(dy, dx);
     // Leave a little flex near full extension so the knee keeps its painted bend.
-    const span = clamp(reach, Math.abs(upperLength - lowerLength) + 4, upperLength + lowerLength - 5);
+    const span = clamp(reach, Math.abs(upperLength - lowerLength) + 4, rig.maxReach);
     const cosine = (span * span + upperLength * upperLength - lowerLength * lowerLength) / (2 * span * upperLength);
     const upper = axis + rig.bend * Math.acos(clamp(cosine, -1, 1));
     const kneeX = upperLength * Math.cos(upper), kneeY = upperLength * Math.sin(upper);
