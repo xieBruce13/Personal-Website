@@ -264,9 +264,8 @@ function createPaintedCrab(image, legImage) {
       const step = state.legs[i];
       drawLeg(ctx, legs[i], step, constrainFoot(i,state.local(step.foot)));
     }
-    for(let i=0;i<claws.length;i++)if(!(state.claws[i].feed>.01))drawClaw(ctx,claws[i],state.claws[i],state,i);
+    for(let i=0;i<claws.length;i++)drawClaw(ctx,claws[i],state.claws[i],state,i);
     paint(ctx, shell);
-    for(let i=0;i<claws.length;i++)if(state.claws[i].feed>.01)drawClaw(ctx,claws[i],state.claws[i],state,i);
     ctx.restore();
     return footprint;
   }

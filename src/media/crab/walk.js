@@ -23,10 +23,8 @@
   const palette = ['#312c29','#68423b','#914538','#B54935','#ba5945','#c47360','#d29a86'];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const heading = canvas.parentElement.querySelector('.hero h1');
-  const protectedCopy = painting ? [...canvas.parentElement.querySelectorAll('.hero-name,.hero h1,.hero>p')] : [];
-  let textBox=null;
-  let crabExtent={left:0,right:0,top:0,bottom:0};
-  const textClearance=24;
+  const letterTitles = painting ? [...canvas.parentElement.querySelectorAll('.hero-name,.hero h1')] : [];
+  let letterAreas=[];
   const holdName = 1.25, gatherTime = 7;
   // Back navigation restores the portfolio where the visitor left it.
   const playOpening = !painting && !reduced.matches && !location.hash &&
@@ -45,13 +43,13 @@
   let width = 0, height = 0, viewHeight = 0, scale = 1, pitch = 6, hitMask = null;
   let pixelRatio = 1, cellPixels = 6, blockPixels = 5;
   let body = point(0,0), angle = -.1, vx = 0, vy = 0, stride = 0;
-  let turnSpeed = 0;
+  let turnSpeed = 0,headingTurn=false;
   let goal, mode = 'walk', remaining = 0, clock = 0, guard = 0;
   let headlineWalkStart = 0;
   let pointer = null, threat = null, followAfter = 0, frame = 0, last = 0;
   const dotBreak = painting ? 20 : 25;
   const eatingCooldown=20;
-  let motionSample=null, followTarget=null, followElapsed=0, blockedElapsed=0;
+  let motionSample=null, followTarget=null, followElapsed=0, interestElapsed=0;
   const letters=painting ? createCrabLetters() : null;
   let meal=null,eatAgainAt=0;
   const angleDifference=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
@@ -160,131 +158,43 @@
     const top=painting ? 64 : window.scrollY;
     const bottom=painting ? height : top+viewHeight;
     if(painting){
-      return outsideCopy(point(clamp(p.x,0,width),clamp(p.y,0,height)),copyObstacle());
+      return point(clamp(p.x,0,width),clamp(p.y,0,height));
     }
     return point(clamp(p.x,mx,width-mx),clamp(p.y,top+my,bottom-my));
   }
-  function measureProtectedCopy() {
-    const previous=textBox;
-    const bounds=protectedCopy.map(element=>{
+  function measureLetterAreas() {
+    const previous=JSON.stringify(letterAreas);
+    letterAreas=letterTitles.map(element=>{
       const range=document.createRange();
       range.selectNodeContents(element);
-      return range.getBoundingClientRect();
+      const rect=range.getBoundingClientRect();
+      return {left:rect.left,right:rect.right,top:rect.top+scrollY,bottom:rect.bottom+scrollY};
     });
-    textBox={
-      left:Math.min(...bounds.map(b=>b.left)),
-      right:Math.max(...bounds.map(b=>b.right)),
-      top:Math.min(...bounds.map(b=>b.top))+window.scrollY,
-      bottom:Math.max(...bounds.map(b=>b.bottom))+window.scrollY
-    };
-    return !previous || Object.keys(textBox).some(key=>previous[key]!==textBox[key]);
+    return previous!==JSON.stringify(letterAreas);
   }
-  function copyObstacle(extra=0) {
-    if(meal)return null;
-    return measuredObstacle(extra);
+  function pointerOnLetters(at) {
+    return letterAreas.some(rect=>at.x>=rect.left && at.x<=rect.right && at.y>=rect.top && at.y<=rect.bottom);
   }
-  function measuredObstacle(extra=0) {
-    if(!textBox)return null;
-    const gap=textClearance+extra;
-    return {left:textBox.left-crabExtent.right-gap,right:textBox.right+crabExtent.left+gap,
-      top:textBox.top-crabExtent.bottom-gap,bottom:textBox.bottom+crabExtent.top+gap};
-  }
-  function outsideCopy(p,box) {
-    if(!box || p.x<=box.left || p.x>=box.right || p.y<=box.top || p.y>=box.bottom)return p;
-    const exits=[point(box.left-1,p.y),point(box.right+1,p.y),
-      point(p.x,box.top-1),point(p.x,box.bottom+1)];
-    return exits.reduce((best,next)=>Math.hypot(next.x-p.x,next.y-p.y)<
-      Math.hypot(best.x-p.x,best.y-p.y)?next:best);
-  }
-  function crossesCopy(a,b,box) {
-    let enter=0, leave=1;
-    for(const [axis,low,high] of [['x','left','right'],['y','top','bottom']]){
-      const delta=b[axis]-a[axis];
-      if(Math.abs(delta)<.0001){
-        if(a[axis]<=box[low] || a[axis]>=box[high])return false;
-        continue;
-      }
-      const first=(box[low]-a[axis])/delta, last=(box[high]-a[axis])/delta;
-      enter=Math.max(enter,Math.min(first,last));
-      leave=Math.min(leave,Math.max(first,last));
-      if(enter>=leave)return false;
+  function roamingGoal() {
+    const course=Math.hypot(vx,vy)>scale?Math.atan2(vy,vx):angle;
+    const directions=[0,-.25,.25,-.55,.55,-1.05,1.05,Math.PI];
+    let best=null,bestScore=-Infinity;
+    for(let i=0;i<8;i++){
+      const direction=course+directions[i]+between(-.12,.12),reach=between(48,74)*scale;
+      const candidate=point(clamp(body.x+Math.cos(direction)*reach,24,width-24),
+        clamp(body.y+Math.sin(direction)*reach,40,height-24));
+      const distance=Math.hypot(candidate.x-body.x,candidate.y-body.y);
+      if(distance<12*scale)continue;
+      const visible=candidate.y>=scrollY+64 && candidate.y<=scrollY+viewHeight-24;
+      const alignment=(1+Math.cos(Math.atan2(candidate.y-body.y,candidate.x-body.x)-course))/2;
+      const score=distance*(visible?1.4:1)*(1+.5*alignment)+between(0,8*scale);
+      if(score>bestScore){best=candidate;bestScore=score;}
     }
-    return leave>0 && enter<1;
-  }
-  function routeAroundCopy(destination) {
-    const box=copyObstacle(16);
-    const target=outsideCopy(destination,box);
-    if(!box || !crossesCopy(body,target,box))return target;
-    // A single rectangle needs only its four corners to find a clear route.
-    // Corners can extend beyond an edge when the crab needs room to pass.
-    const nodes=[body,target,point(box.left-1,box.top-1),point(box.right+1,box.top-1),
-      point(box.right+1,box.bottom+1),point(box.left-1,box.bottom+1)];
-    const cost=[0,...Array(5).fill(Infinity)], previous=Array(6).fill(-1), visited=new Set();
-    for(let pass=0;pass<nodes.length;pass++){
-      let current=-1;
-      for(let i=0;i<nodes.length;i++){
-        if(!visited.has(i) && (current<0 || cost[i]<cost[current]))current=i;
-      }
-      if(current<0 || !Number.isFinite(cost[current]))break;
-      if(current===1){
-        let next=1;
-        while(previous[next]>0)next=previous[next];
-        return nodes[next];
-      }
-      visited.add(current);
-      for(let next=0;next<nodes.length;next++){
-        if(visited.has(next) || crossesCopy(nodes[current],nodes[next],box))continue;
-        const distance=cost[current]+Math.hypot(nodes[next].x-nodes[current].x,nodes[next].y-nodes[current].y);
-        if(distance<cost[next]){cost[next]=distance;previous[next]=current;}
-      }
-    }
-    return outsideCopy(body,box);
-  }
-  function keepOutsideCopy() {
-    const clear=outsideCopy(body,copyObstacle());
-    const dx=clear.x-body.x,dy=clear.y-body.y;
-    if(!dx && !dy)return;
-    // Move the complete rig so a clearance correction preserves its current pose.
-    body=clear;
-    if(dx*vx<0)vx=0;
-    if(dy*vy<0)vy=0;
-    for(const leg of legs){
-      leg.foot=point(leg.foot.x+dx,leg.foot.y+dy);
-      if(leg.swing){
-        leg.swing.from=point(leg.swing.from.x+dx,leg.swing.from.y+dy);
-        leg.swing.to=point(leg.swing.to.x+dx,leg.swing.to.y+dy);
-      }
-    }
+    return best||point(width/2,scrollY+viewHeight/2);
   }
   function wander() {
     if(painting){
-      const box=copyObstacle(24), origin=outsideCopy(body,box);
-      const start=between(0,2*Math.PI);
-      const candidates=[];
-      for(let i=0;i<8;i++){
-        const direction=start+i*Math.PI/4, reach=between(28,48)*scale;
-        candidates.push(point(clamp(origin.x+Math.cos(direction)*reach,24,width-24),
-          clamp(origin.y+Math.sin(direction)*reach,40,height-24)));
-      }
-      let best=null, bestScore=-Infinity;
-      for(const candidate of candidates){
-        const distance=Math.hypot(candidate.x-body.x,candidate.y-body.y);
-        if(distance<12*scale || (box && crossesCopy(origin,candidate,box)))continue;
-        const visible=candidate.x>=24 && candidate.x<=width-24 &&
-          candidate.y>=window.scrollY+64 && candidate.y<=window.scrollY+viewHeight-24;
-        const score=distance*(visible?1.4:1)+between(0,8*scale);
-        if(score>bestScore){best=candidate;bestScore=score;}
-      }
-      if(!best && box){
-        const corners=[point(box.left-20,box.top-20),point(box.right+20,box.top-20),
-          point(box.right+20,box.bottom+20),point(box.left-20,box.bottom+20)];
-        for(const corner of corners){
-          const distance=Math.hypot(corner.x-body.x,corner.y-body.y);
-          if(distance<12*scale || crossesCopy(origin,corner,box))continue;
-          if(!best || distance<bestScore){best=corner;bestScore=distance;}
-        }
-      }
-      goal=best || outsideCopy(point(origin.x,origin.y-32*scale),box);
+      goal=roamingGoal();
       mode='walk';motionSample=null;
       return;
     }
@@ -295,7 +205,7 @@
   function leaveUnreachableTarget() {
     if(mode==='follow' && pointer && beginMeal())return;
     followAfter=Math.max(followAfter,clock+(clock<eatAgainAt?Math.min(1,eatAgainAt-clock):between(5,8)));
-    followTarget=null;followElapsed=blockedElapsed=0;
+    followTarget=null;followElapsed=interestElapsed=0;
     wander();
     nextProbe=clock;
   }
@@ -310,7 +220,7 @@
     const approachTime=Math.hypot(destination.x-body.x,destination.y-body.y)/(23*scale/sizeMultiplier);
     meal={letter,side,since:clock,deadline:clock+Math.max(16,approachTime*1.75+7),origin:at,picked:false};
     mode='meal-approach';goal=destination;
-    motionSample=null;followTarget=null;followElapsed=blockedElapsed=0;
+    motionSample=null;followTarget=null;followElapsed=interestElapsed=0;
     return true;
   }
   function cancelMeal() {
@@ -321,18 +231,14 @@
     resetClaws();wander();
   }
   function retreatFromLetters() {
-    const box=measuredObstacle(64);
-    const exits=box ? [point(body.x,box.top-18*scale),point(box.right+18*scale,body.y),
-      point(body.x,box.bottom+18*scale),point(box.left-18*scale,body.y)] : [point(body.x+30*scale,body.y)];
-    goal=exits.reduce((best,next)=>Math.hypot(next.x-body.x,next.y-body.y)<
-      Math.hypot(best.x-body.x,best.y-body.y)?next:best);
+    goal=roamingGoal();
   }
   function updateMeal() {
     if(!meal)return;
     if(mode==='meal-retreat'){
       if(clock>=meal.until){meal=null;wander();}
       else if(Math.hypot(goal.x-body.x,goal.y-body.y)<3*scale){
-        goal=point(body.x+(body.x<width/2?1:-1)*26*scale,body.y-12*scale);
+        goal=roamingGoal();
       }
       return;
     }
@@ -351,7 +257,7 @@
       mode='meal-chew';meal.since=clock;
     }else if(mode==='meal-chew' && clock-meal.since>=.85){
       meal.letter.finish();meal.until=clock+5;
-      followAfter=meal.until;eatAgainAt=clock+eatingCooldown;
+      eatAgainAt=clock+eatingCooldown;followAfter=eatAgainAt;
       mode='meal-retreat';retreatFromLetters();
     }
   }
@@ -367,22 +273,22 @@
   }
   function checkMovement(dt,dot) {
     if(mode!=='walk' && mode!=='follow'){
-      motionSample=null;followTarget=null;followElapsed=blockedElapsed=0;
+      motionSample=null;followTarget=null;followElapsed=interestElapsed=0;
       return;
     }
     if(mode==='follow' && dot){
       if(!followTarget || Math.hypot(dot.x-followTarget.x,dot.y-followTarget.y)>24){
-        followTarget=point(dot.x,dot.y);followElapsed=blockedElapsed=0;
+        followTarget=point(dot.x,dot.y);followElapsed=interestElapsed=0;
       }
       followElapsed+=dt;
-      const possible=outsideCopy(dot,copyObstacle());
-      blockedElapsed=Math.hypot(possible.x-dot.x,possible.y-dot.y)>2 ? blockedElapsed+dt : 0;
-      if(blockedElapsed>=1.2 || followElapsed>=30){
+      const possible=limit(dot);
+      interestElapsed=pointerOnLetters(dot)||Math.hypot(possible.x-dot.x,possible.y-dot.y)>2 ? interestElapsed+dt : 0;
+      if(interestElapsed>=1.2 || followElapsed>=30){
         leaveUnreachableTarget();
         return;
       }
     }else{
-      followTarget=null;followElapsed=blockedElapsed=0;
+      followTarget=null;followElapsed=interestElapsed=0;
     }
     if(!motionSample)motionSample={x:body.x,y:body.y,time:clock};
     if(clock-motionSample.time<1.6)return;
@@ -415,7 +321,7 @@
     const opening=canvas.parentElement.querySelector('.hero-water').getBoundingClientRect();
     const y=window.scrollY+clamp(opening.top+opening.height*.52,viewHeight*.2,viewHeight*.8);
     body=limit(point(width*(reduced.matches ? .56 : .74),y));
-    angle=-.08;vx=vy=stride=0;guard=0;turnSpeed=0;
+    angle=-.08;vx=vy=stride=0;guard=0;turnSpeed=0;headingTurn=false;
     resetClaws();plantFeet();wander();
   }
   function startle(at, hold) {
@@ -453,11 +359,11 @@
     if(mode==='walk'||mode==='pause'||mode==='follow'){
       if(dot){
         goal=painting ? limit(dot) : dot;mode='follow';
-        if(distance<=10)startle(dot,.24);
+        if(distance<=10 && !(painting && pointerOnLetters(dot) && beginMeal()))startle(dot,.24);
       }else if(mode==='follow'||(mode==='pause' && remaining<=0))wander();
     }
     if(painting)checkMovement(dt,dot);
-    const steering=painting ? routeAroundCopy(goal) : goal;
+    const steering=goal;
     const dx=steering.x-body.x,dy=steering.y-body.y;
     const range=Math.hypot(dx,dy);
     const goalRange=painting ? Math.hypot(goal.x-body.x,goal.y-body.y) : range;
@@ -479,8 +385,12 @@
       const targetTilt=maxShellTilt*Math.sin(2*bearing);
       if(painting){
         const targetAngle=mode==='meal-approach'?Math.PI:bearing;
-        const targetSpeed=clamp(angleDifference(targetAngle,angle)*2.5,-.65,.65);
-        turnSpeed+=(targetSpeed-turnSpeed)*(1-Math.exp(-dt*5));
+        const error=angleDifference(targetAngle,angle);
+        const eating=mode==='meal-approach';
+        if(Math.abs(error)>(eating?.035:.30))headingTurn=true;
+        if(Math.abs(error)<(eating?.02:.10))headingTurn=false;
+        const targetSpeed=headingTurn?clamp(error*2,-.45,.45):0;
+        turnSpeed+=(targetSpeed-turnSpeed)*(1-Math.exp(-dt*4));
         angle=angleDifference(angle+turnSpeed*dt,0);
       }else angle+=clamp(targetTilt-angle,-dt*.95,dt*.95);
     }
@@ -632,9 +542,6 @@
       const bounds=painting.draw(ctx, {legs, claws, guard, stride, clock, local,
         effort:clamp(Math.hypot(vx,vy)/(22*scale), 0, 1)});
       ctx.restore();
-      crabExtent={left:(half-bounds.left)/pixelRatio,right:(bounds.right-half)/pixelRatio,
-        top:(half-bounds.top)/pixelRatio,bottom:(bounds.bottom-half)/pixelRatio};
-      keepOutsideCopy();
       drawMeal(bounds,half);
       const left = body.x - half / pixelRatio;
       const top = body.y - window.scrollY - half / pixelRatio;
@@ -781,7 +688,7 @@
     angle = 0;
     body = point(enter ? width + 50*scale : width/2,
       window.scrollY + space.top + space.height/2);
-    vx=vy=turnSpeed=0;
+    vx=vy=turnSpeed=0;headingTurn=false;
     followAfter=0;
     plantFeet();
     goal=limit(point(width*.62,body.y));
@@ -792,7 +699,7 @@
     const viewportWidth=document.documentElement.clientWidth, viewportHeight=window.innerHeight;
     if(!viewportWidth||!viewportHeight)return;
     height=Math.max(viewportHeight,document.documentElement.scrollHeight);
-    const copyMoved=painting && measureProtectedCopy();
+    const copyMoved=painting && measureLetterAreas();
     if (viewportWidth===width && viewportHeight===viewHeight && pixelRatio===window.devicePixelRatio){
       if(copyMoved)draw();
       return;

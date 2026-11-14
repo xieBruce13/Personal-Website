@@ -27,13 +27,19 @@ function createCrabLetters() {
     if(!candidates.length)return null;
     const selected=candidates[Math.floor(Math.random()*candidates.length)];
     const style=getComputedStyle(selected.node.parentElement);
+    const filters=[];
+    for(let element=selected.node.parentElement;element && !element.matches('.home-page');element=element.parentElement){
+      const filter=getComputedStyle(element).filter;
+      if(filter!=='none')filters.push(filter);
+    }
     const floating=document.createElement('span');
     floating.className='crab-morsel';
     floating.setAttribute('aria-hidden','true');
     floating.textContent=selected.character;
     Object.assign(floating.style,{
       fontFamily:style.fontFamily,fontWeight:style.fontWeight,fontSize:style.fontSize,
-      lineHeight:style.lineHeight,letterSpacing:style.letterSpacing,color:style.color
+      lineHeight:style.lineHeight,letterSpacing:style.letterSpacing,color:style.color,
+      filter:filters.join(' ')||'none'
     });
     let placeholder=null,finished=false,letterWidth=0,letterHeight=0;
     function valid() {
