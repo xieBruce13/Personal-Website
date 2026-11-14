@@ -65,7 +65,7 @@ function home(l, path = ''){
  const c=copy[l];
  const painted=path!=='crab/';
  const backdrop=painted
-   ? '<img id="crab-study" hidden alt="" src="/media/crab/van-gogh-study.webp"><img id="crab-legs" hidden alt="" src="/media/crab/walking-legs.webp"><script defer src="/media/crab/painted.js"></script>'
+   ? '<img id="crab-study" hidden alt="" src="/media/crab/van-gogh-study.webp"><img id="crab-legs" hidden alt="" src="/media/crab/walking-legs.webp"><script defer src="/media/crab/painted.js"></script><script defer src="/media/crab/letters.js"></script>'
    : '<div class="crab-footprints" aria-hidden="true"></div>';
  const animal=backdrop+'<canvas class="walking-crab" aria-hidden="true"></canvas>';
  const name=painted ? '<span class="hero-name">BRUCE XIE</span>' : '';

@@ -33,7 +33,7 @@
     performance.getEntriesByType('navigation')[0]?.type !== 'back_forward';
   let opening = playOpening ? {time:0, layer:document.createElement('canvas'), seed:Math.random()*2**32>>>0} : null;
   const sizeMultiplier = 1.08 * (painting ? 1.15 * 1.5 : 1);
-  const maxShellTilt = (painting ? 20 : 40) * Math.PI / 180;
+  const maxShellTilt = 40 * Math.PI / 180;
   const trail = canvas.parentElement.querySelector('.crab-footprints');
   let trailLeft=0, trailTop=0;
   trail?.addEventListener('animationend',event=>{
@@ -51,11 +51,15 @@
   let pointer = null, threat = null, followAfter = 0, frame = 0, last = 0;
   const dotBreak = painting ? 20 : 25;
   let motionSample=null, followTarget=null, followElapsed=0, blockedElapsed=0;
-  const claws = [-1,1].map(side => ({side, wrist:0, gape:0}));
+  const letters=painting ? createCrabLetters() : null;
+  let meal=null,eatAgainAt=0;
+  const angleDifference=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
+  const ease=t=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+  const claws = [-1,1].map(side => ({side, wrist:0, gape:0,feed:0,carry:0}));
   let probeSide=1, probeAt=0, nextProbe=3;
 
   function resetClaws() {
-    for(const claw of claws){claw.wrist=0;claw.gape=0;}
+    for(const claw of claws){claw.wrist=0;claw.gape=0;claw.feed=0;claw.carry=0;}
     probeAt=-2;nextProbe=clock+between(2,4);
   }
 
@@ -70,8 +74,25 @@
     const pinch=clamp((t-.76)/.15,0,1)*clamp((1.24-t)/.26,0,1);
     const target=mode==='follow' && dot ? local(dot) : null;
     for(const claw of claws){
-      let wrist=0, gape=.04;
-      if(mode==='freeze'){
+      let wrist=0, gape=.04,feed=0,carry=0;
+      if(meal){
+        const selected=claw.side===meal.side;
+        const elapsed=clock-meal.since;
+        if(mode==='meal-retreat'){
+          const release=clock-(meal.until-5);
+          feed=selected?clamp((1.25-release)/.45,0,1):0;
+          carry=1-ease(release/.8);
+        }else{
+          feed=selected?1:mode==='meal-chew'?.7:0;
+          carry=selected ? mode==='meal-carry'?ease(elapsed/1.5):mode==='meal-chew'?1:0 : .85;
+          if(selected){
+            if(mode==='meal-approach')gape=.44;
+            else if(mode==='meal-grab')gape=.44*(1-ease(elapsed/.65));
+            else if(mode==='meal-chew')gape=.07+.10*Math.sin(elapsed*20);
+            else gape=-.08;
+          }
+        }
+      }else if(mode==='freeze'){
         wrist=.22;gape=.56;
       }else if(mode==='escape'){
         wrist=-.20;gape=-.13;
@@ -89,6 +110,9 @@
       const blend=1-Math.exp(-dt*(gape<claw.gape?17:9));
       claw.wrist+=(wrist-claw.wrist)*blend;
       claw.gape+=(gape-claw.gape)*blend;
+      const armBlend=1-Math.exp(-dt*10);
+      claw.feed+=(feed-claw.feed)*armBlend;
+      claw.carry+=(carry-claw.carry)*armBlend;
     }
   }
 
@@ -155,6 +179,10 @@
     return !previous || Object.keys(textBox).some(key=>previous[key]!==textBox[key]);
   }
   function copyObstacle(extra=0) {
+    if(meal)return null;
+    return measuredObstacle(extra);
+  }
+  function measuredObstacle(extra=0) {
     if(!textBox)return null;
     const gap=textClearance+extra;
     return {left:textBox.left-crabExtent.right-gap,right:textBox.right+crabExtent.left+gap,
@@ -264,10 +292,77 @@
     mode='walk';
   }
   function leaveUnreachableTarget() {
-    followAfter=Math.max(followAfter,clock+between(5,8));
+    if(mode==='follow' && pointer && beginMeal())return;
+    followAfter=Math.max(followAfter,clock+(clock<eatAgainAt?Math.min(1,eatAgainAt-clock):between(5,8)));
     followTarget=null;followElapsed=blockedElapsed=0;
     wander();
     nextProbe=clock;
+  }
+  function beginMeal() {
+    if(!letters || meal || clock<eatAgainAt || reduced.matches)return false;
+    const letter=letters.choose(), at=letter?.position();
+    if(!at)return false;
+    const side=at.x<width/2?1:-1;
+    const grip=painting.grips[side<0?0:1];
+    // Face the type from above, with the selected pincer reaching down to it.
+    const destination=point(at.x+grip.x*scale,at.y+grip.y*scale);
+    const approachTime=Math.hypot(destination.x-body.x,destination.y-body.y)/(23*scale/sizeMultiplier);
+    meal={letter,side,since:clock,deadline:clock+Math.max(16,approachTime*1.75+7),origin:at,picked:false};
+    mode='meal-approach';goal=destination;
+    motionSample=null;followTarget=null;followElapsed=blockedElapsed=0;
+    return true;
+  }
+  function cancelMeal() {
+    if(!meal)return;
+    meal.letter.finish(true);meal=null;
+    eatAgainAt=Math.max(eatAgainAt,clock+3);
+    followAfter=Math.max(followAfter,clock+1);
+    resetClaws();wander();
+  }
+  function retreatFromLetters() {
+    const box=measuredObstacle(64);
+    const exits=box ? [point(body.x,box.top-18*scale),point(box.right+18*scale,body.y),
+      point(body.x,box.bottom+18*scale),point(box.left-18*scale,body.y)] : [point(body.x+30*scale,body.y)];
+    goal=exits.reduce((best,next)=>Math.hypot(next.x-body.x,next.y-body.y)<
+      Math.hypot(best.x-body.x,best.y-body.y)?next:best);
+  }
+  function updateMeal() {
+    if(!meal)return;
+    if(mode==='meal-retreat'){
+      if(clock>=meal.until){meal=null;wander();}
+      else if(Math.hypot(goal.x-body.x,goal.y-body.y)<3*scale){
+        goal=point(body.x+(body.x<width/2?1:-1)*26*scale,body.y-12*scale);
+      }
+      return;
+    }
+    if(!meal.letter.valid() || clock>meal.deadline){cancelMeal();return;}
+    const at=meal.origin;
+    if(mode==='meal-approach'){
+      const grip=painting.grips[meal.side<0?0:1];
+      goal=point(at.x+grip.x*scale,at.y+grip.y*scale);
+      if(Math.hypot(goal.x-body.x,goal.y-body.y)<.8*scale && Math.abs(angleDifference(Math.PI,angle))<.045){
+        mode='meal-grab';meal.since=clock;meal.origin=at;
+      }
+    }else if(mode==='meal-grab'){
+      if(clock-meal.since>=.2 && !meal.picked){meal.letter.pick();meal.picked=true;}
+      if(clock-meal.since>=.65){mode='meal-carry';meal.since=clock;}
+    }else if(mode==='meal-carry' && clock-meal.since>=1.9){
+      mode='meal-chew';meal.since=clock;
+    }else if(mode==='meal-chew' && clock-meal.since>=.85){
+      meal.letter.finish();meal.until=clock+5;
+      followAfter=meal.until;eatAgainAt=clock+8;
+      mode='meal-retreat';retreatFromLetters();
+    }
+  }
+  function drawMeal(bounds,half) {
+    if(!meal?.picked || mode==='meal-retreat')return;
+    const grip=bounds.grips[meal.side<0?0:1];
+    const at=point(body.x+(grip.x-half)/pixelRatio,body.y+(grip.y-half)/pixelRatio);
+    const grasp=mode==='meal-grab'?ease((clock-meal.since-.2)/.45):1;
+    at.x=meal.origin.x+(at.x-meal.origin.x)*grasp;
+    at.y=meal.origin.y+(at.y-meal.origin.y)*grasp;
+    const chew=mode==='meal-chew'?ease((clock-meal.since)/.85):0;
+    meal.letter.show(at,angleDifference(angle,Math.PI)*.35,1-chew*.9,1-chew);
   }
   function checkMovement(dt,dot) {
     if(mode!=='walk' && mode!=='follow'){
@@ -323,6 +418,7 @@
     resetClaws();plantFeet();wander();
   }
   function startle(at, hold) {
+    if(meal)return;
     threat=at;
     mode='freeze';
     remaining=hold;
@@ -344,8 +440,9 @@
   }
   function update(dt) {
     clock+=dt;
+    updateMeal();
     if(mode==='crossing' && goal.x-body.x<=1)wander();
-    const guided=mode!=='crossing' && pointer && clock>=followAfter;
+    const guided=mode!=='crossing' && !meal && pointer && clock>=followAfter;
     const dot=guided ? point(pointer.x,pointer.y+window.scrollY) : null;
     const distance=dot?Math.hypot(dot.x-body.x,dot.y-body.y)/scale:Infinity;
     const alert=mode==='freeze'?1:.28*clamp((39-distance)/26,0,1);
@@ -368,22 +465,22 @@
       nextProbe=clock;
     }
     updateClaws(dt,dot);
-    const moving=mode!=='freeze' && mode!=='pause';
-    const travelSpeed=mode==='escape'?49:mode==='follow'||mode==='crossing'?23:16+2*Math.sin(clock*.87);
+    const moving=mode!=='freeze' && mode!=='pause' && !['meal-grab','meal-carry','meal-chew'].includes(mode);
+    const travelSpeed=mode==='escape'?49:mode==='meal-retreat'?28:
+      mode==='follow'||mode==='crossing'||mode==='meal-approach'?23:16+2*Math.sin(clock*.87);
     const speed=moving?Math.min(range*3,travelSpeed*scale/sizeMultiplier):0;
     const smooth=1-Math.exp(-dt*(mode==='freeze'?24:8));
     vx+=((range?dx/range*speed:0)-vx)*smooth;
     vy+=((range?dy/range*speed:0)-vy)*smooth;
     const pace=Math.hypot(vx,vy)/scale;
-    if (moving && pace>1) {
-      // Opposite travel directions share a pose. Lean on diagonals and
-      // ease back to level when crossing a horizontal or vertical bearing.
+    if ((moving && pace>1) || mode==='meal-approach') {
       const bearing=Math.atan2(vy,vx);
       const targetTilt=maxShellTilt*Math.sin(2*bearing);
       if(painting){
-        const targetSpeed=clamp((targetTilt-angle)*2.5,-.32,.32);
+        const targetAngle=mode==='meal-approach'?Math.PI:bearing;
+        const targetSpeed=clamp(angleDifference(targetAngle,angle)*2.5,-.65,.65);
         turnSpeed+=(targetSpeed-turnSpeed)*(1-Math.exp(-dt*5));
-        angle=clamp(angle+turnSpeed*dt,-maxShellTilt,maxShellTilt);
+        angle=angleDifference(angle+turnSpeed*dt,0);
       }else angle+=clamp(targetTilt-angle,-dt*.95,dt*.95);
     }
     body=point(body.x+vx*dt,painting ? body.y+vy*dt : clamp(body.y+vy*dt,0,height));
@@ -536,6 +633,7 @@
       crabExtent={left:(half-bounds.left)/pixelRatio,right:(bounds.right-half)/pixelRatio,
         top:(half-bounds.top)/pixelRatio,bottom:(bounds.bottom-half)/pixelRatio};
       keepOutsideCopy();
+      drawMeal(bounds,half);
       const left = body.x - half / pixelRatio;
       const top = body.y - window.scrollY - half / pixelRatio;
       canvas.style.transform = 'translate('+left+'px,'+top+'px)';
@@ -700,6 +798,7 @@
     const crossingProgress=mode==='crossing'
       ? clamp((body.x-headlineWalkStart)/Math.max(1,goal.x-headlineWalkStart),0,1) : null;
     const oldWidth=width, oldView=viewHeight;
+    if(meal)cancelMeal();
     width=viewportWidth;viewHeight=viewportHeight;
     const pondBounds=canvas.parentElement.querySelector('.hero-water').getBoundingClientRect();
     const baseScale=Math.min(pondBounds.width/155,pondBounds.height/138,4.2);
@@ -758,6 +857,7 @@
     cancelAnimationFrame(frame);frame=0;last=0;
     if(document.hidden){pointer=null;return;}
     if(reduced.matches && width){
+      cancelMeal();letters?.restore();
       trail?.replaceChildren();
       if(opening)finishOpening();
       else if(painting){resetPose();placePaintedCrab();draw();}
@@ -820,6 +920,14 @@
   },{passive:true});
   document.addEventListener('visibilitychange',sync);
   reduced.addEventListener('change',sync);
+  if(painting){
+    const editing=new MutationObserver(()=>{
+      if(document.documentElement.classList.contains('copy-editing')){
+        cancelMeal();letters.restore();
+      }
+    });
+    editing.observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+  }
   canvas.parentElement.classList.add('pond-ready');
   resize();
   if(painting)document.fonts.ready.then(resize);

@@ -3,6 +3,10 @@
 body:has(>.pond-ready):not(.menu-open)>.header{background:transparent}
 .walking-crab{position:fixed;top:0;left:0;z-index:-1;pointer-events:none;image-rendering:pixelated;max-width:none}
 #crab-study ~ .walking-crab{image-rendering:auto}
+.crab-letter-eaten{opacity:0}
+.crab-morsel{position:fixed;top:0;left:0;z-index:5;display:grid;place-items:center;pointer-events:none;user-select:none;white-space:pre;transform-origin:center;will-change:transform,opacity}
+html.copy-editing .crab-letter-eaten{opacity:1}
+@media(prefers-reduced-motion:reduce){.crab-morsel{display:none}.crab-letter-eaten{opacity:1}}
 .crab-opening{position:absolute;z-index:-1;pointer-events:none;image-rendering:pixelated;max-width:none}
 .crab-footprints{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
 .crab-footprints > span{

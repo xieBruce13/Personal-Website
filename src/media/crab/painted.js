@@ -136,6 +136,30 @@ function createPaintedCrab(image, legImage) {
     const [upper, forearm, palm] = splitAtJoints(claw.arm, [claw.hip, claw.elbow, claw.wrist, claw.tip]);
     return {...claw, upper, forearm, palm, jaw:cut(claw.jaw)};
   });
+  const grips=[[650,100],[840,115]], mouth=[747,452];
+  const difference=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
+  function feedingPose(rig,index,carry) {
+    const grip=grips[index];
+    const sourceAngle=angleBetween(rig.wrist,grip);
+    const palmAngle=sourceAngle+difference(index===0?1.05:Math.PI-1.05,sourceAngle)*carry;
+    const target=grip.map((value,i)=>value+(mouth[i]-value)*carry);
+    const palmLength=distance(rig.wrist,grip);
+    const wrist=[target[0]-Math.cos(palmAngle)*palmLength,target[1]-Math.sin(palmAngle)*palmLength];
+    const upperLength=distance(rig.hip,rig.elbow), lowerLength=distance(rig.elbow,rig.wrist);
+    const axis=angleBetween(rig.hip,wrist);
+    const reach=clamp(distance(rig.hip,wrist),Math.abs(upperLength-lowerLength)+4,upperLength+lowerLength-4);
+    const cosine=(reach*reach+upperLength*upperLength-lowerLength*lowerLength)/(2*reach*upperLength);
+    const upper=axis+(index===0?-1:1)*Math.acos(clamp(cosine,-1,1));
+    const knee=[rig.hip[0]+Math.cos(upper)*upperLength,rig.hip[1]+Math.sin(upper)*upperLength];
+    const lower=Math.atan2(rig.hip[1]+Math.sin(axis)*reach-knee[1],rig.hip[0]+Math.cos(axis)*reach-knee[0]);
+    const shoulder=difference(upper,angleBetween(rig.hip,rig.elbow));
+    const elbow=difference(lower,angleBetween(rig.elbow,rig.wrist))-shoulder;
+    return [shoulder,elbow,difference(palmAngle,sourceAngle)-shoulder-elbow];
+  }
+  function transformed(ctx,[x,y]) {
+    const m=ctx.getTransform();
+    return {x:m.a*x+m.c*y+m.e,y:m.b*x+m.d*y+m.f};
+  }
   const shell = cut(shellEdge);
   let footprint;
   function paint(ctx, part) {
@@ -196,19 +220,25 @@ function createPaintedCrab(image, legImage) {
     ctx.restore();
     ctx.restore();
   }
-  function drawClaw(ctx, rig, claw, state) {
+  function drawClaw(ctx, rig, claw, state, index) {
     const {side, wrist, gape} = claw;
     const phase = state.stride * 2 * Math.PI + side * Math.PI / 2;
     const walking = state.effort * (1 - state.guard);
     const beat = Math.sin(phase) * walking;
     const rebound = Math.sin(phase - .65) * walking;
     const idle = Math.sin(state.clock * 1.25 + side * .6) * (1 - state.guard);
+    const ordinary=[side*(.075+.10*beat+.016*idle+.24*state.guard),
+      side*(-.04-.15*rebound-.45*wrist-.15*state.guard),
+      side*(.025+.07*rebound+.035*idle+.70*wrist)];
+    const feeding=feedingPose(rig,index,claw.carry||0);
+    const rotations=ordinary.map((value,i)=>value+difference(feeding[i],value)*(claw.feed||0));
     ctx.save();
-    pivot(ctx, rig.hip, side * (.075 + .10 * beat + .016 * idle + .24 * state.guard));
+    pivot(ctx, rig.hip, rotations[0]);
     paint(ctx, rig.upper);
-    pivot(ctx, rig.elbow, side * (-.04 - .15 * rebound - .45 * wrist - .15 * state.guard));
+    pivot(ctx, rig.elbow, rotations[1]);
     paint(ctx, rig.forearm);
-    pivot(ctx, rig.wrist, side * (.025 + .07 * rebound + .035 * idle + .70 * wrist));
+    pivot(ctx, rig.wrist, rotations[2]);
+    footprint.grips[index]=transformed(ctx,grips[index]);
     ctx.save();
     pivot(ctx, rig.hinge, -side * clamp(.78 * gape + .04 * beat + .018 * idle, -.11, .40));
     paint(ctx, rig.jaw);
@@ -217,23 +247,23 @@ function createPaintedCrab(image, legImage) {
     ctx.restore();
   }
   function draw(ctx, state) {
-    footprint={left:Infinity,top:Infinity,right:-Infinity,bottom:-Infinity};
+    footprint={left:Infinity,top:Infinity,right:-Infinity,bottom:-Infinity,grips:[]};
     ctx.save();
     ctx.scale(1 / texelsPerUnit, 1 / texelsPerUnit);
     ctx.translate(-center.x, -center.y);
+    footprint.mouth=transformed(ctx,mouth);
     // The third pair covers the second, and the fourth pair covers the third.
     for (const i of [5,1,6,2,7,3,4,0]) {
       const step = state.legs[i];
       drawLeg(ctx, legs[i], step, constrainFoot(i,state.local(step.foot)));
     }
-    for (let i = 0; i < claws.length; i++) {
-      drawClaw(ctx, claws[i], state.claws[i], state);
-    }
+    for(let i=0;i<claws.length;i++)if(!(state.claws[i].feed>.01))drawClaw(ctx,claws[i],state.claws[i],state,i);
     paint(ctx, shell);
+    for(let i=0;i<claws.length;i++)if(state.claws[i].feed>.01)drawClaw(ctx,claws[i],state.claws[i],state,i);
     ctx.restore();
     return footprint;
   }
-  return {draw, constrainFoot, needsStep, toes: legs.map(({toe}) => ({
+  return {draw, constrainFoot, needsStep, grips:grips.map(([x,y])=>({x:(x-center.x)/texelsPerUnit,y:(y-center.y)/texelsPerUnit})), toes: legs.map(({toe}) => ({
     x:(toe[0] - center.x) / texelsPerUnit, y:(toe[1] - center.y) / texelsPerUnit
   }))};
 }
