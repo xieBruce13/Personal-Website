@@ -1,4 +1,3 @@
-import {glassLeaf,lotusLeaves} from './src/lotus.mjs';
 import {pathToFileURL} from 'node:url';
 import {pisonCover, studyCover, placeholderCovers} from './src/project-covers.mjs';
 import {icon} from './src/icons.mjs';
@@ -22,11 +21,39 @@ function languageSwitch(l, path='') {
 function header(l,path=''){
  const c=copy[l];
  const nav=(route,label)=>`<a class="nav-link" href="/${l}/${route}/" ${path.startsWith(route+'/')?'aria-current="page"':''}>${label}</a>`;
- const work=`<div class="nav-work"><a class="nav-link" href="${path ? '/'+l+'/' : ''}#work">${c.index}</a></div>`;
+ const homeGallery=['','crab/','painted-crab/'].includes(path);
+ const work=`<div class="nav-work"><a class="nav-link" href="${homeGallery ? '' : '/'+l+'/'}#work">${c.index}</a></div>`;
  return `<a class="skip" href="#main">${c.skip}</a><header class="header"><a class="identity" href="/${l}/">${displayName(l)}</a><span class="header-role">${c.headerRole}</span><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation"><span>${c.menu}</span><i aria-hidden="true"></i></button><nav id="primary-navigation" aria-label="${c.navigation}">${work}${nav('about',c.about)}${nav('contact',c.contact)}${languageSwitch(l,path)}</nav></header>`
 }
 function footer(){return ''}
-function shell(l,path,title,body){const c=copy[l];return `<!doctype html><html${path.startsWith('work/')?' data-project-page':''} lang="${l==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="${c.meta}"><meta name="theme-color" content="#ffffff"><title>${title}</title><link rel="alternate" hreflang="en" href="/en/${path}"><link rel="alternate" hreflang="zh-CN" href="/zh/${path}"><link rel="stylesheet" href="/styles.css"><script type="module" src="/site.js"></script></head><body id="top">${header(l,path)}${body}${footer(l,path!=='contact/')}</body></html>`}
+// Decide before the gallery exists so a bookmarked preview cannot start an anchor scroll.
+const homeOpening = `<script>(function () {
+  if (location.protocol === 'about:') return;
+  const type = performance.getEntriesByType('navigation')[0]?.type;
+  const previous = history.scrollRestoration;
+  history.scrollRestoration = 'manual';
+  if (type !== 'back_forward' && location.hash === '#work' && (type === 'reload' || !document.referrer.startsWith(location.origin + '/'))) {
+    history.replaceState(history.state, '', location.pathname + location.search);
+  }
+  function rememberPosition() {
+    history.replaceState({...history.state, homeScrollY:window.scrollY}, '');
+  }
+  function restorePosition(state) {
+    if (Number.isFinite(state?.homeScrollY)) window.scrollTo({top:state.homeScrollY, behavior:'instant'});
+  }
+  window.addEventListener('pagehide', rememberPosition);
+  document.addEventListener('click', event => {
+    if (event.target.closest?.('a[href^="#"]')) rememberPosition();
+  });
+  window.addEventListener('popstate', event => restorePosition(event.state));
+  if (type === 'back_forward') {
+    window.addEventListener('pageshow', () => restorePosition(history.state), {once:true});
+  } else if (type === 'reload' && !location.hash && previous === 'auto') {
+    // A tab opened before this behavior may still have an automatic position saved.
+    window.addEventListener('pageshow', () => requestAnimationFrame(() => window.scrollTo({top:0, behavior:'instant'})), {once:true});
+  }
+})();</script>`;
+function shell(l,path,title,body){const c=copy[l];return `<!doctype html><html${path.startsWith('work/')?' data-project-page':''} lang="${l==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="${c.meta}"><meta name="theme-color" content="#ffffff"><title>${title}</title><link rel="alternate" hreflang="en" href="/en/${path}"><link rel="alternate" hreflang="zh-CN" href="/zh/${path}">${path === '' ? homeOpening : ''}<link rel="stylesheet" href="/styles.css"><script type="module" src="/site.js"></script></head><body id="top">${header(l,path)}${body}${footer(l,path!=='contact/')}</body></html>`}
 function artwork(p,l){if(p.slug==='pison')return pisonCover(l);if(p.slug==='lucian-freud-lora')return studyCover(p.slug,l);return `<div class="project-art art-${p.slug}" aria-hidden="true"><div class="art-shape"></div><span>${p.name}</span></div>`}
 const galleryFilm=(className,src,poster,title,playbackRate=1)=>`<span class="gallery-film ${className}" aria-hidden="true"><video class="gallery-preview-video" data-playback-rate="${playbackRate}" muted loop playsinline preload="none" poster="${poster}"><source src="${src}" type="video/mp4"></video><span class="gallery-film-meta"><span class="gallery-film-title">${title}</span></span></span>`;
 const pisonGalleryFilm=()=>galleryFilm('gallery-pison','/media/pison/card-three-shots-loop.mp4','/media/pison/card-13-30-poster.webp','Pison Agent');
@@ -34,7 +61,16 @@ const qwenGalleryFilm=()=>galleryFilm('gallery-qwen','/media/qwen/card-shampoo-m
 const eyeGalleryFilm=()=>galleryFilm('gallery-eye','/media/eye-tracking/attention-heatmap-loop.mp4','/media/eye-tracking/attention-heatmap-poster.webp','Eye Tracking');
 const loraGalleryFilm=()=>galleryFilm('gallery-lora','/media/lora/gallery-blink.mp4','/media/lora/gallery-blink-poster.webp','Defying Freud');
 function cards(l,subset=projects){const c=copy[l];return subset.map(p=>{const name=get(p,'galleryTitle',l)||p.name,category=get(p,'galleryCategory',l);const href=`/${l}/work/${p.slug}/`;const cover=p.slug==='pison'?pisonGalleryFilm():p.slug==='qwen-create'?qwenGalleryFilm():p.slug==='eye-tracking-thingz'?eyeGalleryFilm():p.slug==='lucian-freud-lora'?loraGalleryFilm():studyCover(p.slug,l);return `<article class="project-card" data-gallery-tile><a class="project-image" href="${href}" aria-label="${c.view} — ${name}: ${category}">${cover}<span class="project-open" aria-hidden="true">${icon('arrow')}</span></a><p class="gallery-card-category">${category}</p></article>`}).join('')}
-function home(l){const c=copy[l];return shell(l,'',c.title,`<main id="main" class="home-page"><canvas data-worker-src="/media/koi/renderer.js" data-ink-src="/media/koi/engraving.png" class="landing-koi" aria-hidden="true"></canvas>${glassLeaf('upper-left')}${glassLeaf('crown')}<section class="hero"><div class="hero-water" aria-hidden="true">${lotusLeaves()}</div><h1><span class="hero-line-muted">${c.heroLineOne}</span><br class="mobile-break"> <span class="hero-line-emphasis">${c.heroLineTwo}</span></h1><p>${c.role}</p><div class="hero-bottom"><a href="#work">${c.scrollPrompt} ${icon('down')}</a></div></section><section id="work" class="work-gallery">${cards(l,featuredProjects)}${glassLeaf('small')}</section></main><script defer src="/landing-koi.js"></script>`)}
+function home(l, path = ''){
+ const c=copy[l];
+ const painted=path!=='crab/';
+ const backdrop=painted
+   ? '<img id="crab-study" hidden alt="" src="/media/crab/van-gogh-study.webp"><img id="crab-legs" hidden alt="" src="/media/crab/walking-legs.webp"><script defer src="/media/crab/painted.js"></script>'
+   : '<div class="crab-footprints" aria-hidden="true"></div>';
+ const animal=backdrop+'<canvas class="walking-crab" aria-hidden="true"></canvas>';
+ const name=painted ? '<span class="hero-name">BRUCE XIE</span>' : '';
+ return shell(l,path,c.title,`<main id="main" class="home-page">${animal}<section class="hero"><div class="hero-water" aria-hidden="true"></div>${name}<h1 aria-labelledby="hero-phrase hero-emphasis"><span id="hero-phrase" class="hero-line-muted">${c.heroLineOne}</span><br class="mobile-break"> <span id="hero-emphasis" class="hero-line-emphasis">${c.heroLineTwo}</span></h1><p>${c.role}</p><div class="hero-bottom"><a href="#work">${c.scrollPrompt} ${icon('down')}</a></div></section><section id="work" class="work-gallery">${cards(l,featuredProjects)}</section></main><script defer src="/media/crab/walk.js"></script>`);
+}
 function qwenProject(l,p){
  const c=copy[l],q=qwen[l],path=`work/${p.slug}/`;
  return shell(l,path,`${p.name} — ${displayName(l)}`,`<main id="main" class="detail qwen-page">
@@ -116,12 +152,7 @@ async function build() {
  await cp('src/fonts',`${root}/fonts`,{recursive:true});
  await cp('src/media',`${root}/media`,{recursive:true});
  for(const file of ['particles.js','site.js']) await copyFile(`src/${file}`,`${root}/${file}`);
- const koiFiles = ['koi-print.js', 'koi-render.js', 'koi.js'];
- const koi = await Promise.all(koiFiles.map(file => readFile('src/koi/' + file, 'utf8')));
- await writeFile(root + '/landing-koi.js', koi.join('\n'));
- const worker = await readFile('src/koi/koi-worker.js','utf8');
- await writeFile(root + '/media/koi/renderer.js',koi[1] + '\n' + worker);
- const componentFiles = ['styles', 'pison-product', 'project-covers', 'project-gallery', 'qwen-product', 'research-cases', 'about-page', 'navigation', 'project-transition'];
+ const componentFiles = ['styles', 'pison-product', 'project-covers', 'project-gallery', 'pond', 'qwen-product', 'research-cases', 'about-page', 'navigation', 'project-transition'];
  const components = await Promise.all(componentFiles.map(name => readFile('src/' + name + '.css', 'utf8')));
  const tokens = await readFile('src/design-tokens.css', 'utf8');
  const typography = await readFile('src/typography.css', 'utf8');
@@ -133,6 +164,10 @@ async function build() {
   if (/^\/(en|zh)\/$/.test(route)) {
    await mkdir(root + route + 'work/', {recursive:true});
    await writeFile(root + route + 'work/index.html', html);
+   for (const variant of ['crab/', 'painted-crab/']) {
+    await mkdir(root + route + variant, {recursive:true});
+    await writeFile(root + route + variant + 'index.html', renderCopy(home(route.split('/')[1], variant), route, edits).html);
+   }
    if (route === '/en/') await writeFile(root + '/index.html', html);
   }
  }

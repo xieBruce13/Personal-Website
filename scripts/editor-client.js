@@ -36,7 +36,8 @@ import { typeLevels, levelForSize } from './type-scale.mjs';
     html.copy-editing [data-copy-key]:hover,html.copy-editing [data-copy-key]:focus-visible{outline:1px dashed #555;outline-offset:2px}
     html.copy-editing [data-copy-selected]{outline:2px solid #345d99!important;outline-offset:2px}
     html.copy-editing [data-copy-key]:empty::before{content:"＋";color:#666}
-    html.copy-editing body{padding-bottom:320px}
+    html.copy-editing body:not(:has(.home-page)){padding-bottom:320px}
+    html.copy-editing .home-page ~ aside[aria-label="Portfolio editor"]{position:sticky;width:fit-content;margin-left:auto;margin-right:12px}
   `;
   document.head.append(css);
   const elements = [...document.querySelectorAll('[data-copy-key]')];

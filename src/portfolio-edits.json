@@ -42,39 +42,69 @@
     "1531258d090d42fed0b7b5f3": {
       "original": "About",
       "text": "About",
-      "size": 20
+      "size": 17
     },
     "dc0b847d316221010d4c4771": {
       "original": "Contact",
       "text": "Contact",
-      "size": 20
+      "size": 17
     },
     "36c3a7d2b6a0fb30b551592d": {
       "original": "EN",
       "text": "EN",
-      "size": 20
+      "size": 17
     },
     "3dae58c4500c7afbe613a21d": {
       "original": "中文",
       "text": "中文",
-      "size": 20
+      "size": 17
     },
     "a0aedd6f66058517f1726a22": {
       "original": "Bruce",
       "text": "Bruce Xie 谢凌翔",
-      "size": 20
+      "size": 17
+    },
+    "80c122ef8250dd001bd5151f": {
+      "original": "Work",
+      "text": "Work",
+      "size": 17
     }
   },
   "/en/": {
     "001518effca5f9cdd165d676": {
       "original": "I’m Bruce, an AI product manager & builder.",
-      "text": "Hi, I’m Bruce, Product Builder & Designer.",
-      "size": 35,
+      "text": "Hi, I’m Bruce, I build AI Native Products and love Art & Design",
+      "size": 24,
       "color": "#999999",
       "ranges": [
         {
-          "start": 15,
-          "end": 42,
+          "start": 0,
+          "end": 7,
+          "color": "#bdbdbd"
+        },
+        {
+          "start": 8,
+          "end": 13,
+          "color": "#252525"
+        },
+        {
+          "start": 13,
+          "end": 23,
+          "color": "#bdbdbd"
+        },
+        {
+          "start": 23,
+          "end": 41,
+          "color": "#252525"
+        },
+        {
+          "start": 41,
+          "end": 51,
+          "color": "#bdbdbd"
+        },
+        {
+          "start": 51,
+          "end": 63,
           "color": "#252525"
         }
       ]
@@ -86,8 +116,8 @@
     },
     "51a5b48f86e9ba9b710708aa": {
       "original": "AI products.",
-      "text": "Ideate Create Innovate",
-      "size": 82,
+      "text": "IDEATE  CREATE  INNOVATE",
+      "size": 76,
       "ranges": [
         {
           "start": 0,
@@ -97,27 +127,32 @@
         {
           "start": 3,
           "end": 6,
-          "color": "#999999"
+          "color": "#bdbdbd"
         },
         {
           "start": 6,
-          "end": 10,
-          "color": "#252525"
-        },
-        {
-          "start": 10,
-          "end": 13,
+          "end": 8,
           "color": "#999999"
         },
         {
-          "start": 13,
-          "end": 19,
+          "start": 8,
+          "end": 11,
           "color": "#252525"
         },
         {
-          "start": 19,
-          "end": 22,
-          "color": "#999999"
+          "start": 11,
+          "end": 14,
+          "color": "#bdbdbd"
+        },
+        {
+          "start": 14,
+          "end": 21,
+          "color": "#252525"
+        },
+        {
+          "start": 21,
+          "end": 24,
+          "color": "#bdbdbd"
         }
       ]
     },
@@ -160,15 +195,8 @@
     },
     "e55bd6e87fdadcd736f37072": {
       "original": "A prototype turning Pison Watch data into timely advice, through iMessage.",
-      "text": "An health agent that knows about your day",
-      "size": 17,
-      "ranges": [
-        {
-          "start": 0,
-          "end": 41,
-          "color": "#848484"
-        }
-      ]
+      "text": "",
+      "size": 17
     },
     "a668ce60ba9b4a72fb617285": {
       "original": "Pison measures neural and physiological signals. I explored the next step: helping people act on them.",
@@ -483,6 +511,31 @@
     "fb187dbbbcfd049eedd3285b": {
       "original": "See it in use.",
       "text": "Really Life Demo",
+      "size": null
+    },
+    "6a416014af83cf708f516d88": {
+      "original": "Sense",
+      "text": "",
+      "size": null
+    },
+    "a74c7f413bc706856f11d84e": {
+      "original": "Understand",
+      "text": "",
+      "size": null
+    },
+    "39b5cb9376abdc9e9990bfdf": {
+      "original": "Respond",
+      "text": "",
+      "size": null
+    },
+    "13b635fc49aa0ca0bbd2060c": {
+      "original": "Remember",
+      "text": "",
+      "size": null
+    },
+    "1b089aea3514515c2deefe48": {
+      "original": "Google Calendar",
+      "text": "Calendar",
       "size": null
     }
   }

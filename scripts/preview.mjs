@@ -6,7 +6,6 @@ const css=(await readFile('dist/styles.css','utf8'))
 const behavior=await readFile('dist/site.js','utf8');
 const projectTransition=await readFile('src/project-transition.css','utf8');
 const particles=await readFile('dist/particles.js','utf8');
-const koi=await readFile('dist/landing-koi.js','utf8');
 const pages={};
 const media={};
 const mimeTypes={mp4:'video/mp4',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',pdf:'application/pdf',webp:'image/webp',svg:'image/svg+xml',js:'text/javascript'};
@@ -19,15 +18,14 @@ async function collect(dir){for(const entry of await readdir(dir,{withFileTypes:
   let html=await readFile(file,'utf8');
   html=html.replace('<link rel="stylesheet" href="/styles.css">','<style>__PORTFOLIO_STYLES__</style>')
    .replace('<script type="module" src="/site.js"></script>','')
-   .replace('<script type="module" src="/particles.js"></script>','')
-   .replace('<script defer src="/landing-koi.js"></script>', () => '<script>' + koi + '</script>');
+   .replace('<script type="module" src="/particles.js"></script>','');
   const hasParticles=html.includes('id="particles"');
   html=html.replace('</body>',`<script>${behavior}</script>${hasParticles?`<script>${particles}</script>`:''}${bridge}</body>`);
   pages[file.slice(4,-10)]=html;
  }
 }}
 await collect('dist/en');await collect('dist/zh');
-for(const project of ['pison','qwen','lora','eye-tracking','koi'])for(const name of await readdir(`dist/media/${project}`)){const ext=name.split('.').pop(),path=`/media/${project}/${name}`;if(mimeTypes[ext]&&Object.values(pages).some(page=>page.includes(path)))media[path]={type:mimeTypes[ext],data:(await readFile(`dist/media/${project}/${name}`)).toString('base64')};}
+for(const project of ['pison','qwen','lora','eye-tracking','crab'])for(const name of await readdir(`dist/media/${project}`)){const ext=name.split('.').pop(),path=`/media/${project}/${name}`;if(mimeTypes[ext]&&Object.values(pages).some(page=>page.includes(path)))media[path]={type:mimeTypes[ext],data:(await readFile(`dist/media/${project}/${name}`)).toString('base64')};}
 const serialized=JSON.stringify(pages).replaceAll('<','\\u003c');
 const preview=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bruce — Portfolio review</title><style>
 ${projectTransition}
@@ -46,7 +44,11 @@ function assetURL(path){
  return assetURLs.get(path);
 }
 const styles=${JSON.stringify(css).replaceAll('<','\\u003c')};const pages=${serialized};const frame=document.getElementById('preview');let current='/en/';let fragment='';
-function show(path,record=true){const parts=path.split('#');current=parts[0]||current;fragment=parts[1]||'';if(!pages[current])current='/en/';frame.srcdoc=pages[current].replace('__PORTFOLIO_STYLES__',styles).replace(/(?:data-(?:ink|worker)-src|src|poster|href)="(\\/media\\/[^"]+)"/g,(match,path)=>match.replace(path,assetURL(path)));if(record)history.pushState({route:path},'', '#'+path);}
+function show(path,record=true){
+ const parts=path.split('#');current=parts[0]||current;fragment=parts[1]||'';
+ if(!frame.hasAttribute('srcdoc') && fragment==='work' && performance.getEntriesByType('navigation')[0]?.type!=='back_forward') fragment='';
+ if(!pages[current])current='/en/';
+ frame.srcdoc=pages[current].replace('__PORTFOLIO_STYLES__',styles).replace(/(?:src|poster|href)="(\\/media\\/[^"]+)"/g,(match,path)=>match.replace(path,assetURL(path)));if(record)history.pushState({route:path},'', '#'+path);}
 window.addEventListener('popstate',()=>show(location.hash.slice(1)||'/en/',false));
 frame.addEventListener('load',()=>{if(fragment)frame.contentDocument.getElementById(fragment)?.scrollIntoView();const active=current.includes('/work/pison/')?'pison':current.includes('/work/qwen-create/')?'qwen':'restart';for(const id of ['restart','pison','qwen'])document.getElementById(id)?.setAttribute('aria-pressed',String(id===active));});
 window.addEventListener('message',event=>{
@@ -84,7 +86,7 @@ const qwenPreview=preview
 await writeFile('previews/qwen-review.html',qwenPreview);
 // A much smaller standalone review for the edited homepage and Qwen case study.
 // It omits Pison's long-form videos, which made the full review too heavy to open reliably.
-const focusedRoutes=['/en/','/zh/','/en/work/qwen-create/','/zh/work/qwen-create/'];
+const focusedRoutes=['/en/','/zh/','/en/crab/','/zh/crab/','/en/painted-crab/','/zh/painted-crab/','/en/work/qwen-create/','/zh/work/qwen-create/'];
 const focusedPages=Object.fromEntries(Object.entries(pages).filter(([route])=>focusedRoutes.includes(route)));
 const focusedMedia=Object.fromEntries(Object.entries(media).filter(([path])=>Object.values(focusedPages).some(page=>page.includes(path))));
 const focusedPreview=preview

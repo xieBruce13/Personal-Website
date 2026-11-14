@@ -4,10 +4,6 @@
   backdrop-filter: none;
 }
 .header .language:hover { opacity: 1; }
-body:has(> .home-page):not(.menu-open) > .header {
-  background: transparent;
-  text-shadow: 0 0 3px var(--canvas), 0 0 6px var(--canvas);
-}
 @media (min-width: 810px) {
   .header { grid-template-columns: max-content 1fr auto; }
   .header nav { gap: 20px; }

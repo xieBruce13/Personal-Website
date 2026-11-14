@@ -4,13 +4,14 @@ Bilingual AI product management portfolio. Build with Node.js 22+ and install th
 
 ## Design and content
 
-Read `docs/DESIGN_SYSTEM.md` before changing the UI. The white editorial layout uses a swimming scarlet koi behind the landing page and a single row of four square project covers: Pison Health Agent (Personal Agent), Qwen (Agent Team), Eye Tracking (Research Tool), and Defying Freud, a completed private LoRA study (Model Training). Each title and specialty appears below its cover. About and Contact are separate pages.
+Read `docs/DESIGN_SYSTEM.md` before changing the UI. The white editorial layout opens with an interactive painted crab above Bruce’s introduction and a single row of four square project covers: Pison Health Agent (Personal Agent), Qwen (Agent Team), Eye Tracking (Research Tool), and Defying Freud, a completed private LoRA study (Model Training). Each title and specialty appears below its cover. About and Contact are separate pages.
 
 - `src/content.json`: bilingual portfolio copy and project order.
 - `src/case-studies/pison.json` and `pison.mjs`: bilingual Pison presentation, demonstrations and team credits.
 - `src/case-studies/qwen.json` and `src/qwen-product.css`: compact bilingual Qwen introduction, regional access note, and Bruce-supplied English product screenshot linked to the live Agent Team page.
 - `src/design-tokens.css` and `src/project-gallery.css`: shared visual rules.
-- `src/koi/`: landing-page koi illustration and motion; `src/site.js`: interactions.
+- `src/site.js` handles navigation, pointers and project interactions.
+- `src/media/crab/` contains the painted crab, animated joints and walking behavior.
 - `build.mjs`: static routes; `scripts/preview.mjs`: standalone previews.
 
 Preserve factual attribution, prototype status, accessible motion and concise copy. The Pison business-model comparison and roadmap have been removed by request.
@@ -26,7 +27,8 @@ Save writes to `src/portfolio-edits.json`. Edits apply to the current page and l
 Use `npm run build` for the finished pages or `npm run preview` to refresh the offline previews. Both include saved edits. The editing toolbar and save endpoint exist only in the local editing preview. Press Ctrl+C in its terminal to stop it.
 
 ```sh
-npm run dev
+npm run build
+node scripts/serve.mjs
 ```
 
 Open `http://localhost:4173/review.html` for the lightweight hosted desktop/mobile portfolio review, including Home, Pison, Qwen, and Defying Freud. `/en/` and `/zh/` are the actual pages. `/pison-review.html` and `/qwen-review.html` redirect to the relevant hosted-review tabs.

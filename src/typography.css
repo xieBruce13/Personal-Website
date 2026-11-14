@@ -7,11 +7,11 @@ body {
 :where(header, main, footer, .skip, header *, main *, footer *):not(:where(svg, svg *)) {
   font-size: inherit;
 }
-:where(h1, h2, h3) {
+:where(h1, h2, h3, .hero-name) {
   color: var(--text-primary);
   font-weight: 450;
 }
-h1, .hero h1 {
+h1, .hero h1, .hero-name {
   font-size: var(--type-title);
   line-height: 1.06;
   letter-spacing: -.05em;

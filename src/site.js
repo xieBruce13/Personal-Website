@@ -32,10 +32,8 @@ if(menuButton&&menu){
   }
  });
 }
-const headline=document.querySelector('html[lang="en"] .hero h1 .hero-line-muted');
-if(headline) {
- function markHeadlineEndings() {
-  for(const mark of headline.querySelectorAll('.headline-ending')) {
+function markEndings(element, pattern) {
+  for(const mark of element.querySelectorAll('.headline-ending')) {
    const parent=mark.parentNode;
    mark.replaceWith(...mark.childNodes);
    parent.normalize();
@@ -44,7 +42,7 @@ if(headline) {
 
   // The editor may split a word across several colored text nodes.
   const runs=[];
-  const walker=document.createTreeWalker(headline,NodeFilter.SHOW_TEXT);
+  const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);
   let offset=0;
   while(walker.nextNode()) {
    const node=walker.currentNode;
@@ -52,11 +50,11 @@ if(headline) {
    offset+=node.length;
   }
   // Work backwards so splitting a text node preserves all earlier offsets.
-  const words=[...headline.textContent.matchAll(/\b(?:ide|cre|innov)ate\b/gi)];
-  for(const word of words.reverse()) {
-   const end=word.index+word[0].length;
+  const endings=[...element.textContent.matchAll(pattern)];
+  for(const ending of endings.reverse()) {
+   const end=ending.index+ending[0].length;
    for(const run of runs) {
-    const startInNode=Math.max(end-3,run.start)-run.start;
+    const startInNode=Math.max(ending.index,run.start)-run.start;
     const endInNode=Math.min(end,run.end)-run.start;
     if(startInNode>=endInNode) continue;
     const range=document.createRange();
@@ -67,17 +65,14 @@ if(headline) {
     range.surroundContents(mark);
    }
   }
- }
- document.addEventListener('portfolio-copy-preview',markHeadlineEndings);
- markHeadlineEndings();
 }
-
-// A fresh visit starts at the top naturally. Use the same opening on refresh.
-if(document.querySelector('.home-page') && !location.hash && performance.getEntriesByType('navigation')[0]?.type==='reload') {
- const previousRestoration=history.scrollRestoration;
- history.scrollRestoration='manual';
- window.scrollTo({top:0,behavior:'instant'});
- window.addEventListener('pageshow',()=>setTimeout(()=>{history.scrollRestoration=previousRestoration},0),{once:true});
+if(document.querySelector('.home-page')) {
+ const headline=document.querySelector('html[lang="en"] .hero h1 .hero-line-muted');
+ function markHomepageEndings() {
+  if(headline) markEndings(headline,/(?<=\b(?:ide|cre|innov))ate\b/gi);
+ }
+ document.addEventListener('portfolio-copy-preview',markHomepageEndings);
+ markHomepageEndings();
 }
 
 if(document.documentElement.hasAttribute('data-project-page') && !('onpagereveal' in window)) {
@@ -150,17 +145,25 @@ function updateLensTarget(element) {
  return true;
 }
 function moveLens(event) {
- if(event.pointerType!=='mouse' || !finePointer.matches || reducedMotion.matches ||
+ if(event.pointerType!=='mouse' || !finePointer.matches ||
     document.documentElement.classList.contains('copy-editing')) {
   hideLens(); return;
  }
- if(!updateLensTarget(event.target)) return;
  targetX=event.clientX; targetY=event.clientY;
+ if(reducedMotion.matches) {
+  // The reduced-motion dot is a native cursor with no trailing animation.
+  return;
+ }
+ if(!updateLensTarget(event.target)) return;
  if(!lens.classList.contains('is-visible')) {
+  cancelAnimationFrame(lensFrame);
+  lensFrame=0;
+  checkScrolledTarget=false;
   lensX=leadX=targetX; lensY=leadY=targetY;
   lens.style.transform=`translate3d(${lensX}px,${lensY}px,0)`;
   lens.classList.add('is-visible');
   document.documentElement.classList.add('has-dot-cursor');
+  return;
  }
  if(!lensFrame) {lastFrame=performance.now();lensFrame=requestAnimationFrame(followPointer);}
 }

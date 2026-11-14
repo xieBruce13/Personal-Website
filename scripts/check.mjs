@@ -38,19 +38,14 @@ const edits = await readEdits();
 function template(route) { return pages.get(route); }
 for (const [route, source] of pages) {
  const built = await readFile('dist' + route + 'index.html', 'utf8');
- const landing = /^\/(en|zh)\/$/.test(route);
- assert.equal(built.includes('class="landing-koi" aria-hidden="true"'), landing, 'Decorative koi on ' + route);
- assert.equal(built.includes('src="/landing-koi.js"'), landing, 'Koi asset loading on ' + route);
- if(landing) for(const key of ['ink','worker']){
-  const path=built.match(new RegExp('data-'+key+'-src="([^"]+)"'))?.[1];
-  assert(path && (await stat('dist'+path)).isFile(),'Missing koi '+key+' on '+route);
- }
  assert.equal(built, renderCopy(source, route, edits).html, 'Saved edits missing from ' + route);
  assert(!built.includes('data-copy-key=') && !built.includes('/__editor/tools.js'), 'Editor leaked into ' + route);
 }
 for(const l of ['en','zh']){
  const html=template(`/${l}/`);
- assert(html.includes('class="hero-line-muted"')&&html.includes('class="hero-line-emphasis"'),'Homepage statement must use gray/charcoal phrase hierarchy');
+ assert(html.includes('id="crab-study"')&&html.includes('id="crab-legs"'),'Homepage must load the painted crab assets');
+ assert(html.includes('class="hero-name">BRUCE XIE</span>'),'Homepage must show Bruce above the headline');
+ assert(html.includes('class="hero-line-muted"')&&html.includes('class="hero-line-emphasis"'),'Homepage statement must preserve the two text tones');
  assert(!html.includes('Co-Hive'),'Removed Co-Hive should not appear on the homepage');
  const gallery=html.slice(html.indexOf('<section id="work"'));
  const linkedSlugs=[...gallery.matchAll(/href="\/(?:en|zh)\/work\/([a-z0-9-]+)\/"/g)].map(x=>x[1]);
